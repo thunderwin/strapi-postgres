@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "reviews",
   "info": {
-    "name": "Review"
+    "name": "Review",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -28,7 +29,40 @@
       "required": false
     },
     "review_content": {
-      "type": "text"
+      "type": "text",
+      "required": true
+    },
+    "comments": {
+      "collection": "comment",
+      "via": "review"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "votes_up": {
+      "type": "biginteger"
+    },
+    "votes_down": {
+      "type": "biginteger"
+    },
+    "verified_buyer": {
+      "type": "boolean",
+      "default": true
+    },
+    "sku": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "display_name": {
+      "type": "string",
+      "required": true
+    },
+    "user_avatar": {
+      "type": "string"
+    },
+    "remote_image_list": {
+      "type": "json"
     }
   }
 }

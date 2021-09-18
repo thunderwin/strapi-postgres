@@ -1,8 +1,17 @@
-'use strict';
+"use strict";
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/concepts/controllers.html#core-controllers)
- * to customize this controller
- */
+const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
 
-module.exports = {};
+module.exports = {
+  summy: async (ctx) => {
+    let sku = ctx.params.sku;
+    return strapi
+      .query("review")
+      .model.query((db) => {
+        db.where({
+          sku,
+        }).sum("score");
+      })
+      .fetch();
+  },
+};

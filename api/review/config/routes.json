@@ -10,6 +10,14 @@
     },
     {
       "method": "GET",
+      "path": "/reviews/summy/:sku",
+      "handler": "review.summy",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/reviews/count",
       "handler": "review.count",
       "config": {

@@ -58,10 +58,10 @@
       "type": "string",
       "required": true
     },
-    "user_avatar": {
-      "type": "string"
-    },
     "remote_image_list": {
+      "type": "json"
+    },
+    "user_avatar": {
       "type": "json"
     }
   }

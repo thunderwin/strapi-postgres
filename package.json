@@ -12,6 +12,9 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "country-list": "^2.2.0",
+    "joi": "^17.4.2",
     "knex": "<0.20.0",
     "koa-send": "^5.0.1",
     "pg": "^8.3.3",

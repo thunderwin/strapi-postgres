@@ -1,0 +1,14 @@
+{
+  "collectionName": "shopifies",
+  "info": {
+    "name": "shopify",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {}
+}

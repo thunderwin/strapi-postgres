@@ -1,0 +1,14 @@
+{
+  "collectionName": "checkouts",
+  "info": {
+    "name": "checkout",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {}
+}

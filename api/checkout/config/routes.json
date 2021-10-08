@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/checkout",
+      "handler": "checkout.theme",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/checkout/init",
+      "handler": "checkout.init",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/checkout/onepage",
+      "handler": "checkout.onepage",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

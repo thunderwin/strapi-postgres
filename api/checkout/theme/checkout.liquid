@@ -1,0 +1,681 @@
+{% layout 'custom' %}
+
+<div class="page-width">
+  <div class="thank-you">
+    <div class="store_name">{{ shop.name }}</div>
+    <div class="">thank you mes</div>
+  </div>
+</div>
+
+<div
+  class="page-width"
+  data-section-id="{{ section.id }}"
+  data-section-type="cart-template"
+>
+  {% if cart.item_count > 0 %}
+
+  <form action="/cart" method="post" novalidate class="cart">
+    <table>
+      <thead class="cart__row">
+        <th colspan="2" scope="col">{{ "cart.label.product" | t }}</th>
+        <th class="cart__row-price" scope="col">
+          {{ "cart.label.price" | t }}
+        </th>
+        <th class="text-center small--hide" scope="col">
+          {{ "cart.label.quantity" | t }}
+        </th>
+        <th class="text-right small--hide" scope="col">
+          {{ "cart.label.total" | t }}
+        </th>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        <tr
+          class="cart__row border-bottom line{{
+            forloop.index
+          }}{% if forloop.first %} border-top{% endif %}"
+        >
+          <td class="cart__image-wrapper">
+            <div>
+              <img
+                class="cart__image"
+                src="{{ item | img_url: '95x95', scale: 2 }}"
+                alt="{{ item.title | escape }}"
+                data-item-url="{{ item.url }}"
+              />
+            </div>
+          </td>
+          <td class="cart__meta small--text-left">
+            <div class="list-view-item__title">
+              <a href="{{ item.url }}">
+                {{ item.product.title }}
+                {% if item.quantity > 1 %}
+                <span class="medium-up--hide"
+                  ><span class="visually-hidden">{{
+                    "cart.label.quantity" | t
+                  }}</span
+                  >(x{{ item.quantity }})</span
+                >
+                {% endif %}
+              </a>
+            </div>
+            {% unless item.variant.title contains 'Default' %}
+            <div class="cart__meta-text">
+              {% for option in item.product.options %}
+              {{ option }}: {{ item.variant.options[forloop.index0] }}<br />
+              {% endfor %}
+            </div>
+            {% endunless %} {% comment %} Optional, loop through custom product
+            line items if available Line item properties come in as having two
+            parts. The first part will be passed with the default form, but
+            p.last is the actual custom property and may be blank. If it is,
+            don't show it. For more info on line item properties, visit: -
+            http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+            {% endcomment %} {%- assign property_size = item.properties | size
+            -%} {% if property_size > 0 %}
+            <div class="cart__meta-text">
+              {% for p in item.properties %} {% unless p.last == blank %}
+              {{ p.first }}: {% comment %} Check if there was an uploaded file
+              associated {% endcomment %} {% if p.last contains '/uploads/' %}
+              <a href="{{ p.last }}">{{ p.last | split: "/" | last }}</a>
+              {% else %}
+              {{ p.last }}
+              {% endif %} {% endunless %} {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="small--hide">
+              <a
+                href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
+                class="btn btn--small btn--tertiary cart__remove"
+                aria-label="{{ 'cart.general.remove' | t }} {{
+                  item.product.title
+                }}"
+                >{{ "cart.general.remove" | t }}</a
+              >
+            </p>
+          </td>
+          <td class="cart__price-wrapper">
+            {{ item.price | money }}
+
+            {% for discount in item.discounts %}
+            <div class="cart-item__discount medium-up--hide">
+              {{ discount.title }}
+            </div>
+            {% endfor %}
+
+            <div class="cart__edit medium-up--hide">
+              <button
+                type="button"
+                class="
+                  btn btn--secondary btn--small
+                  js-edit-toggle
+                  cart__edit--active
+                "
+                data-target="line{{ forloop.index }}"
+                aria-label="{{ 'cart.general.edit' | t }} {{
+                  item.product.title
+                }}"
+                aria-expanded="false"
+              >
+                <span class="cart__edit-text--edit">{{
+                  "cart.general.edit" | t
+                }}</span>
+                <span class="cart__edit-text--cancel">{{
+                  "cart.general.cancel" | t
+                }}</span>
+              </button>
+            </div>
+          </td>
+          <td class="text-right small--hide">
+            <div class="cart__qty">
+              <label
+                for="updates_large_{{ item.key }}"
+                class="cart__qty-label"
+                >{{ "cart.label.quantity" | t }}</label
+              >
+              <input
+                class="cart__qty-input"
+                type="number"
+                name="updates[]"
+                id="updates_large_{{ item.key }}"
+                value="{{ item.quantity }}"
+                min="0"
+                pattern="[0-9]*"
+                data-quantity-item="{{ forloop.index }}"
+              />
+            </div>
+          </td>
+          <td class="text-right small--hide">
+            {% if item.original_line_price != item.line_price %}
+            <div class="cart-item__original-price">
+              <s>{{ item.original_line_price | money }}</s>
+            </div>
+            {% endif %}
+
+            <div>
+              {{ item.line_price | money }}
+            </div>
+
+            {% for discount in item.discounts %}
+            <div class="cart-item__discount">{{ discount.title }}</div>
+            {% endfor %}
+          </td>
+        </tr>
+        <tr class="medium-up--hide cart__update-wrapper">
+          <td colspan="3" class="text-right">
+            <div class="cart__update-controls">
+              <a
+                href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
+                class="
+                  btn btn--small btn--tertiary
+                  cart__remove
+                  medium-up--hide
+                  cart__update-control
+                "
+                aria-label="{{ 'cart.general.remove' | t }} {{
+                  item.product.title
+                }}"
+              >
+                {{ "cart.general.remove" | t }}
+              </a>
+              <div class="cart__qty cart__update-control">
+                <label for="updates_{{ item.key }}" class="cart__qty-label">
+                  {{ "cart.label.quantity" | t }}
+                </label>
+                <input
+                  class="cart__qty-input"
+                  type="number"
+                  id="updates_{{ item.key }}"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  pattern="[0-9]*"
+                  data-quantity-item="{{ forloop.index }}"
+                />
+              </div>
+              <button
+                type="submit"
+                name="update"
+                class="btn btn--small medium-up--hide cart__update-control"
+                aria-label="{{ 'cart.general.update' | t }} {{
+                  item.product.title
+                }}"
+              >
+                {{ "cart.general.update" | t }}
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="cart__footer">
+      <div class="grid">
+        {% if section.settings.cart_notes_enable %}
+        <div class="grid__item medium-up--one-half cart-note">
+          <label
+            for="CartSpecialInstructions"
+            class="cart-note__label small--text-center"
+            >{{ "cart.general.note" | t }}</label
+          >
+          <textarea
+            name="note"
+            id="CartSpecialInstructions"
+            class="cart-note__input"
+            >{{ cart.note }}</textarea
+          >
+        </div>
+        {% endif %}
+        <div
+          class="
+            grid__item
+            text-right
+            small--text-center{%
+            if
+            section.settings.cart_notes_enable
+            %}
+            medium-up--one-half{%
+            endif
+            %}
+          "
+        >
+          <div>
+            <span class="cart__subtotal-title">{{
+              "cart.general.subtotal" | t
+            }}</span>
+            <span class="cart__subtotal">{{ cart.total_price | money }}</span>
+          </div>
+          {% if cart.total_discounts > 0 %}
+          <div class="cart__savings">
+            {{ "cart.general.savings" | t }}
+            <span class="cart__savings-amount">{{
+              cart.total_discounts | money
+            }}</span>
+          </div>
+          {% endif %} {%- capture taxes_shipping_checkout -%} {%- if
+          shop.taxes_included and shop.shipping_policy.body != blank -%}
+          {{
+            "cart.general.taxes_included_and_shipping_policy_html"
+              | t: link:shop.shipping_policy.url
+          }}
+          {%- elsif shop.taxes_included -%}
+          {{ "cart.general.taxes_included_but_shipping_at_checkout" | t }}
+          {%- elsif shop.shipping_policy.body != blank -%}
+          {{
+            "cart.general.taxes_and_shipping_policy_at_checkout_html"
+              | t: link:shop.shipping_policy.url
+          }}
+          {%- else -%}
+          {{ "cart.general.taxes_and_shipping_at_checkout" | t }}
+          {%- endif -%} {%- endcapture -%}
+          <!-- <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div> -->
+          <!-- <div class="cart__submit-controls">
+            <a
+              href="collections/all"
+              class="
+                btn btn--secondary
+                cart__continue
+                small--hide
+                cart__submit-control
+              "
+            >
+              {{ "cart.general.continue_shopping" | t }}
+            </a>
+            <input
+              type="submit"
+              name="update"
+              class="btn btn--secondary small--hide cart__submit-control"
+              value="{{ 'cart.general.update' | t }}"
+            />
+            <input
+              type="submit"
+              name="checkout"
+              class="btn btn--small-wide cart__submit cart__submit-control"
+              value="{{ 'cart.general.checkout' | t }}"
+            />
+          </div> -->
+
+          {% if additional_checkout_buttons %}
+          <div class="additional-checkout-buttons">
+            {{ content_for_additional_checkout_buttons }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </form>
+  {% else %}
+  <div class="empty-page-content text-center">
+    <h1>{{ "cart.general.title" | t }}</h1>
+    <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
+    <div class="cookie-message">
+      <p>{{ "cart.general.cookies_required" | t }}</p>
+    </div>
+    <a href="/" class="btn btn--has-icon-after cart__continue-btn"
+      >{{ "general.404.link" | t }}{% include 'icon-arrow-right' %}</a
+    >
+  </div>
+  {% endif %}
+</div>
+
+<div class="page-width">
+  <div class="section__header">
+    <h2 class="section__title">Shipping address</h2>
+  </div>
+
+  <div>
+    <form id="checkout">
+      <div class="field">
+        <label for="AddressFirstNameNew">{{
+          "customer.addresses.first_name" | t
+        }}</label>
+        <input
+          type="text"
+          id="AddressFirstNameNew"
+          name="address[first_name]"
+          value=""
+          autocomplete="given-name"
+          placeholder="{{ 'customer.addresses.first_name' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="AddressLastNameNew">{{
+          "customer.addresses.last_name" | t
+        }}</label>
+        <input
+          type="text"
+          id="AddressLastNameNew"
+          name="address[last_name]"
+          value=""
+          autocomplete="family-name"
+          placeholder="{{ 'customer.addresses.last_name' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="AddressCompanyNew">{{
+          "customer.addresses.company" | t
+        }}</label>
+        <input
+          type="text"
+          id="AddressCompanyNew"
+          name="address[company]"
+          value=""
+          autocomplete="organization"
+          placeholder="{{ 'customer.addresses.company' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="AddressAddress1New">{{
+          "customer.addresses.address1" | t
+        }}</label>
+        <input
+          type="text"
+          id="AddressAddress1New"
+          name="address[address1]"
+          value=""
+          autocomplete="address-line1"
+          placeholder="{{ 'customer.addresses.address1' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label for="AddressAddress2New">{{
+          "customer.addresses.address2" | t
+        }}</label>
+        <input
+          type="text"
+          id="AddressAddress2New"
+          name="address[address2]"
+          value=""
+          autocomplete="address-line2"
+          placeholder="{{ 'customer.addresses.address2' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ "customer.addresses.city" | t }}</label>
+        <input
+          type="text"
+          id="AddressCityNew"
+          name="address[city]"
+          value="1"
+          autocomplete="address-level2"
+          placeholder="{{ 'customer.addresses.city' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ "customer.addresses.country" | t }}</label>
+
+        <select id="country" name="country">
+          {{
+            country_option_tags
+          }}
+        </select>
+      </div>
+
+      <div id="AddressProvinceContainer" style="display: none">
+        <label>{{ "customer.addresses.province" | t }}</label>
+
+        <select
+          id="AddressProvince"
+          name="address[province]"
+          data-default="{{  }}"
+          autocomplete="address-level1"
+        ></select>
+      </div>
+      <div class="field">
+        <label>{{ "customer.addresses.zip" | t }}</label>
+        <input
+          type="text"
+          id="AddressZipNew"
+          name="address[zip]"
+          value=""
+          autocapitalize="characters"
+          autocomplete="postal-code"
+          placeholder="{{ 'customer.addresses.zip' | t }}"
+        />
+      </div>
+      <div class="field">
+        <label>{{ "customer.addresses.phone" | t }}</label>
+        <input
+          type="tel"
+          id="AddressPhoneNew"
+          name="address[phone]"
+          value=""
+          autocomplete="tel"
+          placeholder="{{ 'customer.addresses.phone' | t }}"
+        />
+      </div>
+
+      <div class="field">
+        <label>{{ "customer.addresses.phone" | t }}</label>
+        <input
+          type="tel"
+          id="AddressPhoneNew"
+          name="address[phone]"
+          value=""
+          autocomplete="tel"
+          placeholder="{{ 'customer.addresses.phone' | t }}"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div class="check-btn">
+    <button
+      type="submit"
+      class="btn newsletter__submit"
+      onclick="checkout()"
+      name="commit"
+    >
+      <span class="newsletter__submit-text--large">checkout</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .cart__edit {
+    display: none;
+  }
+</style>
+
+<script>
+  function getParams(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] == variable) {
+        return pair[1];
+      }
+    }
+    return false;
+  }
+  function initFormValue(formObj) {
+    for (let x in formObj) {
+      $(`input[name='${x}']`).val(formObj[x]);
+    }
+  }
+
+  function getFormData() {
+    let formData = $("#checkout").serializeArray();
+    console.log("%c formData", "color:green;font-weight:bold");
+    console.log(JSON.stringify(formData));
+
+    let obj = {};
+
+    formData.forEach((x) => (obj[x.name] = x.value));
+    console.log("%c 最终地址", "color:green;font-weight:bold");
+    console.log(JSON.stringify(obj));
+
+    return obj;
+  }
+
+  async function checkout() {
+    let cart = window.cart;
+    let payload = {};
+
+    payload.token = cart.token;
+
+    payload.address = getFormData(); // 加上地址
+    payload.content = cart.content;
+    payload.checkout = true;
+    payload.id = cart.id;
+
+    console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
+    console.log(JSON.stringify(cart));
+    syncCart(payload);
+  }
+
+  function syncCart(payload) {
+    // 单纯的同步购物车
+
+    $.ajax({
+      type: "POST",
+      contentType: "json",
+      dataType: "json",
+      url: "https://gudao.mynatapp.cc/checkout/onepage",
+      crossDomain: true,
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(payload),
+      success: function (r) {
+        console.log("%c 结账返回", "color:green;font-weight:bold");
+        console.log(JSON.stringify(r));
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+  }
+
+  function initCart() {
+    let domain = document.domain;
+    // 初始化购物车
+    $.ajax({
+      type: "GET",
+      url: "/cart.js",
+      dataType: "json",
+
+      success: function (cart) {
+        if (cart.token) {
+          console.dir("token");
+          console.log(cart.token);
+
+          $.ajax({
+            type: "POST",
+            contentType: "json",
+            url: "https://gudao.mynatapp.cc/checkout/init",
+            crossDomain: true,
+
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            data: JSON.stringify({
+              token: cart.token,
+              content: cart,
+              domain: domain,
+            }),
+
+            success: function (r) {
+              window.cart = r; // 拿到的购物车挂到window
+
+              console.log("%c 后台返回购物车", "color:green;font-weight:bold");
+              console.log(JSON.stringify(r));
+
+              if (!!r.address) {
+                console.log("%c 已有地址同步", "color:green;font-weight:bold");
+                initFormValue(r.address);
+              }
+            },
+
+            error: function (e) {
+              console.log("%c 出错", "color:green;font-weight:bold");
+              console.log(JSON.stringify(e));
+            },
+          });
+        }
+
+        // console.log("%c cart", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(window.cart));
+        // if (cart.address) {
+        //   initFormValue(cart.address);
+        // }
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+
+    // return;
+    // let cart = fetch("/cart.js")
+    //   .then((response) => {
+    //     return response.text();
+    //   })
+    //   .then((data) => {
+    //     return data;
+    //   });
+    // return cart;
+  }
+
+  // 表单使用教程 https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
+
+  function handleAddress() {
+    $("#country").on("change", function () {
+      let country = $("#country").val();
+      console.log("%c country", "color:green;font-weight:bold");
+      console.log(JSON.stringify(country));
+
+      let provinces = $("#country option:selected").attr("data-provinces");
+      // console.log("%c provinces ", "color:green;font-weight:bold");
+
+      provinces = JSON.parse(provinces);
+
+      console.log("%c provinces", "color:green;font-weight:bold");
+      console.log(JSON.stringify(provinces));
+
+      if (provinces.length > 0) {
+        $("#AddressProvinceContainer").css("display", "block");
+
+        provinces.forEach((x) => {
+          $("#AddressProvince").append(
+            '<option value="' + x[1] + '">' + x[0] + "</option>"
+          );
+        });
+      } else {
+        console.log("%c 关闭省份", "color:green;font-weight:bold");
+
+        $("#AddressProvinceContainer").css("display", "none");
+      }
+    });
+  }
+
+  window.onload = function () {
+    let successId = getParams("successId");
+    let cancelId = getParams("cancelId");
+
+    if (!!successId) {
+      console.log("%c successId", "color:green;font-weight:bold");
+      console.log(JSON.stringify(successId));
+      console.log("%c cancelId", "color:green;font-weight:bold");
+      console.log(JSON.stringify(cancelId));
+    }
+
+    console.log("%c onload", "color:green;font-weight:bold");
+
+    initCart();
+
+    handleAddress(); // 处理地址
+  };
+</script>

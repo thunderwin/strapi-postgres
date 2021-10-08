@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/shopify",
+      "handler": "shopify.get",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shopify/callback",
+      "handler": "shopify.callback",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

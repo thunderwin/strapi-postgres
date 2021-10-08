@@ -63,6 +63,12 @@
     },
     "user_avatar": {
       "type": "json"
+    },
+    "fake_upload_time": {
+      "type": "datetime"
+    },
+    "fake_upload_image": {
+      "type": "text"
     }
   }
 }

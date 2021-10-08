@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carts",
+  "info": {
+    "name": "Cart",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "token": {
+      "type": "string",
+      "unique": true
+    },
+    "content": {
+      "type": "json"
+    },
+    "address": {
+      "type": "json"
+    },
+    "domain": {
+      "type": "string"
+    }
+  }
+}

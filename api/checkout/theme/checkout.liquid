@@ -7,45 +7,143 @@
   </div>
 </div>
 
+<aside
+  style="
+    background: #fafafa;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    width: 100%;
+  "
+  role="complementary"
+>
+  <button id="order-summary-toggle" style="width: 100%; padding: 0 17px">
+    <span class="wrap">
+      <span class="my-flex">
+        <span class="order-summary-toggle__icon-wrapper">
+          <svg
+            width="20"
+            height="19"
+            xmlns="http://www.w3.org/2000/svg"
+            class="order-summary-toggle__icon"
+          >
+            <path
+              d="M17.178 13.088H5.453c-.454 0-.91-.364-.91-.818L3.727 1.818H0V0h4.544c.455 0 .91.364.91.818l.09 1.272h13.45c.274 0 .547.09.73.364.18.182.27.454.18.727l-1.817 9.18c-.09.455-.455.728-.91.728zM6.27 11.27h10.09l1.454-7.362H5.634l.637 7.362zm.092 7.715c1.004 0 1.818-.813 1.818-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817zm9.18 0c1.004 0 1.817-.813 1.817-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817z"
+            ></path>
+          </svg>
+        </span>
+        <span
+          class="order-summary-toggle__text order-summary-toggle__text--show"
+        >
+          <span>Show order summary</span>
+          <svg
+            width="11"
+            height="6"
+            xmlns="http://www.w3.org/2000/svg"
+            class="order-summary-toggle__dropdown"
+            fill="#000"
+          >
+            <path
+              d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z"
+            ></path>
+          </svg>
+        </span>
+        <span
+          style="display: none"
+          class="order-summary-toggle__text order-summary-toggle__text--hide"
+        >
+          <span>Hide order summary</span>
+          <svg
+            width="11"
+            height="7"
+            xmlns="http://www.w3.org/2000/svg"
+            class="order-summary-toggle__dropdown"
+            fill="#000"
+          >
+            <path
+              d="M6.138.876L5.642.438l-.496.438L.504 4.972l.992 1.124L6.138 2l-.496.436 3.862 3.408.992-1.122L6.138.876z"
+            ></path>
+          </svg>
+        </span>
+        <dl class="my-flex">
+          <dt class="visually-hidden"><span>Sale price</span></dt>
+          <dd>
+            <span
+              class="
+                order-summary__emphasis
+                total-recap__final-price
+                skeleton-while-loading
+              "
+              >{{ cart.total_price | money }}</span
+            >
+          </dd>
+        </dl>
+      </span></span
+    >
+  </button>
+</aside>
+
 <div
   class="page-width"
+  style="display: none; padding-top: 1rem; background-color: #fafafa"
+  id="cart-summy"
   data-section-id="{{ section.id }}"
   data-section-type="cart-template"
 >
   {% if cart.item_count > 0 %}
 
   <form action="/cart" method="post" novalidate class="cart">
-    <table>
-      <thead class="cart__row">
-        <th colspan="2" scope="col">{{ "cart.label.product" | t }}</th>
-        <th class="cart__row-price" scope="col">
-          {{ "cart.label.price" | t }}
-        </th>
-        <th class="text-center small--hide" scope="col">
-          {{ "cart.label.quantity" | t }}
-        </th>
-        <th class="text-right small--hide" scope="col">
-          {{ "cart.label.total" | t }}
-        </th>
-      </thead>
-      <tbody>
+    <div style="font-size: 14px">
+      <div>
         {% for item in cart.items %}
-        <tr
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+          "
           class="cart__row border-bottom line{{
             forloop.index
           }}{% if forloop.first %} border-top{% endif %}"
         >
-          <td class="cart__image-wrapper">
-            <div>
-              <img
-                class="cart__image"
-                src="{{ item | img_url: '95x95', scale: 2 }}"
-                alt="{{ item.title | escape }}"
-                data-item-url="{{ item.url }}"
-              />
+          <div
+            class="cart__image-wrapper"
+            style="position: relative; padding: 0"
+          >
+            <div class="product-thumbnail">
+              <div class="">
+                <img
+                  style="width: 100%; height: 100%"
+                  class=""
+                  src="{{ item | img_url: '95x95', scale: 2 }}"
+                  alt="{{ item.title | escape }}"
+                  data-item-url="{{ item.url }}"
+                />
+              </div>
+              <span
+                style="
+                  position: absolute;
+                  right: -0.75em;
+                  top: -0.75em;
+                  z-index: 3;
+                  font-size: 0.8571428571em;
+                  font-weight: 500;
+                  line-height: 1.75em;
+                  white-space: nowrap;
+                  text-align: center;
+                  border-radius: 1.75em;
+                  background-color: rgba(114, 114, 114, 0.9);
+                  color: #fff;
+                  min-width: 1.75em;
+                  height: 1.75em;
+                "
+                class="product-thumbnail__quantity"
+                aria-hidden="true"
+                >{{ item.quantity }}</span
+              >
             </div>
-          </td>
-          <td class="cart__meta small--text-left">
+          </div>
+          <div style="text-align: left" class="cart__meta small--text-left">
             <div class="list-view-item__title">
               <a href="{{ item.url }}">
                 {{ item.product.title }}
@@ -94,8 +192,8 @@
                 >{{ "cart.general.remove" | t }}</a
               >
             </p>
-          </td>
-          <td class="cart__price-wrapper">
+          </div>
+          <div class="cart__price-wrapper">
             {{ item.price | money }}
 
             {% for discount in item.discounts %}
@@ -126,9 +224,10 @@
                 }}</span>
               </button>
             </div>
-          </td>
-          <td class="text-right small--hide">
-            <div class="cart__qty">
+          </div>
+          <div class="text-right small--hide">
+            {{ item.quantity }}
+            <!-- <div class="cart__qty">
               <label
                 for="updates_large_{{ item.key }}"
                 class="cart__qty-label"
@@ -144,9 +243,9 @@
                 pattern="[0-9]*"
                 data-quantity-item="{{ forloop.index }}"
               />
-            </div>
-          </td>
-          <td class="text-right small--hide">
+            </div> -->
+          </div>
+          <div class="text-right small--hide">
             {% if item.original_line_price != item.line_price %}
             <div class="cart-item__original-price">
               <s>{{ item.original_line_price | money }}</s>
@@ -160,10 +259,10 @@
             {% for discount in item.discounts %}
             <div class="cart-item__discount">{{ discount.title }}</div>
             {% endfor %}
-          </td>
-        </tr>
-        <tr class="medium-up--hide cart__update-wrapper">
-          <td colspan="3" class="text-right">
+          </div>
+        </div>
+        <div class="medium-up--hide cart__update-wrapper">
+          <div colspan="3" class="text-right">
             <div class="cart__update-controls">
               <a
                 href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
@@ -204,11 +303,11 @@
                 {{ "cart.general.update" | t }}
               </button>
             </div>
-          </td>
-        </tr>
+          </div>
+        </div>
         {% endfor %}
-      </tbody>
-    </table>
+      </div>
+    </div>
 
     <div class="cart__footer">
       <div class="grid">
@@ -240,7 +339,10 @@
             %}
           "
         >
-          <div>
+          <div
+            class="my-flex"
+            style="border-bottom: 1px solid #e6e6e6; padding-bottom: 1rem"
+          >
             <span class="cart__subtotal-title">{{
               "cart.general.subtotal" | t
             }}</span>
@@ -319,7 +421,7 @@
   {% endif %}
 </div>
 
-<div class="page-width my-form">
+<div class="page-width my-form" style="margin-top: 1rem">
   <div>
     <form id="checkout">
       <div class="section__header">
@@ -598,7 +700,7 @@
     height: 0.1rem;
     position: absolute;
     /* transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease; */
+        opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease; */
     opacity: 0;
     left: 0;
     top: 100%;
@@ -627,20 +729,56 @@
   }
 
   /* 实现 floating label  */
+
+  /* 处理表格  */
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+  }
+
+  .product-thumbnail {
+    border-radius: 8px;
+    width: 4.6em;
+    height: 4.6em;
+  }
+  .product-thumbnail::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 8px;
+    border: 1px rgba(0, 0, 0, 0.1) solid;
+    z-index: 2;
+  }
+
+  .my-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* 处理表格  */
 </style>
 
 <script>
-  window.formObj = [
-    {
-      name: "email",
-      label: "Email",
-    },
-    {
-      name: "firstname",
-      label: "First name",
-    },
-  ];
-
+  function initMovement() {
+    $("#order-summary-toggle").click(function () {
+      let cssDisplay = $(".order-summary-toggle__text--hide").css("display");
+      if (cssDisplay === "none") {
+        $(".order-summary-toggle__text--show").css("display", "none");
+        $(".order-summary-toggle__text--hide").css("display", "block");
+      } else {
+        $(".order-summary-toggle__text--show").css("display", "block");
+        $(".order-summary-toggle__text--hide").css("display", "none");
+      }
+      $("#cart-summy").toggle();
+    });
+  }
   function getParams(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -830,6 +968,8 @@
     console.log("%c onload", "color:green;font-weight:bold");
 
     initCart();
+
+    initMovement(); // 一些jquery特效
 
     handleAddress(); // 处理地址
   };

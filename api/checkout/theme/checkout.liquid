@@ -432,6 +432,7 @@
         <input
           type="text"
           id="email"
+          required
           name="email"
           value=""
           autocomplete="email"
@@ -451,7 +452,7 @@
         <input
           id="firstname"
           class="floating__input"
-          name="first_name"
+          name="firstname"
           type="text"
           autocomplete="given-name"
           placeholder="First name"
@@ -465,7 +466,7 @@
         <input
           id="lastname"
           class="floating__input"
-          name="last_name"
+          name="lastname"
           type="text"
           autocomplete="family-name"
           placeholder="Last name"
@@ -563,6 +564,17 @@
           <span class="hidden--visually">Postcode</span></label
         >
       </div>
+      <input
+        style="
+          padding: 1.4em 1.7em;
+          width: 100%;
+          border-radius: 4px;
+          margin: 1rem 0;
+        "
+        class="submit btn newsletter__submit"
+        type="submit"
+        value="Submit"
+      />
     </form>
   </div>
 
@@ -762,10 +774,61 @@
     align-items: center;
   }
 
+  #checkout label.error {
+    position: absolute;
+    text-transform: inherit !important;
+    letter-spacing: inherit !important;
+    display: none !important;
+  }
+
   /* 处理表格  */
 </style>
 
 <script>
+  function initFormValidation() {
+    $("#checkout").validate({
+      rules: {
+        firstname: "required",
+        lastname: "required",
+        username: {
+          required: true,
+          minlength: 2,
+        },
+        password: {
+          required: true,
+          minlength: 5,
+        },
+        confirm_password: {
+          required: true,
+          minlength: 5,
+          equalTo: "#password",
+        },
+        email: {
+          required: true,
+          email: true,
+        },
+        topic: {
+          required: "#newsletter:checked",
+          minlength: 2,
+        },
+        agree: "required",
+      },
+      messages: {
+        firstname: "Please enter your firstname",
+        lastname: "Please enter your lastname",
+        password: {
+          required: "Please provide a password",
+          minlength: "Your password must be at least 5 characters long",
+        },
+        email: "Please enter a valid email address",
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+      },
+    });
+  }
   function initMovement() {
     $("#order-summary-toggle").click(function () {
       let cssDisplay = $(".order-summary-toggle__text--hide").css("display");
@@ -811,6 +874,10 @@
   }
 
   async function checkout() {
+    $("#checkout").submit();
+
+    return;
+
     let cart = window.cart;
     let payload = {};
 
@@ -970,6 +1037,8 @@
     initCart();
 
     initMovement(); // 一些jquery特效
+
+    initFormValidation(); // 开启表单验证
 
     handleAddress(); // 处理地址
   };

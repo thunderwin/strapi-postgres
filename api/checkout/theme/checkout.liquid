@@ -328,23 +328,6 @@
 
       <div class="floating">
         <input
-          id="input__username"
-          class="floating__input"
-          name="username"
-          type="text"
-          placeholder="username"
-        />
-        <label
-          for="input__username"
-          class="floating__label"
-          data-content="Username"
-        >
-          <span class="hidden--visually">Username</span></label
-        >
-      </div>
-
-      <div class="floating">
-        <input
           type="text"
           id="email"
           name="email"
@@ -353,7 +336,7 @@
           placeholder="email"
           class="floating__input"
         />
-        <label for="email" data-content="email" class="floating__label">
+        <label data-content="email" class="floating__label">
           <span class="hidden--visually">Email</span>
         </label>
       </div>
@@ -362,155 +345,159 @@
         <div class="form-title">Shipping address</div>
       </div>
 
-      <div class="field">
-        <label for="AddressFirstNameNew">{{
-          "customer.addresses.first_name" | t
-        }}</label>
+      <div class="floating">
         <input
+          id="firstname"
+          class="floating__input"
+          name="first_name"
           type="text"
-          id="AddressFirstNameNew"
-          name="address[first_name]"
-          value=""
           autocomplete="given-name"
-          placeholder="{{ 'customer.addresses.first_name' | t }}"
+          placeholder="First name"
         />
+        <label class="floating__label" data-content="First name">
+          <span class="hidden--visually">First name</span></label
+        >
       </div>
 
-      <div class="field">
-        <label for="AddressLastNameNew">{{
-          "customer.addresses.last_name" | t
-        }}</label>
+      <div class="floating">
         <input
+          id="lastname"
+          class="floating__input"
+          name="last_name"
           type="text"
-          id="AddressLastNameNew"
-          name="address[last_name]"
-          value=""
           autocomplete="family-name"
-          placeholder="{{ 'customer.addresses.last_name' | t }}"
+          placeholder="Last name"
         />
+        <label class="floating__label" data-content="Last name">
+          <span class="hidden--visually">Last name</span></label
+        >
       </div>
 
-      <div class="field">
-        <label for="AddressCompanyNew">{{
-          "customer.addresses.company" | t
-        }}</label>
+      <div class="floating">
         <input
+          id="address1"
+          class="floating__input"
+          name="address1"
           type="text"
-          id="AddressCompanyNew"
-          name="address[company]"
-          value=""
-          autocomplete="organization"
-          placeholder="{{ 'customer.addresses.company' | t }}"
-        />
-      </div>
-
-      <div class="field">
-        <label for="AddressAddress1New">{{
-          "customer.addresses.address1" | t
-        }}</label>
-        <input
-          type="text"
-          id="AddressAddress1New"
-          name="address[address1]"
-          value=""
           autocomplete="address-line1"
-          placeholder="{{ 'customer.addresses.address1' | t }}"
+          placeholder="Address"
         />
+        <label class="floating__label" data-content="Address">
+          <span class="hidden--visually">Address</span></label
+        >
       </div>
 
-      <div class="field">
-        <label for="AddressAddress2New">{{
-          "customer.addresses.address2" | t
-        }}</label>
+      <div class="floating">
         <input
+          id="address2"
+          class="floating__input"
+          name="address2"
           type="text"
-          id="AddressAddress2New"
-          name="address[address2]"
-          value=""
           autocomplete="address-line2"
-          placeholder="{{ 'customer.addresses.address2' | t }}"
+          placeholder="Apartment, suite, etc. (optional)"
         />
+        <label
+          class="floating__label"
+          data-content="Apartment, suite, etc. (optional)"
+        >
+          <span class="hidden--visually"
+            >Apartment, suite, etc. (optional)</span
+          ></label
+        >
       </div>
 
-      <div class="field">
-        <label>{{ "customer.addresses.city" | t }}</label>
+      <div class="floating">
         <input
+          id="city"
+          class="floating__input"
+          name="city"
           type="text"
-          id="AddressCityNew"
-          name="address[city]"
-          value="1"
           autocomplete="address-level2"
-          placeholder="{{ 'customer.addresses.city' | t }}"
+          placeholder="City"
         />
+        <label class="floating__label" data-content="City">
+          <span class="hidden--visually">City</span></label
+        >
       </div>
 
-      <div class="field">
-        <label>{{ "customer.addresses.country" | t }}</label>
-
-        <select id="country" name="country">
+      <div class="floating">
+        <select
+          class="floating__input"
+          autocomplete="country"
+          id="country"
+          name="country"
+        >
           {{
             country_option_tags
           }}
         </select>
+        <label class="floating__label" data-content="Country/region">
+          <span class="hidden--visually">Country/region</span></label
+        >
       </div>
 
-      <div id="AddressProvinceContainer" style="display: none">
-        <label>{{ "customer.addresses.province" | t }}</label>
-
+      <div class="floating" id="AddressProvinceContainer" style="display: none">
         <select
-          id="AddressProvince"
-          name="address[province]"
-          data-default="{{  }}"
+          class="floating__input"
           autocomplete="address-level1"
+          id="province"
+          name="province"
         ></select>
-      </div>
-      <div class="field">
-        <label>{{ "customer.addresses.zip" | t }}</label>
-        <input
-          type="text"
-          id="AddressZipNew"
-          name="address[zip]"
-          value=""
-          autocapitalize="characters"
-          autocomplete="postal-code"
-          placeholder="{{ 'customer.addresses.zip' | t }}"
-        />
-      </div>
-      <div class="field">
-        <label>{{ "customer.addresses.phone" | t }}</label>
-        <input
-          type="tel"
-          id="AddressPhoneNew"
-          name="address[phone]"
-          value=""
-          autocomplete="tel"
-          placeholder="{{ 'customer.addresses.phone' | t }}"
-        />
+        <label class="floating__label" data-content="Province">
+          <span class="hidden--visually">Province</span></label
+        >
       </div>
 
-      <div class="field">
-        <label>{{ "customer.addresses.phone" | t }}</label>
+      <div class="floating">
         <input
-          type="tel"
-          id="AddressPhoneNew"
-          name="address[phone]"
-          value=""
-          autocomplete="tel"
-          placeholder="{{ 'customer.addresses.phone' | t }}"
+          id="zip"
+          class="floating__input"
+          name="zip"
+          type="text"
+          autocomplete="postal-code"
+          placeholder="Postcode"
         />
+        <label class="floating__label" data-content="Postcode">
+          <span class="hidden--visually">Postcode</span></label
+        >
       </div>
     </form>
   </div>
 
-  <div class="check-btn">
+  <div class="check-btn" style="text-align: center">
     <button
       type="submit"
       class="btn newsletter__submit"
       onclick="checkout()"
       name="commit"
+      style="
+        padding: 1.4em 1.7em;
+        width: 100%;
+        border-radius: 4px;
+        margin: 1rem 0;
+      "
     >
       <span class="newsletter__submit-text--large">checkout</span>
     </button>
+
+    <a class="step__footer__previous-link" href="/cart">
+      <svg
+        focusable="false"
+        aria-hidden="true"
+        style="width: 10px; height: 10px; margin-right: 0.2rem"
+        class="
+          icon-svg icon-svg--color-accent icon-svg--size-10
+          previous-link__icon
+        "
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 10 10"
+      >
+        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path></svg
+      ><span class="step__footer__previous-link-content"
+        >Return to cart</span
+      ></a
+    >
   </div>
 </div>
 
@@ -523,6 +510,7 @@
   .my-form .form-title {
     font-size: 1.3rem;
     line-height: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   /* 实现 floating label  */
@@ -550,29 +538,31 @@
   }
 
   .floating {
-    margin-bottom: 1rem;
-    background-color: var(--field__background);
-    transition: background-color 0.2s ease;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    margin-bottom: 0.85rem;
+    border-radius: 4px;
   }
 
   .floating:hover,
   .floating:focus-within {
-    background-color: var(--field__background--hover);
+    /* background-color: var(--field__background--hover); */
   }
 
   .floating__input {
     padding: 1.3rem 1rem 0.5rem;
     width: 100%;
     font-size: 1rem;
-    border-bottom: 0.1rem solid var(--input__border);
     transition: border-color 0.2s ease;
     caret-color: var(--color__accent);
+    border-radius: 4px;
+    line-height: initial;
   }
 
   .floating:hover .floating__input {
     border-color: var(--input__border--hover);
+    border-color: #111111;
+    -webkit-box-shadow: 0 0 0 1px #111111;
+    box-shadow: 0 0 0 1px #111111;
+    border-radius: 4px;
   }
 
   .floating__input::placeholder {
@@ -583,8 +573,10 @@
     display: block;
     position: relative;
     max-height: 0;
-    font-weight: 500;
+    font-size: 1rem !important;
     pointer-events: none;
+    text-transform: capitalize !important;
+    letter-spacing: normal !important;
   }
 
   .floating__label::before {
@@ -594,9 +586,10 @@
     filter: blur(0);
     backface-visibility: hidden;
     transform-origin: left top;
-    transition: transform 0.2s ease;
+    transition: transform 0.1s ease;
     left: 1rem;
     position: relative;
+    color: #666;
   }
 
   .floating__label::after {
@@ -604,15 +597,15 @@
     content: "";
     height: 0.1rem;
     position: absolute;
-    transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+    /* transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease; */
     opacity: 0;
     left: 0;
     top: 100%;
     margin-top: -0.1rem;
-    transform: scale3d(0, 1, 1);
+    /* transform: scale3d(0, 1, 1); */
     width: 100%;
-    background-color: var(--color__accent);
+    /* background-color: var(--color__accent); */
   }
 
   .floating__input:focus + .floating__label::after {
@@ -626,7 +619,7 @@
 
   .floating__label::before,
   .floating__input:focus + .floating__label::before {
-    transform: translate3d(0, -2.9rem, 0) scale3d(0.82, 0.82, 1);
+    transform: translate3d(0, -2.6rem, 0) scale3d(0.82, 0.82, 1);
   }
 
   .floating__input:focus + .floating__label::before {
@@ -812,13 +805,12 @@
         $("#AddressProvinceContainer").css("display", "block");
 
         provinces.forEach((x) => {
-          $("#AddressProvince").append(
+          $("#province").append(
             '<option value="' + x[1] + '">' + x[0] + "</option>"
           );
         });
       } else {
         console.log("%c 关闭省份", "color:green;font-weight:bold");
-
         $("#AddressProvinceContainer").css("display", "none");
       }
     });

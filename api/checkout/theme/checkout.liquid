@@ -1,11 +1,11 @@
 {% layout 'custom' %}
 
-<div class="page-width">
+<!-- <div class="page-width">
   <div class="thank-you">
     <div class="store_name">{{ shop.name }}</div>
     <div class="">thank you mes</div>
   </div>
-</div>
+</div> -->
 
 <aside
   style="
@@ -108,7 +108,7 @@
         >
           <div
             class="cart__image-wrapper"
-            style="position: relative; padding: 0"
+            style="position: relative; padding: 0; margin-right: 1rem"
           >
             <div class="product-thumbnail">
               <div class="">
@@ -564,7 +564,60 @@
           <span class="hidden--visually">Postcode</span></label
         >
       </div>
-      <input
+
+      <div class="section__header">
+        <div class="form-title">Shipping method</div>
+      </div>
+
+      <div class="shipping-wrapper">
+        <div class="each-radio" style="border-bottom: 0">
+          <input
+            type="radio"
+            id="free-shipping"
+            name="shipping-method"
+            value="free-shipping"
+            checked
+          />
+          <div for="huey">Free shipping (15-20 Business Days)</div>
+        </div>
+
+        <div class="each-radio">
+          <input
+            type="radio"
+            id="flat-shipping"
+            name="shipping-method"
+            value="flat-shipping"
+          />
+          <div for="dewey">Express Shipping (10-15 Business Days)</div>
+        </div>
+      </div>
+
+      <div class="section__header">
+        <div class="form-title">Payment method</div>
+      </div>
+
+      <div class="payment-wrapper">
+        <div class="each-radio">
+          <input
+            type="radio"
+            id="paypal-express"
+            name="payment-method"
+            value="paypal-express"
+            checked
+          />
+          <div for="paypal-express">
+            <img
+              alt="PayPal"
+              width="95"
+              height="24"
+              class="offsite-payment-gateway-logo"
+              src="https://www.paypalobjects.com/checkoutweb/release/hermione/media/logo.7e5b43e3.svg"
+              data-pin-nopin="true"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- <input
         style="
           padding: 1.4em 1.7em;
           width: 100%;
@@ -574,7 +627,7 @@
         class="submit btn newsletter__submit"
         type="submit"
         value="Submit"
-      />
+      /> -->
     </form>
   </div>
 
@@ -616,6 +669,9 @@
 </div>
 
 <style>
+  .page-width {
+    max-width: 700px;
+  }
   .cart__edit,
   .cart__update-wrapper {
     display: none;
@@ -625,6 +681,7 @@
     font-size: 1.3rem;
     line-height: 1.3rem;
     margin-bottom: 1rem;
+    margin-top: 1rem;
   }
 
   /* 实现 floating label  */
@@ -780,6 +837,17 @@
     letter-spacing: inherit !important;
     display: none !important;
   }
+  .each-radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #e6e6e6;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  .each-radio label {
+    text-transform: inherit !important;
+  }
 
   /* 处理表格  */
 </style>
@@ -874,9 +942,16 @@
   }
 
   async function checkout() {
-    $("#checkout").submit();
+    var validator = $("#checkout").validate();
+    let result = validator.form();
 
-    return;
+    console.log("result");
+    console.log(result);
+
+    if (!result) {
+      console.log("验证失败");
+      return;
+    }
 
     let cart = window.cart;
     let payload = {};

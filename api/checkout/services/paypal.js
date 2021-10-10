@@ -26,7 +26,7 @@ sb-qolrx340835@business.example.com
 //   "EP5SHbGNiYoBx7x0Y2VAInORcFsiyeCHuH0DhHGj3Y8ecnhJ2kaNBhOALZxiOttH1ZvOXeQW8wprPCQO";
 
 function genPaypalClient(domain) {
-  let paypalCredential = config(); //  拿到paypal 配置
+  let paypalCredential = config(domain); //  拿到paypal 配置
   paypalCredential = paypalCredential.paypalConfig;
 
   let environment = new paypal.core.SandboxEnvironment(
@@ -111,16 +111,16 @@ async function fetchCartAndGenPaypalPayload(cart) {
         }),
 
         shipping: {
-          method: "free shipping",
+          method: cart.shipping,
           name: {
-            full_name: "leisen",
+            full_name: shippingAddress.firstname + shippingAddress.lastname,
           },
           address: {
-            address_line_1: shippingAddress["address[address1]"],
-            address_line_2: shippingAddress["address[address2]"] || "",
-            admin_area_2: shippingAddress["address[city]"],
-            admin_area_1: shippingAddress["address[province]"],
-            postal_code: shippingAddress["address[zip]"],
+            address_line_1: shippingAddress.address1,
+            address_line_2: shippingAddress.address2 || "",
+            admin_area_2: shippingAddress.city,
+            admin_area_1: shippingAddress.province,
+            postal_code: shippingAddress.zip,
             country_code: getCode(shippingAddress.country) || "US",
           },
         },
@@ -150,26 +150,19 @@ module.exports = {
     return response.result;
   },
 
-  async paypalCaptureOrder(req) {
-    let p = req.body;
+  async paypalCaptureOrder(token, domain) {
+    let webConfig = config(domain); //  拿到paypal 配置
 
-    if (!p.token || !p.orderId) {
-      return "参数不对";
-    }
-
-    console.log("%c 当前的token", "color:green;font-weight:bold");
-    console.log(JSON.stringify(p.token));
-    console.log("%c 当前的orderId", "color:green;font-weight:bold");
-    console.log(JSON.stringify(p.orderId));
-
-    let paypalCredential = req.storeConfig.paypalConfig;
+    paypalCredential = webConfig.paypalConfig;
 
     let environment = new paypal.core.SandboxEnvironment(
       paypalCredential.paypalId,
       paypalCredential.paypalKey
     );
+
     let client = new paypal.core.PayPalHttpClient(environment);
-    let request = new paypal.orders.OrdersCaptureRequest(p.token);
+    let request = new paypal.orders.OrdersCaptureRequest(token);
+
     request.requestBody({});
 
     try {
@@ -177,33 +170,18 @@ module.exports = {
       console.log("付款验证通过" + JSON.stringify(response));
 
       if (response.statusCode !== 201 || !response.result.id) {
-        return {
-          code: 1,
-          msg: "付款验证失败",
-        };
+        return false;
       }
 
-      console.log("%c ???", "color:green;font-weight:bold");
-      console.log(JSON.stringify());
-
-      let { placeOrder } = await req.gGuest.request(placeOrderGQL, {
-        input: {
-          cart_id: p.orderId,
-        },
-      });
-
-      console.log("%c placeOrder", "color:green;font-weight:bold");
-      console.log(JSON.stringify(placeOrder));
-
-      // let { data: r } = await req.rAdmin.post(`order/${p.orderId}/invoice`);
-
-      // console.log("%c r", "color:green;font-weight:bold");
-      // console.log(JSON.stringify(r));
-
-      return placeOrder.order;
+      return true;
     } catch (error) {
-      console.log("❌" + JSON.stringify(error));
-      return error;
+      if (error.statusCode === 422) {
+        console.log("%c 重复验证付款", "color:green;font-weight:bold");
+        return true;
+      } else {
+        console.log("❌" + JSON.stringify(error));
+        throw error;
+      }
     }
   },
 };

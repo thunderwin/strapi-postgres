@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "carts",
   "info": {
-    "name": "Cart",
+    "name": "cart",
     "description": ""
   },
   "options": {
@@ -13,16 +13,41 @@
   "attributes": {
     "token": {
       "type": "string",
+      "required": true,
       "unique": true
     },
-    "content": {
-      "type": "json"
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "CNY",
+        "USD"
+      ],
+      "required": true
     },
-    "address": {
-      "type": "json"
+    "original_total_price": {
+      "type": "biginteger"
     },
-    "domain": {
-      "type": "string"
+    "total_price": {
+      "type": "biginteger"
+    },
+    "total_discount": {
+      "type": "biginteger"
+    },
+    "items_subtotal_price": {
+      "type": "biginteger"
+    },
+    "item_count": {
+      "type": "biginteger"
+    },
+    "items": {
+      "type": "json",
+      "required": true
+    },
+    "note": {
+      "type": "text"
+    },
+    "cart_level_discount_applications": {
+      "type": "json"
     }
   }
 }

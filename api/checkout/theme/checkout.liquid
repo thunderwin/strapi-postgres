@@ -1,64 +1,6 @@
 {% layout 'custom' %}
 
-<style>
-  @keyframes Polaris-Spinner--loading {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .Polaris-Spinner svg {
-    animation: Polaris-Spinner--loading 500ms linear infinite;
-    fill: var(--p-border-highlight);
-  }
-
-  .Polaris-Spinner--sizeSmall svg {
-    height: 2rem;
-    width: 2rem;
-  }
-
-  .Polaris-Spinner--sizeLarge svg {
-    height: 4.4rem;
-    width: 4.4rem;
-  }
-  #checkoutFailed {
-    box-shadow: rgb(224, 179, 178) 0px 1px 0px 0px inset,
-      rgb(224, 179, 178) 0px 0px 0px 1px inset;
-    background-color: rgb(255, 244, 244);
-    outline: 0.1rem solid transparent;
-  }
-  #checkoutFailed svg {
-    fill: #d72c0d;
-  }
-  #checkoutsucceed {
-    box-shadow: rgb(149, 201, 180) 0px 1px 0px 0px inset,
-      rgb(149, 201, 180) 0px 0px 0px 1px inset;
-    background-color: rgb(241, 248, 245);
-    outline: 0.1rem solid transparent;
-  }
-  #checkoutsucceed svg {
-    fill: #007f5f;
-  }
-
-  .notebanner {
-    padding: 17px;
-    margin: 17px;
-    display: none;
-  }
-
-  .notebanner svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-  .notebanner .heading {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    display: flex;
-    margin-bottom: 0.5rem;
-  }
-</style>
-
-<div class="notebanner" id="checkoutPaymentStatus">
+<div class="notebanner" id="checkoutPaymentStatus" style="display: none">
   <div style="display: flex; align-items: center" class="">
     <span class="Polaris-Spinner Polaris-Spinner--sizeLarge"
       ><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +17,7 @@
   <span>Checking Your Payment Status</span>
 </div>
 
-<div class="page-width notebanner" id="checkoutsucceed">
+<div class="page-width notebanner" id="checkoutsucceed" style="display: none">
   <div class="thank-you">
     <div class="heading">
       <svg
@@ -96,7 +38,7 @@
   </div>
 </div>
 
-<div class="page-width notebanner" id="checkoutFailed">
+<div class="page-width notebanner" id="checkoutFailed" style="display: none">
   <div class="heading">
     <svg
       viewBox="0 0 20 20"
@@ -684,26 +626,37 @@
 
         <div class="shipping-wrapper">
           <div class="each-radio" style="border-bottom: 0">
-            <input
-              type="radio"
-              id="free-shipping"
-              name="shipping"
-              value="freeShipping-0"
-              checked
-            />
-            <div for="huey">Free shipping (15-20 Business Days)</div>
-            <div class="price-amount">$ 0.00</div>
+            <div class="heading-radio">
+              <div class="radio-left my-flex">
+                <input
+                  type="radio"
+                  id="free-shipping"
+                  name="shipping"
+                  value="freeShipping-0"
+                  checked
+                />
+                <div for="huey">Free shipping</div>
+              </div>
+              <div class="price-amount">$ 0</div>
+            </div>
+            <div class="times">(15-20 Business Days)</div>
           </div>
 
           <div class="each-radio">
-            <input
-              type="radio"
-              id="flat-shipping"
-              name="shipping"
-              value="flatShipping-25.99"
-            />
-            <div for="dewey">Express Shipping (10-15 Business Days)</div>
-            <div class="price-amount">$ 25.99</div>
+            <div class="heading-radio">
+              <div class="radio-left my-flex">
+                <input
+                  type="radio"
+                  id="flat-shipping"
+                  name="shipping"
+                  value="flatShipping-25.99"
+                />
+                <div for="dewey">Express Shipping</div>
+              </div>
+
+              <div class="price-amount">$ 25.99</div>
+            </div>
+            <div class="times">(10-15 Business Days)</div>
           </div>
         </div>
 
@@ -713,22 +666,24 @@
 
         <div class="payment-wrapper">
           <div class="each-radio">
-            <input
-              type="radio"
-              id="paypal-express"
-              name="payment"
-              value="paypalExpress"
-              checked
-            />
-            <div for="paypal-express">
-              <img
-                alt="PayPal"
-                width="95"
-                height="24"
-                class="offsite-payment-gateway-logo"
-                src="https://www.paypalobjects.com/checkoutweb/release/hermione/media/logo.7e5b43e3.svg"
-                data-pin-nopin="true"
+            <div class="heading-radio">
+              <input
+                type="radio"
+                id="paypal-express"
+                name="payment"
+                value="paypalExpress"
+                checked
               />
+              <div for="paypal-express">
+                <img
+                  alt="PayPal"
+                  width="95"
+                  height="24"
+                  class="offsite-payment-gateway-logo"
+                  src="https://www.paypalobjects.com/checkoutweb/release/hermione/media/logo.7e5b43e3.svg"
+                  data-pin-nopin="true"
+                />
+              </div>
             </div>
             <div class="radio-wrapper" style="">
               <div class="blank-slate">
@@ -755,12 +710,13 @@
       </form>
     </div>
 
-    <div class="check-btn" style="text-align: center">
+    <div class="check-btn" style="text-align: center; margin-bottom: 2rem">
       <button
         type="submit"
         class="btn newsletter__submit"
         onclick="checkout()"
-        name="commit"
+        id="check-btn"
+        aria-busy="false"
         style="
           padding: 1.4em 1.7em;
           width: 100%;
@@ -768,7 +724,7 @@
           margin: 1rem 0;
         "
       >
-        <span class="newsletter__submit-text--large">checkout</span>
+        <span class="newsletter__submit-text--large">Complete order</span>
       </button>
 
       <a class="step__footer__previous-link" href="/cart">
@@ -964,9 +920,6 @@
     display: none !important;
   }
   .each-radio {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     border: 1px solid #e6e6e6;
     padding: 1rem;
     border-radius: 4px;
@@ -974,8 +927,68 @@
   .each-radio label {
     text-transform: inherit !important;
   }
+  .heading-radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   /* 处理表格  */
+
+  @keyframes Polaris-Spinner--loading {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .Polaris-Spinner svg {
+    animation: Polaris-Spinner--loading 500ms linear infinite;
+    fill: var(--p-border-highlight);
+  }
+
+  .Polaris-Spinner--sizeSmall svg {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .Polaris-Spinner--sizeLarge svg {
+    height: 4.4rem;
+    width: 4.4rem;
+  }
+  #checkoutFailed {
+    box-shadow: rgb(224, 179, 178) 0px 1px 0px 0px inset,
+      rgb(224, 179, 178) 0px 0px 0px 1px inset;
+    background-color: rgb(255, 244, 244);
+    outline: 0.1rem solid transparent;
+  }
+  #checkoutFailed svg {
+    fill: #d72c0d;
+  }
+  #checkoutsucceed {
+    box-shadow: rgb(149, 201, 180) 0px 1px 0px 0px inset,
+      rgb(149, 201, 180) 0px 0px 0px 1px inset;
+    background-color: rgb(241, 248, 245);
+    outline: 0.1rem solid transparent;
+  }
+  #checkoutsucceed svg {
+    fill: #007f5f;
+  }
+
+  .notebanner {
+    padding: 17px;
+    margin: 17px;
+  }
+
+  .notebanner svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .notebanner .heading {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
 </style>
 
 <script>
@@ -1021,6 +1034,13 @@
       }
       $("#cart-summy").toggle();
     });
+
+    $(".each-radio").click(function () {
+      console.log("%c $(this)", "color:green;font-weight:bold");
+      console.log($(this).find("input:radio"));
+
+      $(this).find("input:radio").prop("checked", true); // radio checked
+    });
   }
   function getParams(variable) {
     var query = window.location.search.substring(1);
@@ -1056,6 +1076,7 @@
   function syncCart(payload) {
     // 单纯的同步购物车
 
+    $("#check-btn").addClass("btn--loading").prop("disabled", true);
     $.ajax({
       type: "POST",
       contentType: "json",

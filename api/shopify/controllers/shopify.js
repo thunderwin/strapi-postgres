@@ -1,25 +1,29 @@
 "use strict";
-
+const nonce = require("nonce")();
+const crypto = require("crypto");
+const cookie = require("cookie");
+const request = require("request-promise");
+const querystring = require("querystring");
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
 
 module.exports = {
-  get: (req, res) => {
-    console.log("%c req.query", "color:green;font-weight:bold");
-    console.log(JSON.stringify(req.query));
-    const shop = req.query.shop;
+  get: (ctx) => {
+    console.log("%c ctx.query", "color:green;font-weight:bold");
+    console.log(JSON.stringify(ctx.query));
+    const shop = ctx.query.shop;
 
     if (!shop) {
-      return res.status(400).send('Missing "Shop Name" parameter!!');
+      return ctx.status(400).send('Missing "Shop Name" parameter!!');
     }
 
     // Shop Name
 
     const shopState = nonce();
     // shopify callback redirect
-    const redirectURL = process.env.TUNNEL_URL + "/shopify-api/callback";
+    const redirectURL = process.env.TUNNEL_URL + "/shopify/callback";
 
     console.log("%c redirectURL", "color:green;font-weight:bold");
     console.log(JSON.stringify(redirectURL));
@@ -37,26 +41,26 @@ module.exports = {
       "&redirect_uri=" +
       redirectURL;
 
-    res.cookie("state", shopState);
-    res.redirect(shopifyURL);
+    ctx.cookies.set("state", shopState);
+    ctx.redirect(shopifyURL);
   },
 
-  callback: (req, res) => {
-    console.log("%c req.query", "color:green;font-weight:bold");
-    console.log(JSON.stringify(req.query));
+  callback: (ctx) => {
+    console.log("%c 访问callback", "color:green;font-weight:bold");
+    console.log(JSON.stringify(ctx.query));
 
-    const { shop, hmac, code, state } = req.query;
-    const stateCookie = cookie.parse(req.headers.cookie).state;
+    const { shop, hmac, code, state } = ctx.query;
+    const stateCookie = cookie.parse(ctx.headers.cookie).state;
 
     console.log("%c stateCookie", "color:green;font-weight:bold");
     console.log(JSON.stringify(stateCookie));
 
     if (state !== stateCookie) {
-      return res.status(403).send("Request origin cannot be verified");
+      return ctx.send("Request origin cannot be verified");
     }
 
     if (shop && hmac && code) {
-      const queryMap = Object.assign({}, req.query);
+      const queryMap = Object.assign({}, ctx.query);
       delete queryMap["signature"];
       delete queryMap["hmac"];
 
@@ -79,7 +83,7 @@ module.exports = {
       }
 
       if (!hashEquals) {
-        return res.status(400).send("HMAC validation failed");
+        return ctx.send("HMAC validation failed");
       }
       const accessTokenRequestUrl =
         "https://" + shop + "/admin/oauth/access_token";
@@ -100,17 +104,17 @@ module.exports = {
           request
             .get(shopRequestURL, { headers: shopRequestHeaders })
             .then((shopResponse) => {
-              res.redirect("https://" + shop + "/admin/apps");
+              ctx.redirect("https://" + shop + "/admin/apps");
             })
             .catch((error) => {
-              res.status(error.statusCode).send(error.error.error_description);
+              ctx.send(error.error.error_description);
             });
         })
         .catch((error) => {
-          res.status(error.statusCode).send(error.error.error_description);
+          ctx.send(error.error.error_description);
         });
     } else {
-      res.status(400).send("Required parameters missing");
+      ctx.send("Required parameters missing");
     }
   },
 };

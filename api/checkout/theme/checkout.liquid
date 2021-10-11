@@ -1,28 +1,117 @@
 {% layout 'custom' %}
 
-<div id="checkoutPaymentStatus" style="display: none; background-color: blue">
-  We are checking your payment status
+<style>
+  @keyframes Polaris-Spinner--loading {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .Polaris-Spinner svg {
+    animation: Polaris-Spinner--loading 500ms linear infinite;
+    fill: var(--p-border-highlight);
+  }
+
+  .Polaris-Spinner--sizeSmall svg {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .Polaris-Spinner--sizeLarge svg {
+    height: 4.4rem;
+    width: 4.4rem;
+  }
+  #checkoutFailed {
+    box-shadow: rgb(224, 179, 178) 0px 1px 0px 0px inset,
+      rgb(224, 179, 178) 0px 0px 0px 1px inset;
+    background-color: rgb(255, 244, 244);
+    outline: 0.1rem solid transparent;
+  }
+  #checkoutFailed svg {
+    fill: #d72c0d;
+  }
+  #checkoutsucceed {
+    box-shadow: rgb(149, 201, 180) 0px 1px 0px 0px inset,
+      rgb(149, 201, 180) 0px 0px 0px 1px inset;
+    background-color: rgb(241, 248, 245);
+    outline: 0.1rem solid transparent;
+  }
+  #checkoutsucceed svg {
+    fill: #007f5f;
+  }
+
+  .notebanner {
+    padding: 17px;
+    margin: 17px;
+    display: none;
+  }
+
+  .notebanner svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .notebanner .heading {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+</style>
+
+<div class="notebanner" id="checkoutPaymentStatus">
+  <div style="display: flex; align-items: center" class="">
+    <span class="Polaris-Spinner Polaris-Spinner--sizeLarge"
+      ><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z"
+        ></path></svg></span
+    ><span role="status"
+      ><span class="Polaris-VisuallyHidden" style="margin-left: 1rem"
+        >Loading..</span
+      ></span
+    >
+  </div>
+
+  <span>Checking Your Payment Status</span>
 </div>
 
-<div
-  class="page-width"
-  id="checkoutsucceed"
-  style="display: none; background-color: green"
->
+<div class="page-width notebanner" id="checkoutsucceed">
   <div class="thank-you">
-    <div class="store_name">{{ shop.name }}</div>
+    <div class="heading">
+      <svg
+        viewBox="0 0 20 20"
+        class="Polaris-Icon__Svg"
+        focusable="false"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M0 10a10 10 0 1 0 20 0 10 10 0 0 0-20 0zm15.2-1.8a1 1 0 0 0-1.4-1.4L9 11.6 6.7 9.3a1 1 0 0 0-1.4 1.4l3 3c.4.4 1 .4 1.4 0l5.5-5.5z"
+        ></path>
+      </svg>
+      <span class="" style="margin-left: 1rem">Payment Success</span>
+    </div>
     <div class="order_num"></div>
-    <div class="">Your order has been accept,</div>
+    <div class="">Your order has been accept, and will ship to you soon.</div>
   </div>
 </div>
 
-<div
-  class="page-width"
-  style="display: none; background-color: red"
-  id="checkoutFailed"
->
-  payment failed, reason:
-  <span class="reason"></span>
+<div class="page-width notebanner" id="checkoutFailed">
+  <div class="heading">
+    <svg
+      viewBox="0 0 20 20"
+      class="Polaris-Icon__Svg"
+      focusable="false"
+      aria-hidden="true"
+    >
+      <path
+        d="M11.768.768a2.5 2.5 0 0 0-3.536 0L.768 8.232a2.5 2.5 0 0 0 0 3.536l7.464 7.464a2.5 2.5 0 0 0 3.536 0l7.464-7.464a2.5 2.5 0 0 0 0-3.536L11.768.768zM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6zm2 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+      ></path>
+    </svg>
+    <span style="margin-left: 1rem">Payment failed</span>
+
+    <span class="reason"></span>
+  </div>
 </div>
 
 <div id="cart-wrapper">
@@ -890,6 +979,8 @@
 </style>
 
 <script>
+  let globalCart;
+
   function initFormValidation() {
     $("#checkout").validate({
       rules: {
@@ -1080,7 +1171,7 @@
             }),
 
             success: function (r) {
-              window.cart = r; // 拿到的购物车挂到window
+              globalCart = r; // 拿到的购物车挂到window
 
               console.log("%c 后台返回购物车", "color:green;font-weight:bold");
               console.log(JSON.stringify(r));
@@ -1167,7 +1258,7 @@
       return;
     }
 
-    let cart = window.cart;
+    let cart = globalCart;
     let payload = {};
 
     payload.token = cart.token;

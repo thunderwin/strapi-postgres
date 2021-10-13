@@ -1699,43 +1699,49 @@
       return;
     }
 
-    let cart = window.globalCart;
+    $.ajax({
+      type: "GET",
+      url: "/cart.js",
+      dataType: "json",
 
-    if (!cart.id) return;
+      success: function (content) {
+        let cart = window.globalCart;
+        if (!cart.id) return;
+        let payload = {};
+        payload.token = cart.token;
+        payload.id = cart.id;
+        payload.content = content; // 这样拿到的购物车 content才是最新的
 
-    let payload = {};
-    payload.token = cart.token;
-    payload.id = cart.id;
-    payload.content = cart.content;
+        let f = getFormData(); // 加上地址
 
-    let f = getFormData(); // 加上地址
+        console.log(f);
 
-    console.log(f);
+        payload.address = {
+          firstname: f.firstname,
+          lastname: f.lastname,
+          address1: f.address1,
+          address2: f.address2,
+          city: f.city,
+          country: f.country,
+          province: f.province,
+          zip: f.zip,
+        };
 
-    payload.address = {
-      firstname: f.firstname,
-      lastname: f.lastname,
-      address1: f.address1,
-      address2: f.address2,
-      city: f.city,
-      country: f.country,
-      province: f.province,
-      zip: f.zip,
-    };
+        payload.email = f.email;
+        payload.payment = f.payment;
 
-    payload.email = f.email;
-    payload.payment = f.payment;
+        let shippingStr = f.shipping.split("-");
+        payload.shipping = shippingStr[0];
+        payload.shippingFee = shippingStr[1];
 
-    let shippingStr = f.shipping.split("-");
-    payload.shipping = shippingStr[0];
-    payload.shippingFee = shippingStr[1];
+        payload.checkout = true;
 
-    payload.checkout = true;
+        console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
+        console.log(JSON.stringify(payload));
 
-    console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
-    console.log(JSON.stringify(payload));
-
-    syncCart(payload);
+        syncCart(payload);
+      },
+    });
   }
 
   $(function () {

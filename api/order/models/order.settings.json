@@ -50,10 +50,6 @@
         "fail"
       ]
     },
-    "cart": {
-      "type": "json",
-      "required": true
-    },
     "active": {
       "type": "boolean"
     }

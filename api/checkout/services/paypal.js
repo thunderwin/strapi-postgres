@@ -47,7 +47,8 @@ async function fetchCartAndGenPaypalPayload(cart) {
   console.dir("购物车");
   console.log(JSON.stringify(cart));
 
-  let c = cart.content;
+  let coupon = cart.coupon;
+  let c = cart.content // 购物车
   let currency = c.currency;
 
   currency = "USD";
@@ -57,13 +58,12 @@ async function fetchCartAndGenPaypalPayload(cart) {
   let shippingAddress = cart.address;
 
   let discountTotal = 0;
-  if (c.cart_level_discount_applications.length > 0) {
+  if (!!coupon && coupon.id) {
     console.dir("有折扣");
 
     // 计算总折扣
-    discountTotal = prices.discounts.reduce((sum, x) => {
-      return (sum += x.amount.value);
-    }, 0);
+    discountTotal = coupon.
+
     discountTotal = discountTotal.toFixed(2);
   }
 

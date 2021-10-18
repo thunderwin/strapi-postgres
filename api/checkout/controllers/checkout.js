@@ -20,7 +20,6 @@ module.exports = {
   },
 
   init: async (ctx) => {
-
     let body = ctx.request.body;
     console.dir("%c 初始化购物车", "color:green;font-weight:bold");
     console.log(JSON.stringify(body));
@@ -47,7 +46,7 @@ module.exports = {
       console.log(JSON.stringify(cart));
 
       if (!cart) {
-        console.dir("需要存");
+        console.dir("需要存订单");
         cart = await strapi.query("order").create({
           token: value.token,
           content: value.content,
@@ -55,6 +54,14 @@ module.exports = {
           active: true, // 新建的订单 active
         });
       }
+
+      console.dir('同步订单')
+
+      cart = await strapi.query("order").update({id: cart.id},{
+        content: value.content,
+      });
+
+
       return ctx.send(cart);
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
@@ -63,7 +70,7 @@ module.exports = {
     }
   },
 
-  onepage: async (ctx) => {
+  updateOrder: async (ctx) => {
     let body = ctx.request.body;
     console.dir("%c 结账参数", "color:green;font-weight:bold");
     console.log(JSON.stringify(body));
@@ -110,16 +117,46 @@ module.exports = {
   },
 
   applyCoupon: async (ctx) => {
+
+    let body = ctx.request.body;
+    const schema = Joi.object({
+      couponCode: Joi.string().required(),
+      orderId: Joi.number().required()
+    });
+    const { error, value } = schema.validate(body);
+    if (error) {
+      return ctx.send(error.details);
+    }
     // 1 查表获取coupon 信息
+    let info  = await strapi.query('coupon').findOne({code: value.couponCode})
+
+    console.dir('coupon 信息')
+    console.log(JSON.stringify(info))
+
+    if (!info){
+      return ctx.send({
+        code: 1,
+        msg: 'Coupon code is not available.'
+      });
+    }
 
     // 2 更新到订单上
+    let updatedOrder = await strapi.query('order').update({id: value.orderId},{coupon: info})
+
+    if (updatedOrder.id){
+      console.dir('订单更新成功，')
+
+      return ctx.send({
+        code: 0,
+        data: updatedOrder
+      })
+    }
+
 
     //
   },
 
-  removeCoupon: async (ctx) => {
-
-  },
+  removeCoupon: async (ctx) => {},
 
   payment: async (ctx) => {
     // 对某一个订单发起支付
@@ -127,14 +164,14 @@ module.exports = {
     console.dir("%c 结账参数", "color:green;font-weight:bold");
     console.log(JSON.stringify(body));
 
-    let order = await strapi.query("order").findOne({ id: body.orderid, });
+    let order = await strapi.query("order").findOne({ id: body.orderid });
 
     // 准备支付订单
     let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
     return ctx.send(paypalLinks);
   },
 
-  placeorder: async (ctx) => {
+  placeOrder: async (ctx) => {
     // 支付成功后，把订单固定
     let body = ctx.request.body;
     console.dir("%c 支付成功参数", "color:green;font-weight:bold");

@@ -130,21 +130,41 @@
                   ></path>
                 </svg>
               </span>
-              <dl class="my-flex">
-                <dt class="visually-hidden"><span>Sale price</span></dt>
-                <dd>
-                  <span
-                    class="
-                      order-summary__emphasis
-                      total-recap__final-price
-                      skeleton-while-loading
-                    "
-                    >{{ cart.total_price | money }}</span
-                  >
-                </dd>
+
+              <dl class="my-flex" id="base-price">
+                <div class="discouted-price">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd>
+                    <span
+                      class="
+                        order-summary__emphasis
+                        total-recap__final-price
+                        skeleton-while-loading
+                      "
+                      >{{ cart.total_price | money }}</span
+                    >
+                  </dd>
+                </div>
               </dl>
-            </span></span
-          >
+
+              <dl  style="display: none" class="discounted-price">
+                <div class="base-price my-flex">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd>
+                    <span style="text-decoration: line-through">{{
+                      cart.total_price | money
+                    }}</span>
+                  </dd>
+                </div>
+
+                <div class="discouted-price my-flex">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd style="display: flex;">
+                     <span class="discounted-price-value"></span>
+                  </dd>
+                </div>
+              </dl> </span
+          ></span>
         </button>
       </aside>
 
@@ -428,16 +448,38 @@
                 "
               >
                 <div
-                  class="my-flex"
-                  style="border-bottom: 1px solid #e6e6e6; padding-bottom: 1rem"
+                  class="my-flex discounted-price"
+                  style=" padding-bottom: 1rem; display: none;"
                 >
-                  <span class="cart__subtotal-title">{{
-                    "cart.general.subtotal" | t
-                  }}</span>
-                  <span class="cart__subtotal">{{
-                    cart.total_price | money
-                  }}</span>
+                  <span class="cart__subtotal-title">Discount</span>
+
+                  <div class="cart__subtotal my-flex" >
+                      <!-- <div class="currency"> </div> -->
+                      <div class="discount-value"></div>
+                  </div>
                 </div>
+
+                <div
+                class="my-flex"
+                style=" padding-bottom: 1rem"
+              >
+                <span class="cart__subtotal-title">{{
+                  "cart.general.subtotal" | t
+                }}</span>
+                <span class="cart__subtotal">{{
+                  cart.total_price | money
+                }}</span>
+              </div>
+
+              <div
+              class="my-flex discounted-price"
+              style="border-bottom: 1px solid #e6e6e6; display: none; padding-bottom: 1rem"
+            >
+              <span class="cart__subtotal-title">Total</span>
+              <span class="cart__subtotal discounted-price-value"></span>
+            </div>
+
+
                 {% if cart.total_discounts > 0 %}
                 <div class="cart__savings">
                   {{ "cart.general.savings" | t }}
@@ -678,7 +720,7 @@
             </div>
 
             <div class="shipping-wrapper">
-              <div class="each-radio" style="border-bottom: 0">
+              <div class="each-radio free-shipping-wrapper" style="border-bottom: 0;display: none;">
                 <div class="heading-radio">
                   <div class="radio-left my-flex">
                     <input
@@ -691,6 +733,23 @@
                     <div for="huey">Free shipping</div>
                   </div>
                   <div class="price-amount">$ 0</div>
+                </div>
+                <div class="times">(15-20 Business Days)</div>
+              </div>
+
+              <div class="each-radio standard-shipping-wrapper" style="border-bottom: 0">
+                <div class="heading-radio">
+                  <div class="radio-left my-flex">
+                    <input
+                      type="radio"
+                      id="standard-shipping"
+                      name="shipping"
+                      value="standardShipping-12.55"
+                      checked
+                    />
+                    <div for="huey">Standard shipping</div>
+                  </div>
+                  <div class="price-amount">$ 12.55</div>
                 </div>
                 <div class="times">(15-20 Business Days)</div>
               </div>
@@ -732,17 +791,34 @@
                 >
               </div>
 
-              <button
-                type="submit"
+              <div
                 class="btn"
-                onclick="checkout()"
-                id="check-btn"
+                id="coupon-btn"
                 aria-busy="false"
-                style="width: 100px; border-radius: 4px; height: 47.8px"
+                style="width: 100px; border-radius: 4px; padding: 1.2em 1.7em"
               >
                 <span class="">Apply</span>
-              </button>
+              </div>
             </div>
+            <div style="display: none" id="coupon-msg"></div>
+
+            <div
+              class=""
+              id="working-coupon"
+              style="
+                border-radius: 4px;
+                height: 30px;
+                border: 1px solid #ddd;
+                line-height: 30px;
+                width: auto;
+                text-align: center;
+                background-color: #ddd;
+                color: #000;
+                text-transform: uppercase;
+                display: none;
+                font-weight: bold;
+              "
+            ></div>
 
             <div class="section__header">
               <div class="form-title">Payment method</div>
@@ -1126,6 +1202,7 @@
                     cart.total_price | money
                   }}</span>
                 </div>
+
                 {% if cart.total_discounts > 0 %}
                 <div class="cart__savings">
                   {{ "cart.general.savings" | t }}
@@ -1230,7 +1307,7 @@
     font-size: 1.3rem;
     line-height: 1.3rem;
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-top: 1.3rem;
   }
 
   /* 实现 floating label  */
@@ -1462,8 +1539,9 @@
 </style>
 
 <script>
-  // let endpoint = "https://gudao.mynatapp.cc";
-  endpoint = "https://gudao-api.thousandcountry.com";
+  let endpoint = "https://gudao.mynatapp.cc";
+  // endpoint = "https://gudao-api.thousandcountry.com";
+  let freeShippingPrice = 69 * 100
 
   function initFormValidation() {
     $("#checkout").validate({
@@ -1512,6 +1590,13 @@
 
       $(this).find("input:radio").prop("checked", true); // radio checked
     });
+
+    $("#coupon-btn").click(function () {
+      let code = $("#coupon").val();
+      applyCoupon(code);
+    });
+
+
   }
   function getParams(variable) {
     var query = window.location.search.substring(1);
@@ -1553,7 +1638,7 @@
       type: "POST",
       contentType: "json",
       dataType: "json",
-      url: endpoint + "/checkout/onepage",
+      url: endpoint + "/checkout/updateOrder",
       crossDomain: true,
 
       headers: {
@@ -1648,6 +1733,15 @@
       success: function (cart) {
         console.log("%c 购物车", "color:green;font-weight:bold");
         console.log(JSON.stringify(cart));
+
+        // free shipping?
+        if (cart.total_price > freeShippingPrice){
+          console.log('%c Free shipping','color:green;font-weight:bold')
+
+          $('.free-shipping-wrapper').fadeIn()
+          $('#free-shipping').prop("checked", true)
+          $('.standard-shipping-wrapper').hide()
+        }
 
         if (cart.token && cart.item_count >= 1) {
           console.dir("token");
@@ -1803,6 +1897,98 @@
     });
   }
 
+  async function applyCoupon(e) {
+    $("#coupon-msg").hide();
+    $("#working-coupon").hide();
+
+    function showError(msg) {
+      $("#coupon-msg").html(`<p style="color:#d02e2e">${msg}</p>`);
+      $("#coupon-msg").fadeIn();
+    }
+
+    function showSuccees(msg, value, discount) {
+      $("#working-coupon").html(`<p style="color:#000">${msg}</p>`);
+      $("#working-coupon").fadeIn();
+
+      // 修改显示
+      $("#base-price").hide();
+      $(".discounted-price").fadeIn();
+      $(".discounted-price-value").html(value);
+      $(".discount-value").html(discount);
+    }
+
+    console.log("%c code", "color:green;font-weight:bold");
+    console.log(JSON.stringify(e));
+
+    if (!e) {
+      showError("Code is missing");
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      contentType: "json",
+      dataType: "json",
+      url: endpoint + "/checkout/applyCoupon",
+      crossDomain: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        couponCode: e,
+        orderId: window.globalCart.id,
+      }),
+      success: function (r) {
+        console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
+        console.log(JSON.stringify(r));
+        if (r.code === 1) {
+          showError(r.msg);
+        }
+
+        console.log("%c type", "color:green;font-weight:bold");
+        console.log(JSON.stringify(typeof r));
+
+        if ($.isArray(r)) {
+          showError(r[0].message);
+        }
+
+        if (r.code === 0) {
+          let coupon = r.data.coupon;
+          let total = r.data.content.original_total_price * 0.01
+          let msg = coupon.label;
+
+          let type = coupon.type;
+          let value = coupon.value * 0.01;
+
+          let showDiscountPrice;
+
+          if (type === "percentage") {
+            showDiscountPrice = (total - total * value) ;
+          }else if( type === 'fixed'){
+            showDiscountPrice = total - value
+          }
+
+
+          console.log('%c showDiscountPrice','color:green;font-weight:bold')
+          console.log(JSON.stringify(showDiscountPrice))
+
+          let discount = '- $ ' +(total - showDiscountPrice)
+          let discountedValue = '$ ' +showDiscountPrice
+
+          showSuccees(msg, discountedValue ,discount );
+        }
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+  }
+  async function removeCoupon() {}
+
+  async function update() {}
+
   $(function () {
     let successId = getParams("successId");
     let cancelId = getParams("cancelId");
@@ -1831,7 +2017,7 @@
 
     console.log("%c onload", "color:green;font-weight:bold");
 
-    initCart();
+    initCart(); // 初始化购物车
 
     initMovement(); // 一些jquery特效
 

@@ -18,16 +18,32 @@
     },
     {
       "method": "POST",
-      "path": "/checkout/onepage",
-      "handler": "checkout.onepage",
+      "path": "/checkout/updateOrder",
+      "handler": "checkout.updateOrder",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/checkout/placeorder",
-      "handler": "checkout.placeorder",
+      "path": "/checkout/placeOrder",
+      "handler": "checkout.placeOrder",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/checkout/applyCoupon",
+      "handler": "checkout.applyCoupon",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/checkout/removeCoupon",
+      "handler": "checkout.removeCoupon",
       "config": {
         "policies": []
       }

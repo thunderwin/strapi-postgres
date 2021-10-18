@@ -48,8 +48,10 @@ async function fetchCartAndGenPaypalPayload(cart) {
   console.log(JSON.stringify(cart));
 
   let coupon = cart.coupon;
-  let c = cart.content // 购物车
+  let c = cart.content; // 购物车
   let currency = c.currency;
+  let totalPrice = (c.original_total_price / 100).toFixed(2);
+
 
   currency = "USD";
 
@@ -61,22 +63,18 @@ async function fetchCartAndGenPaypalPayload(cart) {
   if (!!coupon && coupon.id) {
     console.dir("有折扣");
 
-
-    let totalPrice = c.original_total_price
     let couponType = coupon.type;
-    let couponValue = coupon.value
-
+    let couponValue = coupon.value;
 
     if (couponType === "percentage") {
-      discountTotal = ( totalPrice * couponValue * 0.01) ;
-    }else if( type === 'fixed'){
-      discountTotal =  couponValue * 100
+      discountTotal = totalPrice * couponValue * 0.01;
+    } else if (type === "fixed") {
+      discountTotal = couponValue * 100;
     }
 
     // 计算总折扣
-    discountTotal = discountTotal * 0.01;
+    discountTotal = discountTotal.toFixed(2);
   }
-
 
   console.dir("总折扣");
   console.log(JSON.stringify(discountTotal));
@@ -93,11 +91,11 @@ async function fetchCartAndGenPaypalPayload(cart) {
       {
         amount: {
           currency_code: currency,
-          value: c.items_subtotal_price / 100 - discountTotal + cart.shippingFee,
+          value: totalPrice - discountTotal + cart.shippingFee,
           breakdown: {
             item_total: {
               currency_code: currency, // 不含税的商品总价
-              value: c.original_total_price / 100,
+              value: totalPrice,
             },
             shipping: {
               currency_code: currency,

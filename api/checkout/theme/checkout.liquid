@@ -147,7 +147,7 @@
                 </div>
               </dl>
 
-              <dl  style="display: none" class="discounted-price">
+              <dl style="display: none" class="discounted-price">
                 <div class="base-price my-flex">
                   <dt class="visually-hidden"><span>Sale price</span></dt>
                   <dd>
@@ -159,8 +159,8 @@
 
                 <div class="discouted-price my-flex">
                   <dt class="visually-hidden"><span>Sale price</span></dt>
-                  <dd style="display: flex;">
-                     <span class="discounted-price-value"></span>
+                  <dd style="display: flex">
+                    <span class="discounted-price-value"></span>
                   </dd>
                 </div>
               </dl> </span
@@ -449,36 +449,36 @@
               >
                 <div
                   class="my-flex discounted-price"
-                  style=" padding-bottom: 1rem; display: none;"
+                  style="padding-bottom: 1rem; display: none"
                 >
                   <span class="cart__subtotal-title">Discount</span>
 
-                  <div class="cart__subtotal my-flex" >
-                      <!-- <div class="currency"> </div> -->
-                      <div class="discount-value"></div>
+                  <div class="cart__subtotal my-flex">
+                    <!-- <div class="currency"> </div> -->
+                    <div class="discount-value"></div>
                   </div>
                 </div>
 
+                <div class="my-flex" style="padding-bottom: 1rem">
+                  <span class="cart__subtotal-title">{{
+                    "cart.general.subtotal" | t
+                  }}</span>
+                  <span class="cart__subtotal">{{
+                    cart.total_price | money
+                  }}</span>
+                </div>
+
                 <div
-                class="my-flex"
-                style=" padding-bottom: 1rem"
-              >
-                <span class="cart__subtotal-title">{{
-                  "cart.general.subtotal" | t
-                }}</span>
-                <span class="cart__subtotal">{{
-                  cart.total_price | money
-                }}</span>
-              </div>
-
-              <div
-              class="my-flex discounted-price"
-              style="border-bottom: 1px solid #e6e6e6; display: none; padding-bottom: 1rem"
-            >
-              <span class="cart__subtotal-title">Total</span>
-              <span class="cart__subtotal discounted-price-value"></span>
-            </div>
-
+                  class="my-flex discounted-price"
+                  style="
+                    border-bottom: 1px solid #e6e6e6;
+                    display: none;
+                    padding-bottom: 1rem;
+                  "
+                >
+                  <span class="cart__subtotal-title">Total</span>
+                  <span class="cart__subtotal discounted-price-value"></span>
+                </div>
 
                 {% if cart.total_discounts > 0 %}
                 <div class="cart__savings">
@@ -720,7 +720,10 @@
             </div>
 
             <div class="shipping-wrapper">
-              <div class="each-radio free-shipping-wrapper" style="border-bottom: 0;display: none;">
+              <div
+                class="each-radio free-shipping-wrapper"
+                style="border-bottom: 0; display: none"
+              >
                 <div class="heading-radio">
                   <div class="radio-left my-flex">
                     <input
@@ -737,7 +740,10 @@
                 <div class="times">(15-20 Business Days)</div>
               </div>
 
-              <div class="each-radio standard-shipping-wrapper" style="border-bottom: 0">
+              <div
+                class="each-radio standard-shipping-wrapper"
+                style="border-bottom: 0"
+              >
                 <div class="heading-radio">
                   <div class="radio-left my-flex">
                     <input
@@ -795,7 +801,7 @@
                 class="btn"
                 id="coupon-btn"
                 aria-busy="false"
-                style="width: 100px; border-radius: 4px; padding: 1.2em 1.7em"
+                style="width: 100px; border-radius: 4px; padding: 13px 1.7em"
               >
                 <span class="">Apply</span>
               </div>
@@ -1541,7 +1547,34 @@
 <script>
   let endpoint = "https://gudao.mynatapp.cc";
   // endpoint = "https://gudao-api.thousandcountry.com";
-  let freeShippingPrice = 69 * 100
+  let freeShippingPrice = 69 * 100;
+
+  function handleProvince() {
+    let country = $("#country").val();
+    console.log("%c country", "color:green;font-weight:bold");
+    console.log(JSON.stringify(country));
+
+    let provinces = $("#country option:selected").attr("data-provinces");
+    // console.log("%c provinces ", "color:green;font-weight:bold");
+
+    provinces = JSON.parse(provinces);
+
+    console.log("%c provinces", "color:green;font-weight:bold");
+    console.log(JSON.stringify(provinces));
+
+    if (provinces.length > 0) {
+      $("#AddressProvinceContainer").css("display", "block");
+
+      provinces.forEach((x) => {
+        $("#province").append(
+          '<option value="' + x[1] + '">' + x[0] + "</option>"
+        );
+      });
+    } else {
+      console.log("%c 关闭省份", "color:green;font-weight:bold");
+      $("#AddressProvinceContainer").css("display", "none");
+    }
+  }
 
   function initFormValidation() {
     $("#checkout").validate({
@@ -1551,6 +1584,10 @@
         email: {
           required: true,
           email: true,
+        },
+        phone: {
+          required: true,
+          number: true,
         },
         address1: {
           required: true,
@@ -1596,7 +1633,9 @@
       applyCoupon(code);
     });
 
-
+    $("#country").on("change", function () {
+      handleProvince();
+    });
   }
   function getParams(variable) {
     var query = window.location.search.substring(1);
@@ -1610,9 +1649,20 @@
     return false;
   }
   function initFormValue(formObj) {
+    console.log("%c 需要恢复的值", "color:green;font-weight:bold");
+    console.log(JSON.stringify(formObj));
+
     for (let x in formObj) {
-      $(`input[name='${x}']`).val(formObj[x]);
+      $("#" + x).val(formObj[x]);
+
+
+      if (x === 'country'){
+        handleProvince();
+      }
+      // $(`input[name='${x}']`).val(formObj[x]);
     }
+
+
   }
 
   function getFormData() {
@@ -1735,11 +1785,11 @@
         console.log(JSON.stringify(cart));
 
         // free shipping?
-        if (cart.total_price > freeShippingPrice){
-          console.log('%c Free shipping','color:green;font-weight:bold')
-          $('.free-shipping-wrapper').fadeIn()
-          $('#free-shipping').prop("checked", true)
-          $('.standard-shipping-wrapper').hide()
+        if (cart.total_price > freeShippingPrice) {
+          console.log("%c Free shipping", "color:green;font-weight:bold");
+          $(".free-shipping-wrapper").fadeIn();
+          $("#free-shipping").prop("checked", true);
+          $(".standard-shipping-wrapper").hide();
         }
 
         if (cart.token && cart.item_count >= 1) {
@@ -1877,6 +1927,7 @@
           country: f.country,
           province: f.province,
           zip: f.zip,
+          phone: f.phone,
         };
 
         payload.email = f.email;
@@ -1954,7 +2005,7 @@
 
         if (r.code === 0) {
           let coupon = r.data.coupon;
-          let total = r.data.content.original_total_price * 0.01
+          let total = r.data.content.original_total_price * 0.01;
           let msg = coupon.label;
 
           let type = coupon.type;
@@ -1963,19 +2014,18 @@
           let showDiscountPrice;
 
           if (type === "percentage") {
-            showDiscountPrice = (total - total * value) ;
-          }else if( type === 'fixed'){
-            showDiscountPrice = total - value
+            showDiscountPrice = total - total * value;
+          } else if (type === "fixed") {
+            showDiscountPrice = total - value;
           }
 
+          console.log("%c showDiscountPrice", "color:green;font-weight:bold");
+          console.log(JSON.stringify(showDiscountPrice));
 
-          console.log('%c showDiscountPrice','color:green;font-weight:bold')
-          console.log(JSON.stringify(showDiscountPrice))
+          let discount = "- $ " + (total - showDiscountPrice);
+          let discountedValue = "$ " + showDiscountPrice;
 
-          let discount = '- $ ' +(total - showDiscountPrice)
-          let discountedValue = '$ ' +showDiscountPrice
-
-          showSuccees(msg, discountedValue ,discount );
+          showSuccees(msg, discountedValue, discount);
         }
       },
       error: function (e) {
@@ -2021,7 +2071,5 @@
     initMovement(); // 一些jquery特效
 
     initFormValidation(); // 开启表单验证
-
-    handleAddress(); // 处理地址
   });
 </script>

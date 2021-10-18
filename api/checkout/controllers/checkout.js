@@ -84,6 +84,7 @@ module.exports = {
       shipping: Joi.string(),
       shippingFee: Joi.number(),
       payment: Joi.string(),
+      phone: Joi.string(),
       checkout: Joi.boolean(),
     });
 

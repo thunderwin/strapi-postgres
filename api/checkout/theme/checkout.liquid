@@ -918,9 +918,9 @@
       </div>
     </div>
     <div class="right-area">
-      <div
+       <div
         class="page-width"
-        style="padding-top: 1rem; background-color: #fafafa"
+        style=" padding-top: 1rem; background-color: #fafafa"
         id="cart-summy"
         data-section-id="{{ section.id }}"
         data-section-type="cart-template"
@@ -1198,15 +1198,36 @@
                 "
               >
                 <div
-                  class="my-flex"
-                  style="border-bottom: 1px solid #e6e6e6; padding-bottom: 1rem"
+                  class="my-flex discounted-price"
+                  style="padding-bottom: 1rem; display: none"
                 >
+                  <span class="cart__subtotal-title">Discount</span>
+
+                  <div class="cart__subtotal my-flex">
+                    <!-- <div class="currency"> </div> -->
+                    <div class="discount-value"></div>
+                  </div>
+                </div>
+
+                <div class="my-flex" style="padding-bottom: 1rem">
                   <span class="cart__subtotal-title">{{
                     "cart.general.subtotal" | t
                   }}</span>
                   <span class="cart__subtotal">{{
                     cart.total_price | money
                   }}</span>
+                </div>
+
+                <div
+                  class="my-flex discounted-price"
+                  style="
+                    border-bottom: 1px solid #e6e6e6;
+                    display: none;
+                    padding-bottom: 1rem;
+                  "
+                >
+                  <span class="cart__subtotal-title">Total</span>
+                  <span class="cart__subtotal discounted-price-value"></span>
                 </div>
 
                 {% if cart.total_discounts > 0 %}
@@ -1272,15 +1293,16 @@
         <div class="empty-page-content text-center">
           <h1>{{ "cart.general.title" | t }}</h1>
           <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
-          <!-- <div class="cookie-message">
+          <div class="cookie-message">
             <p>{{ "cart.general.cookies_required" | t }}</p>
-          </div> -->
-          <!-- <a href="/" class="btn btn--has-icon-after cart__continue-btn"
+          </div>
+          <a href="/" class="btn btn--has-icon-after cart__continue-btn"
             >{{ "general.404.link" | t }}{% include 'icon-arrow-right' %}</a
-          > -->
+          >
         </div>
         {% endif %}
       </div>
+
     </div>
   </div>
 </div>
@@ -2019,8 +2041,8 @@
           console.log("%c showDiscountPrice", "color:green;font-weight:bold");
           console.log(JSON.stringify(showDiscountPrice));
 
-          let discount = "- $ " + (total - showDiscountPrice);
-          let discountedValue = "$ " + showDiscountPrice;
+          let discount = "- $ " + (total - showDiscountPrice).toFixed(2);
+          let discountedValue = "$ " + (showDiscountPrice).toFixed(2);
 
           showSuccees(msg, discountedValue, discount);
         }

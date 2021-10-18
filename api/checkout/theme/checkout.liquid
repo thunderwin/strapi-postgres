@@ -1546,7 +1546,7 @@
 
 <script>
   let endpoint = "https://gudao.mynatapp.cc";
-  // endpoint = "https://gudao-api.thousandcountry.com";
+  endpoint = "https://gudao-api.thousandcountry.com";
   let freeShippingPrice = 69 * 100;
 
   function handleProvince() {
@@ -1655,14 +1655,11 @@
     for (let x in formObj) {
       $("#" + x).val(formObj[x]);
 
-
-      if (x === 'country'){
+      if (x === "country") {
         handleProvince();
       }
       // $(`input[name='${x}']`).val(formObj[x]);
     }
-
-
   }
 
   function getFormData() {

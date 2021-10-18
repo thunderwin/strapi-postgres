@@ -113,6 +113,8 @@ module.exports = {
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
+
+
       throw error;
     }
   },

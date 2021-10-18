@@ -91,7 +91,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
       {
         amount: {
           currency_code: currency,
-          value: totalPrice - discountTotal + cart.shippingFee,
+          value: (totalPrice - discountTotal + cart.shippingFee).toFixed(2),
           breakdown: {
             item_total: {
               currency_code: currency, // 不含税的商品总价

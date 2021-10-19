@@ -55,12 +55,14 @@ module.exports = {
         });
       }
 
-      console.dir('同步订单')
+      console.dir("同步订单");
 
-      cart = await strapi.query("order").update({id: cart.id},{
-        content: value.content,
-      });
-
+      cart = await strapi.query("order").update(
+        { id: cart.id },
+        {
+          content: value.content,
+        }
+      );
 
       return ctx.send(cart);
     } catch (error) {
@@ -94,7 +96,7 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    console.dir("%c 验证参数通过", "color:green;font-weight:bold");
+    console.dir("%c 数通过", "color:green;font-weight:bold");
     console.log(JSON.stringify(value));
 
     try {
@@ -114,47 +116,46 @@ module.exports = {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
 
-
       throw error;
     }
   },
 
   applyCoupon: async (ctx) => {
-
     let body = ctx.request.body;
     const schema = Joi.object({
       couponCode: Joi.string().required(),
-      orderId: Joi.number().required()
+      orderId: Joi.number().required(),
     });
     const { error, value } = schema.validate(body);
     if (error) {
       return ctx.send(error.details);
     }
     // 1 查表获取coupon 信息
-    let info  = await strapi.query('coupon').findOne({code: value.couponCode})
+    let info = await strapi.query("coupon").findOne({ code: value.couponCode });
 
-    console.dir('coupon 信息')
-    console.log(JSON.stringify(info))
+    console.dir("coupon 信息");
+    console.log(JSON.stringify(info));
 
-    if (!info){
+    if (!info) {
       return ctx.send({
         code: 1,
-        msg: 'Coupon code is not available.'
+        msg: "Coupon code is not available.",
       });
     }
 
     // 2 更新到订单上
-    let updatedOrder = await strapi.query('order').update({id: value.orderId},{coupon: info})
+    let updatedOrder = await strapi
+      .query("order")
+      .update({ id: value.orderId }, { coupon: info });
 
-    if (updatedOrder.id){
-      console.dir('订单更新成功，')
+    if (updatedOrder.id) {
+      console.dir("订单更新成功，");
 
       return ctx.send({
         code: 0,
-        data: updatedOrder
-      })
+        data: updatedOrder,
+      });
     }
-
 
     //
   },

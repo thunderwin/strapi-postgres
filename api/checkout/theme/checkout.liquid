@@ -918,9 +918,9 @@
       </div>
     </div>
     <div class="right-area">
-       <div
+      <div
         class="page-width"
-        style=" padding-top: 1rem; background-color: #fafafa"
+        style="padding-top: 1rem; background-color: #fafafa"
         id="cart-summy"
         data-section-id="{{ section.id }}"
         data-section-type="cart-template"
@@ -1302,7 +1302,6 @@
         </div>
         {% endif %}
       </div>
-
     </div>
   </div>
 </div>
@@ -1748,7 +1747,7 @@
       type: "POST",
       contentType: "json",
       dataType: "json",
-      url: endpoint + "/checkout/placeorder",
+      url: endpoint + "/checkout/placeOrder",
       crossDomain: true,
       headers: {
         Accept: "application/json",
@@ -2042,7 +2041,7 @@
           console.log(JSON.stringify(showDiscountPrice));
 
           let discount = "- $ " + (total - showDiscountPrice).toFixed(2);
-          let discountedValue = "$ " + (showDiscountPrice).toFixed(2);
+          let discountedValue = "$ " + showDiscountPrice.toFixed(2);
 
           showSuccees(msg, discountedValue, discount);
         }

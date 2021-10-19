@@ -1566,8 +1566,11 @@
 </style>
 
 <script>
-  let endpoint = "https://gudao.mynatapp.cc";
-  endpoint = "https://gudao-api.thousandcountry.com";
+  let endpoint =
+    document.domain === "wudizu.myshopify.com"
+      ? "https://gudao.mynatapp.cc"
+      : "https://gudao-api.thousandcountry.com";
+
   let freeShippingPrice = 69 * 100;
 
   function handleProvince() {

@@ -15,3 +15,7 @@ sdsdf
 ## 发布
 
 git add . && git commit -m 'asas' && git push a master
+
+## 调试真机
+
+https://blog.csdn.net/sansan_7957/article/details/90641505

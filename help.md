@@ -10,6 +10,8 @@ vb56TzSlLryC2
 free.lei.sheng-facilitator@gmail.com  
 CKDJMYW62T8MC
 
+sdsdf
+
 ## 发布
 
 git add . && git commit -m 'asas' && git push a master

@@ -79,14 +79,14 @@ module.exports = {
 
     const schema = Joi.object({
       id: Joi.number().required(),
-      token: Joi.string().required(),
-      email: Joi.string().email(),
+      token: Joi.string().trim().required(),
+      email: Joi.string().trim().email(),
       content: Joi.object().required(),
       address: Joi.object(),
       shipping: Joi.string(),
       shippingFee: Joi.number(),
       payment: Joi.string(),
-      phone: Joi.string(),
+      phone: Joi.string().trim(),
       checkout: Joi.boolean(),
     });
 
@@ -123,13 +123,14 @@ module.exports = {
   applyCoupon: async (ctx) => {
     let body = ctx.request.body;
     const schema = Joi.object({
-      couponCode: Joi.string().required(),
+      couponCode: Joi.string().lowercase().required(),
       orderId: Joi.number().required(),
     });
     const { error, value } = schema.validate(body);
     if (error) {
       return ctx.send(error.details);
     }
+
     // 1 查表获取coupon 信息
     let info = await strapi.query("coupon").findOne({ code: value.couponCode });
 

@@ -10,7 +10,7 @@ const querystring = require("querystring");
  */
 
 module.exports = {
-  get: (ctx) => {
+  initApp: (ctx) => {
     console.log("%c ctx.query", "color:green;font-weight:bold");
     console.log(JSON.stringify(ctx.query));
     const shop = ctx.query.shop;

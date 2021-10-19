@@ -1,4 +1,5 @@
 {
+  "kind": "collectionType",
   "collectionName": "shopifies",
   "info": {
     "name": "shopify",
@@ -10,5 +11,24 @@
     "timestamps": true,
     "comment": ""
   },
-  "attributes": {}
+  "attributes": {
+    "domain": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "email": {
+      "type": "email",
+      "unique": false
+    },
+    "paypal": {
+      "type": "json"
+    },
+    "users_permissions_users": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "shopifies",
+      "dominant": true
+    }
+  }
 }

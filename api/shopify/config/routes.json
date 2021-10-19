@@ -2,8 +2,16 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/shopify",
-      "handler": "shopify.get",
+      "path": "/shopifies",
+      "handler": "shopify.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shopify/initApp",
+      "handler": "shopify.initApp",
       "config": {
         "policies": []
       }

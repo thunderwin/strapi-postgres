@@ -48,7 +48,7 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    let r = await strapi.query("order").find({
+    let r = await strapi.query("order").count({
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: false,

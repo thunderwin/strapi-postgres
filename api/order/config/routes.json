@@ -2,10 +2,26 @@
   "routes": [
     {
       "method": "GET",
+      "path": "/orders/dayCount",
+      "handler": "order.dayCount",
+      "config": {
+        "policies": ["plugins::users-permissions.ratelimit"]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/orders/sync",
+      "handler": "order.sync",
+      "config": {
+        "policies": ["plugins::users-permissions.ratelimit"]
+      }
+    },
+    {
+      "method": "GET",
       "path": "/orders",
       "handler": "order.find",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -13,7 +29,7 @@
       "path": "/orders/count",
       "handler": "order.count",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -21,7 +37,7 @@
       "path": "/orders/:id",
       "handler": "order.findOne",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -29,7 +45,7 @@
       "path": "/orders",
       "handler": "order.create",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -37,7 +53,7 @@
       "path": "/orders/:id",
       "handler": "order.update",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -45,7 +61,7 @@
       "path": "/orders/:id",
       "handler": "order.delete",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     }
   ]

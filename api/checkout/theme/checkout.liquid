@@ -1568,7 +1568,7 @@
 <script>
   let endpoint =
     document.domain === "wudizu.myshopify.com"
-      ? "https://gudao.mynatapp.cc"
+      ? "http://localhost:1337"
       : "https://gudao-api.thousandcountry.com";
 
   let freeShippingPrice = 69 * 100;
@@ -1837,8 +1837,8 @@
             success: function (r) {
               window.globalCart = r; // 拿到的购物车挂到window
 
-              console.log("%c 后台返回购物车", "color:green;font-weight:bold");
-              console.log(JSON.stringify(r));
+              // console.log("%c 后台返回购物车", "color:green;font-weight:bold");
+              // console.log(JSON.stringify(r));
 
               if (!!r.address) {
                 if (!!r.email) {
@@ -2085,9 +2085,10 @@
 
     $("#cart-wrapper").css("display", "block");
 
-    console.log("%c onload", "color:green;font-weight:bold");
+    console.log("%c 🥬", "color:green;font-weight:bold");
 
     initCart(); // 初始化购物车
+    console.log("%c 执行次数", "color:green;font-weight:bold");
 
     initMovement(); // 一些jquery特效
 

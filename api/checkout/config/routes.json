@@ -13,7 +13,7 @@
       "path": "/checkout/init",
       "handler": "checkout.init",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -21,7 +21,7 @@
       "path": "/checkout/updateOrder",
       "handler": "checkout.updateOrder",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -29,7 +29,7 @@
       "path": "/checkout/placeOrder",
       "handler": "checkout.placeOrder",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -37,7 +37,7 @@
       "path": "/checkout/applyCoupon",
       "handler": "checkout.applyCoupon",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     },
     {
@@ -45,7 +45,7 @@
       "path": "/checkout/removeCoupon",
       "handler": "checkout.removeCoupon",
       "config": {
-        "policies": []
+        "policies": ["plugins::users-permissions.ratelimit"]
       }
     }
   ]

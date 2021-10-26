@@ -229,4 +229,23 @@ module.exports = {
       throw error;
     }
   },
+
+  paypalNotify: async (ctx) => {
+
+    let body = ctx.request.body;
+    console.dir("%c paypal通知", "color:green;font-weight:bold");
+    console.log(JSON.stringify(body));
+
+    // 告诉收到了，别发了
+    ctx.send('OK');
+
+    // 检查是不是真的来自paypal
+    let r = await strapi.services.paypal.paypalIPN(body)
+
+    if (!r) return
+
+    // 不知道
+
+
+  }
 };

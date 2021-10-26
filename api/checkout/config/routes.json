@@ -9,6 +9,14 @@
       }
     },
     {
+      "method": "post",
+      "path": "/checkout/paypalNotify",
+      "handler": "checkout.paypalNotify",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/checkout/init",
       "handler": "checkout.init",

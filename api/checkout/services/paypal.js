@@ -1,6 +1,9 @@
 const config = require("./website");
 const paypal = require("@paypal/checkout-server-sdk");
 const { getCode } = require("country-list");
+const axios = require("axios");
+const request = require('request')
+const Promise = require('bluebird')
 
 // 下单
 
@@ -52,7 +55,6 @@ async function fetchCartAndGenPaypalPayload(cart) {
   let currency = c.currency;
   let totalPrice = (c.original_total_price / 100).toFixed(2);
 
-
   currency = "USD";
 
   //   let { prices, items, shipping_addresses } = c;
@@ -84,8 +86,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
     application_context: {
       return_url:
         "https://" + cart.domain + "/a/checkout/?successId=" + cart.id, // 支付成功
-      cancel_url:
-        "https://" + cart.domain + "/a/checkout?cancelId=" + cart.id, // 取消支付后
+      cancel_url: "https://" + cart.domain + "/a/checkout?cancelId=" + cart.id, // 取消支付后
     },
     purchase_units: [
       {
@@ -192,5 +193,46 @@ module.exports = {
         throw error;
       }
     }
+  },
+
+  paypalIPN(body) {
+    return new Promise((resolve, reject) => {
+      // Prepend 'cmd=_notify-validate' flag to the post string
+      let postreq = "cmd=_notify-validate";
+
+      // Iterate the original request payload object
+      // and prepend its keys and values to the post string
+      Object.keys(body).map((key) => {
+        postreq = `${postreq}&${key}=${body[key]}`;
+        return key;
+      });
+
+      const options = {
+        url: "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr",
+        method: "POST",
+        headers: {
+          "Content-Length": postreq.length,
+        },
+        encoding: "utf-8",
+        body: postreq,
+      };
+
+      // Make a post request to PayPal
+      request(options, (error, response, resBody) => {
+        if (error || response.statusCode !== 200) {
+          reject(new Error(error));
+          return;
+        }
+
+        // Validate the response from PayPal and resolve / reject the promise.
+        if (resBody.substring(0, 8) === "VERIFIED") {
+          resolve(true);
+        } else if (resBody.substring(0, 7) === "INVALID") {
+          reject(new Error("IPN Message is invalid."));
+        } else {
+          reject(new Error("Unexpected response body."));
+        }
+      });
+    });
   },
 };

@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "log_ipns",
+  "info": {
+    "name": "LogIpn"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "body": {
+      "type": "json"
+    },
+    "env": {
+      "type": "string"
+    }
+  }
+}

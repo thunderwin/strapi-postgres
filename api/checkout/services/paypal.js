@@ -2,8 +2,8 @@ const config = require("./website");
 const paypal = require("@paypal/checkout-server-sdk");
 const { getCode } = require("country-list");
 const axios = require("axios");
-const request = require('request')
-const Promise = require('bluebird')
+const request = require("request");
+const Promise = require("bluebird");
 
 // 下单
 
@@ -208,7 +208,10 @@ module.exports = {
       });
 
       const options = {
-        url: "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr",
+        url:
+          process.env.NODE_ENV === "development"
+            ? "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr"
+            : "https://ipnpb.paypal.com/cgi-bin/webscr",
         method: "POST",
         headers: {
           "Content-Length": postreq.length,

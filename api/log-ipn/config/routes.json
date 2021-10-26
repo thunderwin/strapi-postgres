@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/log-ipns",
+      "handler": "log-ipn.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/log-ipns/count",
+      "handler": "log-ipn.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/log-ipns/:id",
+      "handler": "log-ipn.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/log-ipns",
+      "handler": "log-ipn.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/log-ipns/:id",
+      "handler": "log-ipn.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/log-ipns/:id",
+      "handler": "log-ipn.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

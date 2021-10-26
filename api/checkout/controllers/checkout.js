@@ -232,6 +232,9 @@ module.exports = {
 
   paypalNotify: async (ctx) => {
 
+
+
+
     let body = ctx.request.body;
     console.dir("%c paypal通知", "color:green;font-weight:bold");
     console.log(JSON.stringify(body));
@@ -244,8 +247,12 @@ module.exports = {
 
     if (!r) return
 
-    // 不知道
+    // 先保存为日志
 
+    return await strapi.query('log-ipn').create({
+      body: body,
+      env: process.env.NODE_ENV
+    })
 
   }
 };

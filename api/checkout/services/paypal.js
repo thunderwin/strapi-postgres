@@ -83,9 +83,9 @@ async function fetchCartAndGenPaypalPayload(cart) {
     intent: "CAPTURE",
     application_context: {
       return_url:
-        "https://" + cart.domain + "/apps/checkout/?successId=" + cart.id, // 支付成功
+        "https://" + cart.domain + "/a/checkout/?successId=" + cart.id, // 支付成功
       cancel_url:
-        "https://" + cart.domain + "/apps/checkout?cancelId=" + cart.id, // 取消支付后
+        "https://" + cart.domain + "/a/checkout?cancelId=" + cart.id, // 取消支付后
     },
     purchase_units: [
       {

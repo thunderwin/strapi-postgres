@@ -19,3 +19,7 @@ git add . && git commit -m 'asas' && git push a master
 ## 调试真机
 
 https://blog.csdn.net/sansan_7957/article/details/90641505
+
+## JOI 文档
+
+https://joi.dev/api/?v=17.4.2#dateiso

@@ -37,6 +37,8 @@
       <div class="order_num"></div>
       <div class="">Your order has been accept, and will ship to you soon.</div>
     </div>
+
+    {% section 'product-recommendations' %}
   </div>
 
   <div class="page-width notebanner" id="checkoutFailed" style="display: none">
@@ -1575,16 +1577,16 @@
 
   function handleProvince() {
     let country = $("#country").val();
-    console.log("%c country", "color:green;font-weight:bold");
-    console.log(JSON.stringify(country));
+    // console.log("%c country", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(country));
 
     let provinces = $("#country option:selected").attr("data-provinces");
     // console.log("%c provinces ", "color:green;font-weight:bold");
 
     provinces = JSON.parse(provinces);
 
-    console.log("%c provinces", "color:green;font-weight:bold");
-    console.log(JSON.stringify(provinces));
+    // console.log("%c provinces", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(provinces));
 
     if (provinces.length > 0) {
       $("#AddressProvinceContainer").css("display", "block");
@@ -1595,7 +1597,7 @@
         );
       });
     } else {
-      console.log("%c 关闭省份", "color:green;font-weight:bold");
+      // console.log("%c 关闭省份", "color:green;font-weight:bold");
       $("#AddressProvinceContainer").css("display", "none");
     }
   }
@@ -1646,8 +1648,8 @@
     });
 
     $(".each-radio").click(function () {
-      console.log("%c $(this)", "color:green;font-weight:bold");
-      console.log($(this).find("input:radio"));
+      // console.log("%c $(this)", "color:green;font-weight:bold");
+      // console.log($(this).find("input:radio"));
 
       $(this).find("input:radio").prop("checked", true); // radio checked
     });
@@ -1673,8 +1675,8 @@
     return false;
   }
   function initFormValue(formObj) {
-    console.log("%c 需要恢复的值", "color:green;font-weight:bold");
-    console.log(JSON.stringify(formObj));
+    // console.log("%c 需要恢复的值", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(formObj));
 
     for (let x in formObj) {
       $("#" + x).val(formObj[x]);
@@ -1718,8 +1720,8 @@
       },
       data: JSON.stringify(payload),
       success: function (r) {
-        console.log("%c 结账返回", "color:green;font-weight:bold");
-        console.log(JSON.stringify(r));
+        // console.log("%c 结账返回", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(r));
 
         $("#check-btn").removeClass("btn--loading").prop("disabled", false);
 
@@ -1802,20 +1804,22 @@
       dataType: "json",
 
       success: function (cart) {
-        console.log("%c 购物车", "color:green;font-weight:bold");
-        console.log(JSON.stringify(cart));
+
+        // console.log("%c 购物车", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(cart));
 
         // free shipping?
         if (cart.total_price > freeShippingPrice) {
-          console.log("%c Free shipping", "color:green;font-weight:bold");
+
+          // console.log("%c Free shipping", "color:green;font-weight:bold");
+
           $(".free-shipping-wrapper").fadeIn();
           $("#free-shipping").prop("checked", true);
           $(".standard-shipping-wrapper").hide();
         }
 
         if (cart.token && cart.item_count >= 1) {
-          console.dir("token");
-          console.log(cart.token);
+
 
           $.ajax({
             type: "POST",
@@ -1844,7 +1848,7 @@
                 if (!!r.email) {
                   r.address.email = r.email;
                 }
-                console.log("%c 已有地址同步", "color:green;font-weight:bold");
+                // console.log("%c 已有地址同步", "color:green;font-weight:bold");
                 initFormValue(r.address);
               }
             },
@@ -1884,8 +1888,9 @@
   function handleAddress() {
     $("#country").on("change", function () {
       let country = $("#country").val();
-      console.log("%c country", "color:green;font-weight:bold");
-      console.log(JSON.stringify(country));
+
+      // console.log("%c country", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(country));
 
       let provinces = $("#country option:selected").attr("data-provinces");
       // console.log("%c provinces ", "color:green;font-weight:bold");
@@ -1904,7 +1909,7 @@
           );
         });
       } else {
-        console.log("%c 关闭省份", "color:green;font-weight:bold");
+        // console.log("%c 关闭省份", "color:green;font-weight:bold");
         $("#AddressProvinceContainer").css("display", "none");
       }
     });
@@ -1960,8 +1965,8 @@
 
         payload.checkout = true;
 
-        console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
-        console.log(JSON.stringify(payload));
+        // console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(payload));
 
         syncCart(payload);
       },
@@ -1988,8 +1993,8 @@
       $(".discount-value").html(discount);
     }
 
-    console.log("%c code", "color:green;font-weight:bold");
-    console.log(JSON.stringify(e));
+    // console.log("%c code", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(e));
 
     if (!e) {
       showError("Code is missing");
@@ -2011,14 +2016,14 @@
         orderId: window.globalCart.id,
       }),
       success: function (r) {
-        console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
-        console.log(JSON.stringify(r));
+        // console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(r));
         if (r.code === 1) {
           showError(r.msg);
         }
 
-        console.log("%c type", "color:green;font-weight:bold");
-        console.log(JSON.stringify(typeof r));
+        // console.log("%c type", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(typeof r));
 
         if ($.isArray(r)) {
           showError(r[0].message);
@@ -2040,8 +2045,8 @@
             showDiscountPrice = total - value;
           }
 
-          console.log("%c showDiscountPrice", "color:green;font-weight:bold");
-          console.log(JSON.stringify(showDiscountPrice));
+          // console.log("%c showDiscountPrice", "color:green;font-weight:bold");
+          // console.log(JSON.stringify(showDiscountPrice));
 
           let discount = "- $ " + (total - showDiscountPrice).toFixed(2);
           let discountedValue = "$ " + showDiscountPrice.toFixed(2);
@@ -2065,11 +2070,11 @@
     let token = getParams("token");
 
     if (!!successId && token) {
-      console.log("%c successId", "color:green;font-weight:bold");
-      console.log(JSON.stringify(successId));
+      // console.log("%c successId", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(successId));
 
-      console.log("%c token", "color:green;font-weight:bold");
-      console.log(JSON.stringify(token));
+      // console.log("%c token", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(token));
 
       handleSuccess(successId, token);
       return; //
@@ -2085,10 +2090,8 @@
 
     $("#cart-wrapper").css("display", "block");
 
-    console.log("%c 🥬", "color:green;font-weight:bold");
 
     initCart(); // 初始化购物车
-    console.log("%c 执行次数", "color:green;font-weight:bold");
 
     initMovement(); // 一些jquery特效
 

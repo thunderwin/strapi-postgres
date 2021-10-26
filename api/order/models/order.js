@@ -17,13 +17,11 @@ module.exports = {
       if (order.active === false) {
         try {
           strapi.plugins["email"].services.email.send({
-            to: "woooms@qq.com",
-            from: "nathan@qq.com",
-            subject: "test email",
+            to: "nathan@wudizu.com",
+            from: "woooms@qq.com",
+            subject: "早上好",
             text: `
-              The comment #${order.id} contain a bad words.
-              Comment:
-              ${order.content}
+              你早上吃什么
             `,
           });
         } catch (error) {

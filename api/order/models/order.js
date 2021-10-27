@@ -1,4 +1,5 @@
 "use strict";
+const sgMail = require("@sendgrid/mail");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/concepts/models.html#lifecycle-hooks)
@@ -14,12 +15,12 @@ function genOrderConfirmEmailHTML(orderObj) {
   let body = `
   <p> ${items}  </p>
   <p> Amount: ${total} </p>
-`
+`;
 
   return {
     title: email_title,
-    body
-  }
+    body,
+  };
 }
 
 module.exports = {
@@ -31,7 +32,32 @@ module.exports = {
       console.dir("创建新订单结果");
       console.log(JSON.stringify(order));
 
+      // using Twilio SendGrid's v3 Node.js Library
+      // https://github.com/sendgrid/sendgrid-nodejs
+
+
+
       if (order.active === false) {
+
+        let html = genOrderConfirmEmailHTML(order);
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+          to: order.email, // Change to your recipient
+          from: "info@wudizu.com", // Change to your verified sender
+          subject: html.title,
+          html: html.body,
+        };
+        sgMail
+          .send(msg)
+          .then(() => {
+            console.log("Email sent");
+          })
+          .catch((err) => {
+            console.log(err.response.body)
+          });
+
+          return
+
         try {
           let html = genOrderConfirmEmailHTML(order);
 
@@ -40,11 +66,10 @@ module.exports = {
 
           strapi.plugins["email"].services.email.send({
             to: order.email,
-            from: "woooms@qq.com",
+            from: "info@wudizu.com",
             subject: html.title,
             html: html.body,
           });
-
         } catch (error) {
           return "email fault";
         }

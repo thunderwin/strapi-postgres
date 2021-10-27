@@ -11,10 +11,34 @@ function genOrderConfirmEmailHTML(orderObj) {
     return `<p> ${x.product_title}  X ${x.quantity}</p>`;
   });
   let total = orderObj.content.total_price;
+  let address = orderObj.address;
 
-  let body = `
-  <p> ${items}  </p>
-  <p> Amount: ${total} </p>
+  let body = `<h2>ORDER ${orderObj.id}</h2>
+<p>Thank you for your purchase!</p>
+<p>Hi ${
+    address.firstname
+  }, we're getting your order ready to be shipped. We will notify you when it has been sent.</p>
+
+
+<h3>Order summary</h3>
+<div>${items}</div>
+
+<p>Total : $ ${total/100}</p>
+
+
+<h3>Shipping information</h3>
+<p> ${address.firstname + " " + address.lastname} </p>
+<p> ${address.address1 + " " + address.address2} </p>
+<p> ${address.city + " " + address.country} </p>
+<p> ${address.zip + " " + address.phone} </p>
+
+
+<h3>Shipping method</h3>
+<p>${orderObj.shipping}</p>
+
+<h3>Payment method</h3>
+<p>${orderObj.payment}</p>
+
 `;
 
   return {
@@ -29,16 +53,13 @@ module.exports = {
     beforeCreate(data) {},
     // Called after an entry is created
     afterUpdate(order, params, data) {
-      console.dir("创建新订单结果");
-      console.log(JSON.stringify(order));
+      // console.dir("创建新订单结果");
+      // console.log(JSON.stringify(order));
 
       // using Twilio SendGrid's v3 Node.js Library
       // https://github.com/sendgrid/sendgrid-nodejs
 
-
-
       if (order.active === false) {
-
         let html = genOrderConfirmEmailHTML(order);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
@@ -53,10 +74,10 @@ module.exports = {
             console.log("Email sent");
           })
           .catch((err) => {
-            console.log(err.response.body)
+            console.log(err.response.body);
           });
 
-          return
+        return;
 
         try {
           let html = genOrderConfirmEmailHTML(order);

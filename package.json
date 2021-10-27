@@ -35,6 +35,8 @@
     "strapi-plugin-upload": "3.6.1",
     "strapi-plugin-users-permissions": "3.6.1",
     "strapi-provider-email-mailgun": "^3.6.8",
+    "strapi-provider-email-sendgrid": "^3.6.8",
+    "strapi-provider-email-smtp": "^1.0.3",
     "strapi-utils": "3.6.1"
   },
   "author": {

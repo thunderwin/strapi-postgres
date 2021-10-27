@@ -2,15 +2,13 @@ module.exports = ({ env }) => ({
   //  https://www.npmjs.com/package/strapi-provider-email-mailgun
   // ...
   email: {
-    provider: "mailgun",
+    provider: 'sendgrid',
     providerOptions: {
-      apiKey: env("MAILGUN_API_KEY"),
-      domain: env("MAILGUN_DOMAIN"), //Required if you have an account with multiple domains
-      host: env("MAILGUN_HOST", "api.mailgun.net"), //Optional. If domain region is Europe use 'api.eu.mailgun.net'
+      apiKey: env('SENDGRID_API_KEY'),
     },
     settings: {
-      defaultFrom: "woooms@qq.com", // set an gmail here
-      defaultReplyTo: "woooms@qq.com", // set an gmail heres
+      defaultFrom: 'info@wudizu.com',
+      defaultReplyTo: 'info@wudizu.com',
     },
   },
   // ...

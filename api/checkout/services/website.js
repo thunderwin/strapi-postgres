@@ -1,4 +1,13 @@
 const websites = {
+  "www.chocolateladie.com": {
+    paypalConfig: {
+      paypalAccount: "beeavern@163.com",
+      paypalId:
+        "ASXrp1yKHKzPNxHXE8_oHL8PoP_pqtCE9GsOrbIajds_tRvJg6QOqpOYYUZgNujdK65UJR5jvUvnbbHq",
+      paypalKey:
+        "ECj_FNMNZbYcBtbxX43KSkwg2KUIFekT9wXICvLBx7EZV44ECAMrpQPRxs15A8ZAI6JElsnc5NFmLIVV",
+    },
+  },
   "wudizu.myshopify.com": {
     paypalConfig: {
       paypalAccount: "free.lei.sheng-facilitator@gmail.com",

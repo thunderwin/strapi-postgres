@@ -32,10 +32,11 @@ function genPaypalClient(domain) {
   let paypalCredential = config(domain); //  拿到paypal 配置
   paypalCredential = paypalCredential.paypalConfig;
 
-  let environment = new paypal.core.SandboxEnvironment(
+  let environment =   new paypal.core.LiveEnvironment(
     paypalCredential.paypalId,
     paypalCredential.paypalKey
   );
+
   let client = new paypal.core.PayPalHttpClient(environment);
   let request = new paypal.orders.OrdersCreateRequest();
   return {
@@ -165,7 +166,7 @@ module.exports = {
 
     paypalCredential = webConfig.paypalConfig;
 
-    let environment = new paypal.core.SandboxEnvironment(
+    let environment = new paypal.core.LiveEnvironment(
       paypalCredential.paypalId,
       paypalCredential.paypalKey
     );

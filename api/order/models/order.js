@@ -44,6 +44,7 @@ module.exports = {
             subject: html.title,
             html: html.body,
           });
+
         } catch (error) {
           return "email fault";
         }

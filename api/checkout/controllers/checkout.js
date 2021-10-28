@@ -108,6 +108,10 @@ module.exports = {
       if (!!value.checkout) {
         // 如果要求结账, 获取paypal
         let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
+
+        console.log('%c paypalLinks','color:green;font-weight:bold')
+        console.log(JSON.stringify(paypalLinks))
+
         return ctx.send(paypalLinks);
       }
 
@@ -131,26 +135,29 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    // 1 查表获取coupon 信息
-    let info = await strapi.query("coupon").findOne({ code: value.couponCode });
+    // 1 验证 coupon 信息
+    let order = await strapi.query("order").findOne({ id: value.orderId });
 
-    console.dir("coupon 信息");
-    console.log(JSON.stringify(info));
+    let { valid, message,discount,couponData } = await strapi.services.coupon.verifyCoupon(
+      order,
+      value.couponCode
+    );
 
-    if (!info) {
+
+    if (!valid) {
       return ctx.send({
         code: 1,
-        msg: "Coupon code is not available.",
+        msg: message,
       });
     }
 
     // 2 更新到订单上
     let updatedOrder = await strapi
       .query("order")
-      .update({ id: value.orderId }, { coupon: info });
+      .update({ id: value.orderId }, { coupon: couponData, discount });
 
     if (updatedOrder.id) {
-      console.dir("订单更新成功，");
+      console.dir("订单更新成功");
 
       return ctx.send({
         code: 0,
@@ -231,28 +238,23 @@ module.exports = {
   },
 
   paypalNotify: async (ctx) => {
-
-
-
-
     let body = ctx.request.body;
     console.dir("%c paypal通知", "color:green;font-weight:bold");
     console.log(JSON.stringify(body));
 
     // 告诉收到了，别发了
-    ctx.send('OK');
+    ctx.send("OK");
 
     // 检查是不是真的来自paypal
-    let r = await strapi.services.paypal.paypalIPN(body)
+    let r = await strapi.services.paypal.paypalIPN(body);
 
-    if (!r) return
+    if (!r) return;
 
     // 先保存为日志
 
-    return await strapi.query('log-ipn').create({
+    return await strapi.query("log-ipn").create({
       body: body,
-      env: process.env.NODE_ENV
-    })
-
-  }
+      env: process.env.NODE_ENV,
+    });
+  },
 };

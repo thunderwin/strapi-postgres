@@ -532,13 +532,12 @@
             />
           </div> -->
 
-          <!-- 这里会显示paypal快速支付按钮 -->
+                <!-- 这里会显示paypal快速支付按钮 -->
                 <!-- {% if additional_checkout_buttons %}
                 <div class="additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
                 </div>
                 {% endif %} -->
-
               </div>
             </div>
           </div>
@@ -741,7 +740,7 @@
                   </div>
                   <div class="price-amount">$ 0</div>
                 </div>
-                <div class="times">(9-14 Business Days)  (Amount over $70+)</div>
+                <div class="times">(9-14 Business Days) (Amount over $70+)</div>
               </div>
 
               <div
@@ -1289,8 +1288,6 @@
                   {{ content_for_additional_checkout_buttons }}
                 </div>
                 {% endif %} -->
-
-
               </div>
             </div>
           </div>
@@ -1808,13 +1805,11 @@
       dataType: "json",
 
       success: function (cart) {
-
         // console.log("%c 购物车", "color:green;font-weight:bold");
         // console.log(JSON.stringify(cart));
 
         // free shipping?
         if (cart.total_price > freeShippingPrice) {
-
           // console.log("%c Free shipping", "color:green;font-weight:bold");
 
           $(".free-shipping-wrapper").fadeIn();
@@ -1823,8 +1818,6 @@
         }
 
         if (cart.token && cart.item_count >= 1) {
-
-
           $.ajax({
             type: "POST",
             contentType: "json",
@@ -2037,25 +2030,17 @@
           let coupon = r.data.coupon;
           let total = r.data.content.original_total_price * 0.01;
           let msg = coupon.label;
+          let discountList = r.data.discount;
+          let discountValue;
 
-          let type = coupon.type;
-          let value = coupon.value * 0.01;
-
-          let showDiscountPrice;
-
-          if (type === "percentage") {
-            showDiscountPrice = total - total * value;
-          } else if (type === "fixed") {
-            showDiscountPrice = total - value;
+          if (discountList.length > 0) {
+            discountValue = discountList[0].value * 0.01;
           }
 
-          // console.log("%c showDiscountPrice", "color:green;font-weight:bold");
-          // console.log(JSON.stringify(showDiscountPrice));
+           let showDiscountValue = "- $ " + discountValue.toFixed(2);
+           let showDiscountedValue = "$ " + (total - discountValue).toFixed(2);
 
-          let discount = "- $ " + (total - showDiscountPrice).toFixed(2);
-          let discountedValue = "$ " + showDiscountPrice.toFixed(2);
-
-          showSuccees(msg, discountedValue, discount);
+          showSuccees(msg, showDiscountedValue, showDiscountValue);
         }
       },
       error: function (e) {
@@ -2093,7 +2078,6 @@
     }
 
     $("#cart-wrapper").css("display", "block");
-
 
     initCart(); // 初始化购物车
 

@@ -63,20 +63,16 @@ async function fetchCartAndGenPaypalPayload(cart) {
   let shippingAddress = cart.address;
 
   let discountTotal = 0;
-  if (!!coupon && coupon.id) {
+  if ( cart.discount.length > 0) {
     console.dir("有折扣");
 
-    let couponType = coupon.type;
-    let couponValue = coupon.value;
-
-    if (couponType === "percentage") {
-      discountTotal = totalPrice * couponValue * 0.01;
-    } else if (type === "fixed") {
-      discountTotal = couponValue * 100;
-    }
 
     // 计算总折扣
-    discountTotal = discountTotal.toFixed(2);
+    discountTotal = cart.discount.reduce((acc, cur) => {
+      return acc + cur.value;
+    },0);
+
+    discountTotal = discountTotal/100
   }
 
   console.dir("总折扣");

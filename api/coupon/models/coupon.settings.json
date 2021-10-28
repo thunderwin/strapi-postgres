@@ -8,7 +8,7 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "label": {
@@ -34,13 +34,17 @@
       "type": "enumeration",
       "enum": [
         "fixed",
-        "percentage"
+        "percentage",
+        "itemPercentage"
       ],
       "default": "percentage"
     },
     "value": {
       "type": "decimal",
       "required": true
+    },
+    "restrict": {
+      "type": "json"
     }
   }
 }

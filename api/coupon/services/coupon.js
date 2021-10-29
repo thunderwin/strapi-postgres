@@ -8,20 +8,26 @@
 let handleRestrict = (coupon, order) => {
   // verify if the coupon is valid
   let amount = order.content.original_total_price;
-  let qty = order.content.items.quality;
+  let qty = order.content.item_count;
+
+  console.log(amount);
+  console.log(qty);
 
   if (!coupon.restrict) {
     return true;
   }
+  let keys = Object.keys(coupon.restrict);
 
-  switch (coupon.restrict) {
-    case "minQty":
-      return qty >= coupon.minQty;
-    case "minAmount":
-      return amount >= coupon.minAmount;
+  for (let i = 0; i < keys.length; i++) {
+    switch (keys[i]) {
+      case "minQty":
+        return qty >= coupon.restrict.minQty;
+      case "minAmount":
+        return amount >= coupon.restrict.minAmount;
 
-    default:
-      return true;
+      default:
+        return true;
+    }
   }
 };
 
@@ -34,7 +40,7 @@ let caculateDiscount = (coupon, order) => {
       return coupon.value;
     case "itemPercentage":
       let cheapItem = order.content.items.sort((a, b) => a.price - b.price)[0]; // find cheap item price
-      return (cheapItem.price ) * (coupon.value / 100);
+      return cheapItem.price * (coupon.value / 100);
     default:
       return 0;
   }
@@ -55,6 +61,9 @@ module.exports = {
     }
 
     let isValid = handleRestrict(couponData, order);
+    console.dir("isValid");
+    console.log(JSON.stringify(isValid));
+
     let discountAmount = caculateDiscount(couponData, order);
 
     let discountItem = {

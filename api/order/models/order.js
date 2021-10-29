@@ -7,9 +7,14 @@ const sgMail = require("@sendgrid/mail");
  */
 function genOrderConfirmEmailHTML(orderObj) {
   let email_title = `Thank you for your purchase!`;
+
   let items = orderObj.content.items.map((x) => {
-    return `<p> ${x.product_title}  X ${x.quantity}</p>`;
+    return `<p> ${x.product_title}  X ${x.quantity}</p>
+    <div> <img width="100" src="${x.image}" />  </div>
+    `;
   });
+
+
   let total = orderObj.content.total_price;
   let address = orderObj.address;
 

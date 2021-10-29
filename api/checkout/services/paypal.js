@@ -72,7 +72,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
       return acc + cur.value;
     },0);
 
-    discountTotal = discountTotal/100
+    discountTotal =( discountTotal/100).toFixed(2);
   }
 
   console.dir("总折扣");
@@ -152,9 +152,17 @@ module.exports = {
 
     // 4 执行支付
     request.requestBody(payload);
-    let response = await client.execute(request);
 
-    return response.result;
+    try {
+
+      let response = await client.execute(request);
+
+      return response.result;
+    } catch (error) {
+      console.dir('paypal key error')
+
+      throw error
+    }
   },
 
   async paypalCaptureOrder(token, domain) {

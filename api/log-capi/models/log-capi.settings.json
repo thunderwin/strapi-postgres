@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "log_capis",
+  "info": {
+    "name": "logCAPI"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "error": {
+      "type": "json"
+    }
+  }
+}

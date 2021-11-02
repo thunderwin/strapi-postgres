@@ -32,7 +32,7 @@ function genPaypalClient(domain) {
   let paypalCredential = config(domain); //  拿到paypal 配置
   paypalCredential = paypalCredential.paypalConfig;
 
-  let environment =   new paypal.core.LiveEnvironment(
+  let environment = new paypal.core.LiveEnvironment(
     paypalCredential.paypalId,
     paypalCredential.paypalKey
   );
@@ -63,16 +63,15 @@ async function fetchCartAndGenPaypalPayload(cart) {
   let shippingAddress = cart.address;
 
   let discountTotal = 0;
-  if ( cart.discount.length > 0) {
+  if (cart.discount && cart.discount.length > 0) {
     console.dir("有折扣");
-
 
     // 计算总折扣
     discountTotal = cart.discount.reduce((acc, cur) => {
       return acc + cur.value;
-    },0);
+    }, 0);
 
-    discountTotal =( discountTotal/100).toFixed(2);
+    discountTotal = (discountTotal / 100).toFixed(2);
   }
 
   console.dir("总折扣");
@@ -154,14 +153,13 @@ module.exports = {
     request.requestBody(payload);
 
     try {
-
       let response = await client.execute(request);
 
       return response.result;
     } catch (error) {
-      console.dir('paypal key error')
+      console.dir("paypal key error");
 
-      throw error
+      throw error;
     }
   },
 

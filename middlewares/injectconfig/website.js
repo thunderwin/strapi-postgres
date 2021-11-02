@@ -21,11 +21,6 @@ const websites = {
       paypalKey:
         "EFZrIisWYYC8jUYZSPWjJ6H5OItKYPuEDdUyn_avva8Hh4eLG34Kre2MxL7ZgPOtxvEqOOcrN863q_hi",
     },
-    facebookConfig: {
-      pixelId: "110986787786144",
-      pixelAccessToken:
-        "EAAny9poEXpcBAK2oKjlpINt2TbA6cDVTPvEaMyLI6yxObxwONc8I2XkMblfJTDcm8pJLrr9XATxHu7KQVaBSuEvZA8zZCvgxcsE9OOtiCUwYNmUBtDpTNVAy3piugOMqC2fc8eVoQAZC3d4SafM96xXGvBv4MsqjZBQAcd6sIBePt9F0PORMiUgIcqwoKIAZD",
-    },
   },
   "ivchicy.myshopify.com": {
     paypalConfig: {

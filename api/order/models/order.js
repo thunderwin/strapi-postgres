@@ -54,8 +54,22 @@ function genOrderConfirmEmailHTML(orderObj) {
 
 module.exports = {
   lifecycles: {
+    beforeFindOne(params, data) {
+
+    },
     // Called before an entry is created
     beforeCreate(data) {},
+    afterCreate(result, data){
+      // data 是前台发送来的
+      // result 是后台返回的
+
+
+
+
+
+    },
+
+
     // Called after an entry is created
     afterUpdate(order, params, data) {
       // console.dir("创建新订单结果");
@@ -101,5 +115,6 @@ module.exports = {
         }
       }
     },
+
   },
 };

@@ -11,5 +11,11 @@ module.exports = ({ env }) => ({
       defaultReplyTo: 'info@wudizu.com',
     },
   },
+
+  sentry: {
+    // https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-sentry
+    dsn: env('SENTRY_DSN'),
+    sendMetadata: true,
+  },
   // ...
 });

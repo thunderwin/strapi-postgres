@@ -158,6 +158,7 @@ module.exports = {
       return response.result;
     } catch (error) {
       console.dir("paypal key error");
+      strapi.plugins.sentry.services.sentry.sendError(error);
 
       throw error;
     }
@@ -188,6 +189,8 @@ module.exports = {
 
       return true;
     } catch (error) {
+      strapi.plugins.sentry.services.sentry.sendError(error);
+
       if (error.statusCode === 422) {
         console.log("%c 重复验证付款", "color:green;font-weight:bold");
         return true;

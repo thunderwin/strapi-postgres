@@ -83,6 +83,8 @@ module.exports = {
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
+      strapi.plugins.sentry.services.sentry.sendError(error);
+
       throw error;
     }
   },
@@ -109,6 +111,8 @@ module.exports = {
     const { error, value } = schema.validate(body);
 
     if (error) {
+      strapi.plugins.sentry.services.sentry.sendError(error);
+
       return ctx.send(error.details);
     }
 
@@ -149,6 +153,8 @@ module.exports = {
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
+
+      strapi.plugins.sentry.services.sentry.sendError(error);
 
       throw error;
     }
@@ -260,6 +266,8 @@ module.exports = {
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
+      strapi.plugins.sentry.services.sentry.sendError(error);
+
       throw error;
     }
   },

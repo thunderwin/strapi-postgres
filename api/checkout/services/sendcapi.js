@@ -78,7 +78,12 @@ module.exports = {
   // 有地址，邮箱，addPaymentinfo
   // 有checkout payment
 
-  initiateCheckout({ cart, capi, userIp, domain, userDetail = {} }) {
+  capi({ cart, capi, userIp, domain, userDetail = {} }) {
+
+    if (!domain){
+      throw new Error("domain is required");
+    }
+
     let websiteConfig = config(domain);
     let facebookConfig = websiteConfig.facebookConfig;
 
@@ -138,7 +143,7 @@ module.exports = {
     const eventRequest = new EventRequest(
       facebookConfig.pixelAccessToken,
       facebookConfig.pixelId
-    ).setEvents(eventsData);
+    ).setTestEventCode('TEST90933').setEvents(eventsData);
 
     console.dir("事件列表");
     console.log(JSON.stringify(eventsData));
@@ -152,38 +157,8 @@ module.exports = {
       }
     );
   },
-  addPaymentInfo(ctx) {
-    // 用户增加了账单地址，或者物流地址
-  },
-  purchase(ctx) {
-    // 跳到paypal
 
-    let current_timestamp = Math.floor(new Date() / 1000);
 
-    const eventsData = [serverEvent]; // 可以是数组，多个event
-
-    const eventRequest = new EventRequest(access_token, pixel_id).setEvents(
-      eventsData
-    );
-
-    eventRequest.execute().then(
-      (response) => {
-        console.log("Response: ", response);
-      },
-      (err) => {
-        console.error("Error: ", err);
-      }
-    );
-
-    // 发送事件
-    const serverEvent = new ServerEvent()
-      .setEventName("Purchase")
-      .setEventTime(current_timestamp)
-      .setUserData(userData)
-      .setCustomData(customData)
-      .setEventSourceUrl("http://jaspers-market.com/product/123")
-      .setActionSource("website");
-  },
 
   //TEST36073
 };

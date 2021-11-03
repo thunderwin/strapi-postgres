@@ -48,8 +48,8 @@ function genPaypalClient(domain) {
 async function fetchCartAndGenPaypalPayload(cart) {
   // 部获取购物车用来支付
 
-  console.dir("购物车");
-  console.log(JSON.stringify(cart));
+  // console.dir("购物车");
+  // console.log(JSON.stringify(cart));
 
   let coupon = cart.coupon;
   let c = cart.content; // 购物车
@@ -63,7 +63,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
   let shippingAddress = cart.address;
 
   let discountTotal = 0;
-  if (cart.discount && cart.discount.length > 0) {
+  if (!!cart.discount && cart.discount.length > 0) {
     console.dir("有折扣");
 
     // 计算总折扣

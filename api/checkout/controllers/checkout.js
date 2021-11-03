@@ -72,7 +72,7 @@ module.exports = {
 
 
 
-      return strapi.services.sendcapi.initiateCheckout({
+      return strapi.services.sendcapi.capi({
         cart: value.content, // 购物车
         capi: value.capi, // capi
         userIp: ctx.realIp,
@@ -91,8 +91,7 @@ module.exports = {
 
   updateOrder: async (ctx) => {
     let body = ctx.request.body;
-    console.dir("%c 结账参数", "color:green;font-weight:bold");
-    console.log(JSON.stringify(body));
+
 
     const schema = Joi.object({
       id: Joi.number().required(),
@@ -116,8 +115,8 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    console.dir("%c 数通过", "color:green;font-weight:bold");
-    console.log(JSON.stringify(value));
+    // console.dir("%c 数通过", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(value));
 
     try {
       let order = await strapi.query("order").update({ id: value.id }, value);
@@ -128,7 +127,7 @@ module.exports = {
       if (!!value.checkout) {
 
         // send evernt to capi
-        strapi.services.sendcapi.initiateCheckout({
+        strapi.services.sendcapi.capi({
           cart: value.content, // 购物车
           capi: value.capi, // capi
           userIp: ctx.realIp,

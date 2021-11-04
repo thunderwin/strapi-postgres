@@ -58,6 +58,9 @@
     },
     "discount": {
       "type": "json"
+    },
+    "paypal": {
+      "type": "json"
     }
   }
 }

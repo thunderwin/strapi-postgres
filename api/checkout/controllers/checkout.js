@@ -70,16 +70,12 @@ module.exports = {
 
       ctx.send(cart);
 
-
-
       return strapi.services.sendcapi.capi({
         cart: value.content, // 购物车
         capi: value.capi, // capi
         userIp: ctx.realIp,
         domain: value.domain,
       });
-
-
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -91,7 +87,6 @@ module.exports = {
 
   updateOrder: async (ctx) => {
     let body = ctx.request.body;
-
 
     const schema = Joi.object({
       id: Joi.number().required(),
@@ -124,36 +119,32 @@ module.exports = {
       console.dir("%c 再次同步购物车", "color:green;font-weight:bold");
       console.log(JSON.stringify(order.id));
 
-      if (!!value.checkout) {
-
-        // send evernt to capi
-        strapi.services.sendcapi.capi({
-          cart: value.content, // 购物车
-          capi: value.capi, // capi
-          userIp: ctx.realIp,
-          domain: order.domain,
-          userDetail:{
-            email: value.email,
-            phone: value.phone,
-          }
-        });
-        // 如果要求结账, 获取paypal
-        let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
-
-        console.log("%c paypalLinks", "color:green;font-weight:bold");
-        console.log(JSON.stringify(paypalLinks));
-
-
-
-        return ctx.send(paypalLinks);
+      if (!value.checkout) {
+        return ctx.send(order);
       }
 
-      return ctx.send(order);
+      // send evernt to capi
+      strapi.services.sendcapi.capi({
+        cart: value.content, // 购物车
+        capi: value.capi, // capi
+        userIp: ctx.realIp,
+        domain: order.domain,
+        userDetail: {
+          email: value.email,
+          phone: value.phone,
+        },
+      });
+      // 如果要求结账, 获取paypal
+      let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
+
+      // console.log("%c paypalLinks", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(paypalLinks));
+
+      return ctx.send(paypalLinks);
     } catch (error) {
-      console.dir("获取购物车出错", "color:green;font-weight:bold");
+      console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
 
-      strapi.plugins.sentry.services.sentry.sendError(error);
 
       throw error;
     }
@@ -177,6 +168,10 @@ module.exports = {
       await strapi.services.coupon.verifyCoupon(order, value.couponCode);
 
     if (!valid) {
+
+
+      strapi.services.log.logError('优惠券不可用',message)
+
       return ctx.send({
         code: 1,
         msg: message,
@@ -256,7 +251,10 @@ module.exports = {
 
       let order = await strapi
         .query("order")
-        .update({ id }, { paymentStatus: "success", active: false });
+        .update(
+          { id },
+          { paymentStatus: "success", active: false, paypal: verifyPayment }
+        );
 
       console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
       console.log(JSON.stringify(order.id));

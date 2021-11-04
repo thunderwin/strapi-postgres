@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "log_checkouts",
+  "info": {
+    "name": "logCheckout"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "reason": {
+      "type": "string"
+    },
+    "error": {
+      "type": "json"
+    }
+  }
+}

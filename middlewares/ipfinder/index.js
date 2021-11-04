@@ -7,8 +7,8 @@ module.exports = (strapi) => {
 
         const clientIp = requestIp.getClientIp(ctx);
 
-        console.dir('IP')
-        console.log(clientIp)
+        // console.dir('IP')
+        // console.log(clientIp)
 
 
         ctx.realIp = clientIp;

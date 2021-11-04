@@ -32,10 +32,16 @@ function genPaypalClient(domain) {
   let paypalCredential = config(domain); //  拿到paypal 配置
   paypalCredential = paypalCredential.paypalConfig;
 
-  let environment = new paypal.core.LiveEnvironment(
-    paypalCredential.paypalId,
-    paypalCredential.paypalKey
-  );
+  let environment =
+    process.env.NODE_ENV === "development"
+      ? new paypal.core.SandboxEnvironment(
+          paypalCredential.paypalId,
+          paypalCredential.paypalKey
+        )
+      : new paypal.core.LiveEnvironment(
+          paypalCredential.paypalId,
+          paypalCredential.paypalKey
+        );
 
   let client = new paypal.core.PayPalHttpClient(environment);
   let request = new paypal.orders.OrdersCreateRequest();
@@ -126,7 +132,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
             address_line_2: shippingAddress.address2 || "",
             admin_area_2: shippingAddress.city,
             admin_area_1: shippingAddress.province,
-            postal_code: shippingAddress.zip,
+            postal_code: shippingAddress.zip || "35238",
             country_code: getCode(shippingAddress.country) || "US",
           },
         },
@@ -169,10 +175,16 @@ module.exports = {
 
     paypalCredential = webConfig.paypalConfig;
 
-    let environment = new paypal.core.LiveEnvironment(
-      paypalCredential.paypalId,
-      paypalCredential.paypalKey
-    );
+    let environment =
+      process.env.NODE_ENV === "development"
+        ? new paypal.core.SandboxEnvironment(
+            paypalCredential.paypalId,
+            paypalCredential.paypalKey
+          )
+        : new paypal.core.LiveEnvironment(
+            paypalCredential.paypalId,
+            paypalCredential.paypalKey
+          );
 
     let client = new paypal.core.PayPalHttpClient(environment);
     let request = new paypal.orders.OrdersCaptureRequest(token);
@@ -184,12 +196,23 @@ module.exports = {
       console.log("付款验证通过" + JSON.stringify(response));
 
       if (response.statusCode !== 201 || !response.result.id) {
+        strapi.services.log.logError("付款验证状态不对", response);
         return false;
       }
 
-      return true;
+      function genResponse(response) {
+        return {
+          paypalDebugId: response.headers['paypal-debug-id'],
+          transactionId: response.result.id,
+          account: paypalCredential.paypalAccount,
+          payer: response.result.payer,
+        };
+      }
+
+      // paypalCredential.paypalAccount  也需要更新
+      return genResponse(response);
     } catch (error) {
-      strapi.plugins.sentry.services.sentry.sendError(error);
+      strapi.services.log.logError("捕获付款错误", error);
 
       if (error.statusCode === 422) {
         console.log("%c 重复验证付款", "color:green;font-weight:bold");

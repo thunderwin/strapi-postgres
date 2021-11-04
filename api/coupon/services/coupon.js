@@ -48,12 +48,7 @@ module.exports = {
     console.dir("code");
     console.log(JSON.stringify(code));
 
-    const couponData = await strapi.query('coupon').findOne({ code });
-
-
-    console.log('%c couponData','color:green;font-weight:bold')
-    console.log(JSON.stringify(couponData))
-
+    let couponData = await strapi.query('coupon').findOne({ code });
 
     if (!couponData) {
       console.log("%c couponData is null","color:red;font-weight:bold")

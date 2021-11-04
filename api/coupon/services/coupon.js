@@ -55,6 +55,8 @@ module.exports = {
       return {
         valid: false,
         message: "Coupon not found",
+        discount: null,
+        couponData: null,
       };
     }
 

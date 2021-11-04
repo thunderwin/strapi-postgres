@@ -169,7 +169,6 @@ module.exports = {
         await strapi.services.coupon.verifyCoupon(order, value.couponCode);
 
       if (!valid) {
-        strapi.services.log.logError("优惠券不可用", message);
 
         return ctx.send({
           code: 1,
@@ -191,6 +190,10 @@ module.exports = {
         });
       }
     } catch (error) {
+
+      console.dir('优惠券出错误')
+      console.log(error)
+
       strapi.services.log.logError("使用优惠券失败", error);
     }
 

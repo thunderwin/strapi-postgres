@@ -176,22 +176,22 @@ module.exports = {
           msg: message,
         });
       }
+
+      // 2 更新到订单上
+      let updatedOrder = await strapi
+        .query("order")
+        .update({ id: value.orderId }, { coupon: couponData, discount });
+
+      if (updatedOrder.id) {
+        console.dir("订单更新成功");
+
+        return ctx.send({
+          code: 0,
+          data: updatedOrder,
+        });
+      }
     } catch (error) {
-      strapi.services.log.logError("验证优惠券失败", error);
-    }
-
-    // 2 更新到订单上
-    let updatedOrder = await strapi
-      .query("order")
-      .update({ id: value.orderId }, { coupon: couponData, discount });
-
-    if (updatedOrder.id) {
-      console.dir("订单更新成功");
-
-      return ctx.send({
-        code: 0,
-        data: updatedOrder,
-      });
+      strapi.services.log.logError("使用优惠券失败", error);
     }
 
     //

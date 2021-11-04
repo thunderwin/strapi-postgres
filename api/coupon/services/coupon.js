@@ -50,13 +50,20 @@ module.exports = {
 
     const couponData = await strapi.query('coupon').findOne({ code });
 
+
+    console.log('%c couponData','color:green;font-weight:bold')
+    console.log(JSON.stringify(couponData))
+
+
     if (!couponData) {
+      console.log("%c couponData is null","color:red;font-weight:bold")
       return {
         valid: false,
         message: "Coupon not found",
       };
     }
 
+    // 优惠券存在，查看是不是可用，和计算折扣
     let isValid = handleRestrict(couponData, order);
     console.dir("isValid");
     console.log(JSON.stringify(isValid));

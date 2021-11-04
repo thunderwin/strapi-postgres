@@ -48,7 +48,7 @@ module.exports = {
     console.dir("code");
     console.log(JSON.stringify(code));
 
-    const couponData = await strapi.services.coupon.findOne({ code });
+    const couponData = await strapi.query('coupon').findOne({ code });
 
     if (!couponData) {
       return {

@@ -145,7 +145,6 @@ module.exports = {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
 
-
       throw error;
     }
   },
@@ -157,25 +156,28 @@ module.exports = {
       orderId: Joi.number().required(),
     });
     const { error, value } = schema.validate(body);
+
     if (error) {
       return ctx.send(error.details);
     }
 
-    // 1 验证 coupon 信息
-    let order = await strapi.query("order").findOne({ id: value.orderId });
+    try {
+      // 1 验证 coupon 信息
+      let order = await strapi.query("order").findOne({ id: value.orderId });
 
-    let { valid, message, discount, couponData } =
-      await strapi.services.coupon.verifyCoupon(order, value.couponCode);
+      let { valid, message, discount, couponData } =
+        await strapi.services.coupon.verifyCoupon(order, value.couponCode);
 
-    if (!valid) {
+      if (!valid) {
+        strapi.services.log.logError("优惠券不可用", message);
 
-
-      strapi.services.log.logError('优惠券不可用',message)
-
-      return ctx.send({
-        code: 1,
-        msg: message,
-      });
+        return ctx.send({
+          code: 1,
+          msg: message,
+        });
+      }
+    } catch (error) {
+      strapi.services.log.logError("验证优惠券失败", error);
     }
 
     // 2 更新到订单上

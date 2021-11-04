@@ -94,7 +94,9 @@ async function fetchCartAndGenPaypalPayload(cart) {
       {
         amount: {
           currency_code: currency,
-          value: (totalPrice - discountTotal + cart.shippingFee).toFixed(2),
+          value: (totalPrice - discountTotal + cart.shippingFee / 100).toFixed(
+            2
+          ),
           breakdown: {
             item_total: {
               currency_code: currency, // 不含税的商品总价
@@ -102,7 +104,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
             },
             shipping: {
               currency_code: currency,
-              value: cart.shippingFee,
+              value: (cart.shippingFee / 100).toFixed(2),
             },
             discount: {
               currency_code: currency,
@@ -202,7 +204,7 @@ module.exports = {
 
       function genResponse(response) {
         return {
-          paypalDebugId: response.headers['paypal-debug-id'],
+          paypalDebugId: response.headers["paypal-debug-id"],
           transactionId: response.result.id,
           account: paypalCredential.paypalAccount,
           payer: response.result.payer,

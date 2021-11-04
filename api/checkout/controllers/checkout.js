@@ -79,7 +79,8 @@ module.exports = {
     } catch (error) {
       console.dir("获取购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
-      strapi.plugins.sentry.services.sentry.sendError(error);
+
+      strapi.services.log.logError("初始化购物车出错", error);
 
       throw error;
     }
@@ -105,8 +106,6 @@ module.exports = {
     const { error, value } = schema.validate(body);
 
     if (error) {
-      strapi.plugins.sentry.services.sentry.sendError(error);
-
       return ctx.send(error.details);
     }
 
@@ -145,6 +144,8 @@ module.exports = {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
 
+      strapi.services.log.logError("获取支付链接出错", error);
+
       throw error;
     }
   },
@@ -169,7 +170,6 @@ module.exports = {
         await strapi.services.coupon.verifyCoupon(order, value.couponCode);
 
       if (!valid) {
-
         return ctx.send({
           code: 1,
           msg: message,
@@ -190,9 +190,8 @@ module.exports = {
         });
       }
     } catch (error) {
-
-      console.dir('优惠券出错误')
-      console.log(error)
+      console.dir("优惠券出错误");
+      console.log(error);
 
       strapi.services.log.logError("使用优惠券失败", error);
     }
@@ -268,7 +267,9 @@ module.exports = {
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
-      strapi.plugins.sentry.services.sentry.sendError(error);
+      strapi.services.log.logError("生产订单出错", error);
+
+
 
       throw error;
     }

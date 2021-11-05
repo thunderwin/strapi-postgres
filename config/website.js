@@ -11,8 +11,7 @@ const websites = {
       pixelId: "110986787786144",
       pixelAccessToken:
         "EAAny9poEXpcBAK2oKjlpINt2TbA6cDVTPvEaMyLI6yxObxwONc8I2XkMblfJTDcm8pJLrr9XATxHu7KQVaBSuEvZA8zZCvgxcsE9OOtiCUwYNmUBtDpTNVAy3piugOMqC2fc8eVoQAZC3d4SafM96xXGvBv4MsqjZBQAcd6sIBePt9F0PORMiUgIcqwoKIAZD",
-      capiTestId:'TEST90933'
-
+      capiTestId: "TEST90933",
     },
   },
   "www.ivchicy.com": {
@@ -27,7 +26,7 @@ const websites = {
       pixelId: "474956070463289",
       pixelAccessToken:
         "EAAPP4FqfQH8BAMHj9BB2usiUCHMQHxsCZCjZBexZAz4MDkDF7WovnrnUrFQsgfaDX3n8TGX8QFP7q3PJMJ1o4rA8IF9bWPEWmc0Yv1xIBb42d4gfekEOZCZBhYuxBel98WAp4H0EIGcaqQweoqge2MadRWu4W6oeAAeGHPZCzP4fWFnJBYZAYGZA",
-      capiTestId:'TEST30858'
+      capiTestId: "TEST30858",
     },
   },
   "wudizu.myshopify.com": {
@@ -53,27 +52,8 @@ const websites = {
         "EFZrIisWYYC8jUYZSPWjJ6H5OItKYPuEDdUyn_avva8Hh4eLG34Kre2MxL7ZgPOtxvEqOOcrN863q_hi",
     },
   },
-  "www.ivchicy.com": {
-    paypalConfig: {
-      paypalAccount: "free.lei.sheng-facilitator@gmail.com",
-      paypalId:
-        "ASnwz_T0VEvmifWp9MkaKro84lGBjdhNcUAw7lrWeVcNAeg2PzdqY32QxN9wFoxVLwTYmGNKgEJbpilk",
-      paypalKey:
-        "EFZrIisWYYC8jUYZSPWjJ6H5OItKYPuEDdUyn_avva8Hh4eLG34Kre2MxL7ZgPOtxvEqOOcrN863q_hi",
-    },
-  },
 };
 
 module.exports = function (domain) {
-  return (
-    websites[domain] || {
-      paypalConfig: {
-        paypalAccount: "free.lei.sheng-facilitator@gmail.com",
-        paypalId:
-          "ASnwz_T0VEvmifWp9MkaKro84lGBjdhNcUAw7lrWeVcNAeg2PzdqY32QxN9wFoxVLwTYmGNKgEJbpilk",
-        paypalKey:
-          "EFZrIisWYYC8jUYZSPWjJ6H5OItKYPuEDdUyn_avva8Hh4eLG34Kre2MxL7ZgPOtxvEqOOcrN863q_hi",
-      },
-    }
-  );
+  return websites[domain];
 };

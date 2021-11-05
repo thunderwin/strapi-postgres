@@ -10,15 +10,7 @@ const EventRequest = bizSdk.EventRequest;
 const UserData = bizSdk.UserData;
 const ServerEvent = bizSdk.ServerEvent;
 
-const access_token = "<ACCESS_TOKEN>";
-const pixel_id = "<ADS_PIXEL_ID>";
 
-const api = bizSdk.FacebookAdsApi.init(access_token);
-
-const version = "v12.0";
-const endpoint = "https://graph.facebook.com/";
-
-const axios = require("axios");
 
 // curl -i -X POST \
 //  "https://graph.facebook.com/v12.0/{PIXEL_ID}/events/?access_token=EAAMXXNt4pbABAEKyDOE8nMMcVZAMSdeaZBkOjHqX11HMYfra0ZCwKVIVzzxebbUCyZAV1mLwPQXviPlUMTuYLioaJLXwZBTsv9xmibaShtN1ZAMENoInW2PzZCxe5YH3l0GF7cuLX6C8XuK4QAkMYecxRztiiAkFAkk4JHwmdSaoZAp2SmmTg13dgiRLCzQbuP1upz5po4dtNAmjSZCevdpVZCzp1UZBYTqCK6shkVkXmZC8wypbOuY4qngJ"
@@ -85,6 +77,10 @@ module.exports = {
     }
 
     let websiteConfig = config(domain);
+
+    console.log('%c ?????','color:green;font-weight:bold')
+    console.log(JSON.stringify(websiteConfig))
+
     let facebookConfig = websiteConfig.facebookConfig;
 
     const api = bizSdk.FacebookAdsApi.init(facebookConfig.pixelAccessToken);

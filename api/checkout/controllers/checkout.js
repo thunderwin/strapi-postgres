@@ -62,6 +62,7 @@ module.exports = {
       }
 
       console.dir("同步订单");
+      if (!cart.tracking) cart.tracking = [];
       cart.tracking = cart.tracking.concat([value.capi]);
 
       console.dir('cart.tracking')

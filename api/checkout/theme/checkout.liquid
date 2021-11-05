@@ -1314,7 +1314,7 @@
         country: {
           required: true,
         },
-        zip:{
+        zip: {
           required: true,
         }
       },
@@ -1510,7 +1510,7 @@
 
         // capi
         let capi = CAPI() //get capi
-        console.log('%c capi','color:green;font-weight:bold')
+        console.log('%c capi', 'color:green;font-weight:bold')
         console.log(JSON.stringify(capi))
 
 
@@ -1530,7 +1530,7 @@
               token: cart.token,
               content: cart,
               domain: domain,
-              capi:capi,
+              capi: capi,
             }),
 
             success: function (r) {
@@ -1582,22 +1582,36 @@
 
     let fbp = document.cookie.split(';').filter(c => c.includes('_fbp=')).map(c => c.split('_fbp=')[1]);
     let fbc = document.cookie.split(';').filter(c => c.includes('_fbc=')).map(c => c.split('_fbc=')[1]);
+    let params = document.cookie.split(';').filter(c => c.includes('custom_params=')).map(c => c.split('custom_params=')[1]);
+
     fbp = (fbp.length && fbp[0]) || null;
     fbc = (fbc.length && fbc[0]) || null;
+    params = (params.length && params[0]) || null;
 
     if (!fbc && window.location.search.includes('fbclid=')) {
       fbc = 'fb.1.' + (+new Date()) + '.' + window.location.search.split('fbclid=')[1];
+    }
+
+    function genUrlParams() {
+      let obj = {}
+      params.split('&').forEach(x => {
+        let [key, value] = x.split('=');
+        obj[key] = value;
+      });
+      return obj;
     }
 
     return {
       fbp,
       fbc,
       userAgent: navigator.userAgent,
-      "url": window.location.origin + window.location.pathname
+      "url": window.location.origin + window.location.pathname,
+      params: params? genUrlParams() : {}
     }
 
 
   }
+
 
   // 表单使用教程 https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
 

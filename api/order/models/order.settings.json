@@ -61,6 +61,9 @@
     },
     "paypal": {
       "type": "json"
+    },
+    "tracking": {
+      "type": "json"
     }
   }
 }

@@ -40,6 +40,7 @@ module.exports = {
       return ctx.send(error.details);
     }
 
+
     try {
       let cart;
       cart = await strapi
@@ -55,16 +56,23 @@ module.exports = {
           token: value.token,
           content: value.content,
           domain: value.domain,
+          tracking: value.capi ? [value.capi] : [],
           active: true, // 新建的订单 active
         });
       }
 
       console.dir("同步订单");
+      cart.tracking = cart.tracking.concat([value.capi]);
+
+      console.dir('cart.tracking')
+      console.log(JSON.stringify(cart.tracking))
+
 
       cart = await strapi.query("order").update(
         { id: cart.id },
         {
           content: value.content,
+          tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
         }
       );
 
@@ -268,8 +276,6 @@ module.exports = {
       console.dir("生产订单出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
       strapi.services.log.logError("生产订单出错", error);
-
-
 
       throw error;
     }

@@ -52,12 +52,10 @@ module.exports = {
     const { shop, hmac, code, state } = ctx.query;
     const stateCookie = cookie.parse(ctx.headers.cookie).state;
 
-    console.log("%c stateCookie", "color:green;font-weight:bold");
-    console.log(JSON.stringify(stateCookie));
-
     if (state !== stateCookie) {
       return ctx.send("Request origin cannot be verified");
     }
+
 
     if (shop && hmac && code) {
       const queryMap = Object.assign({}, ctx.query);
@@ -85,6 +83,7 @@ module.exports = {
       if (!hashEquals) {
         return ctx.send("HMAC validation failed");
       }
+
       const accessTokenRequestUrl =
         "https://" + shop + "/admin/oauth/access_token";
       const accessTokenPayload = {
@@ -93,9 +92,17 @@ module.exports = {
         code,
       };
 
+      console.dir('accessTokenRequestUrl')
+      console.log(JSON.stringify(accessTokenRequestUrl))
+
+
       request
         .post(accessTokenRequestUrl, { json: accessTokenPayload })
         .then((accessTokenResponse) => {
+
+          console.dir('accessTokenResponse')
+          console.log(JSON.stringify(accessTokenResponse))
+
           const accessToken = accessTokenResponse.access_token;
           const shopRequestURL =
             "https://" + shop + "/admin/api/2020-04/shop.json";
@@ -107,13 +114,21 @@ module.exports = {
               ctx.redirect("https://" + shop + "/admin/apps");
             })
             .catch((error) => {
+              console.log("%c error", "color:red;font-weight:bold");
               ctx.send(error.error.error_description);
             });
         })
         .catch((error) => {
+          console.log("%c error", "color:red;font-weight:bold");
+
+          console.log(error.error.error_description);
+
           ctx.send(error.error.error_description);
         });
+
+
     } else {
+
       ctx.send("Required parameters missing");
     }
   },

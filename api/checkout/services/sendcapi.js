@@ -143,7 +143,7 @@ module.exports = {
     const eventRequest = new EventRequest(
       facebookConfig.pixelAccessToken,
       facebookConfig.pixelId
-    ).setTestEventCode('TEST90933').setEvents(eventsData);
+    ).setTestEventCode(facebookConfig.capiTestId).setEvents(eventsData);
 
     console.dir("事件列表");
     console.log(JSON.stringify(eventsData));

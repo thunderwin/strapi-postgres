@@ -1606,7 +1606,7 @@
       fbc,
       userAgent: navigator.userAgent,
       "url": window.location.origin + window.location.pathname,
-      params: params? genUrlParams() : {}
+      params: params ? genUrlParams() : {}
     }
 
 
@@ -1819,5 +1819,12 @@
     initMovement(); // 一些jquery特效
 
     initFormValidation(); // 开启表单验证
+
+
+    $( window ).unload(function() {
+  return "Handler for .unload() called.";
+});
+
+
   });
 </script>

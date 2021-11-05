@@ -101,7 +101,7 @@ module.exports = {
     const schema = Joi.object({
       id: Joi.number().required(),
       token: Joi.string().trim().required(),
-      email: Joi.string().trim().email(),
+      email: Joi.string().trim().email().lowercase(),
       content: Joi.object().required(),
       address: Joi.object(),
       shipping: Joi.string(),

@@ -1,7 +1,7 @@
 "use strict";
 const bizSdk = require("facebook-nodejs-business-sdk");
 
-const config = require("./website");
+const config = require("../../../config/website");
 
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;

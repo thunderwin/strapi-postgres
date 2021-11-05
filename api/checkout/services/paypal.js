@@ -1,4 +1,4 @@
-const config = require("./website");
+const config = require("../../../config/website");
 const paypal = require("@paypal/checkout-server-sdk");
 const { getCode } = require("country-list");
 const axios = require("axios");

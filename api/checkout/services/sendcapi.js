@@ -1,7 +1,7 @@
 "use strict";
 const bizSdk = require("facebook-nodejs-business-sdk");
 
-const config = require("../../../config/website");
+const {websites} = require("../../../config/website");
 
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;
@@ -76,7 +76,7 @@ module.exports = {
       throw new Error("domain is required");
     }
 
-    let websiteConfig = config(domain);
+    let websiteConfig = websites[domain];
 
     console.log('%c ?????','color:green;font-weight:bold')
     console.log(JSON.stringify(websiteConfig))

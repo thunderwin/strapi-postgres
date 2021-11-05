@@ -1,4 +1,4 @@
-const config = require("../../../config/website");
+const {websites} = require("../../../config/website");
 const paypal = require("@paypal/checkout-server-sdk");
 const { getCode } = require("country-list");
 const axios = require("axios");
@@ -29,7 +29,7 @@ sb-qolrx340835@business.example.com
 //   "EP5SHbGNiYoBx7x0Y2VAInORcFsiyeCHuH0DhHGj3Y8ecnhJ2kaNBhOALZxiOttH1ZvOXeQW8wprPCQO";
 
 function genPaypalClient(domain) {
-  let paypalCredential = config(domain); //  拿到paypal 配置
+  let paypalCredential = websites[domain]; //  拿到paypal 配置
   paypalCredential = paypalCredential.paypalConfig;
 
   let environment =
@@ -173,7 +173,7 @@ module.exports = {
   },
 
   async paypalCaptureOrder(token, domain) {
-    let webConfig = config(domain); //  拿到paypal 配置
+    let webConfig = websites[domain]; //  拿到paypal 配置
 
     paypalCredential = webConfig.paypalConfig;
 

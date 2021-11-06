@@ -66,7 +66,7 @@ module.exports = {
     console.log(body);
 
     const schema = Joi.object({
-      _limit: Joi.number().default(4),
+      _limit: Joi.number().default(10),
       _sort: Joi.string().default("id:desc"),
       _start: Joi.number().min(0).default(0),
       paymentStatus: Joi.string(),
@@ -108,6 +108,8 @@ module.exports = {
             error: "没有权限",
           });
         }
+        params._where.domain_in = [value.domain];
+
       }
 
       if (Array.isArray(value.domain)) {

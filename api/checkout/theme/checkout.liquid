@@ -1493,9 +1493,8 @@
   }
   function initCart() {
 
-    fbq('track', 'InitiateCheckout');
 
-    fbq('track', 'AddPaymentInfo');
+
 
 
     let domain = document.domain;
@@ -1817,6 +1816,12 @@
     $("#cart-wrapper").css("display", "block");
 
     initCart(); // 初始化购物车
+
+    window.addEventListener('load', function () {
+      fbq('track', 'InitiateCheckout');
+      fbq('track', 'AddPaymentInfo');
+    });
+
 
     initMovement(); // 一些jquery特效
 

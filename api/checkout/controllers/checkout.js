@@ -77,7 +77,7 @@ module.exports = {
         }
       );
 
-      ctx.send(cart);
+       return ctx.send(cart);
 
       return strapi.services.sendcapi.capi({
         cart: value.content, // 购物车
@@ -132,16 +132,16 @@ module.exports = {
       }
 
       // send evernt to capi
-      strapi.services.sendcapi.capi({
-        cart: value.content, // 购物车
-        capi: value.capi, // capi
-        userIp: ctx.realIp,
-        domain: order.domain,
-        userDetail: {
-          email: value.email,
-          phone: value.phone,
-        },
-      });
+      // strapi.services.sendcapi.capi({
+      //   cart: value.content, // 购物车
+      //   capi: value.capi, // capi
+      //   userIp: ctx.realIp,
+      //   domain: order.domain,
+      //   userDetail: {
+      //     email: value.email,
+      //     phone: value.phone,
+      //   },
+      // });
       // 如果要求结账, 获取paypal
       let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
 

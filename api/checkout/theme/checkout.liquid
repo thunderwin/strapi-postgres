@@ -1394,6 +1394,9 @@
   }
 
   function syncCart(payload) {
+
+    fbq('track', 'AddPaymentInfo');
+
     // 单纯的同步购物车
 
     $("#check-btn").addClass("btn--loading").prop("disabled", true);
@@ -1413,6 +1416,9 @@
       success: function (r) {
         // console.log("%c 结账返回", "color:green;font-weight:bold");
         // console.log(JSON.stringify(r));
+
+        fbq('track', 'Purchase');
+
 
         $("#check-btn").removeClass("btn--loading").prop("disabled", false);
 
@@ -1487,6 +1493,9 @@
     });
   }
   function initCart() {
+
+
+
     let domain = document.domain;
     // 初始化购物车
     $.ajax({
@@ -1567,15 +1576,7 @@
       },
     });
 
-    // return;
-    // let cart = fetch("/cart.js")
-    //   .then((response) => {
-    //     return response.text();
-    //   })
-    //   .then((data) => {
-    //     return data;
-    //   });
-    // return cart;
+    fbq('track', 'InitiateCheckout');
   }
 
   function CAPI() {

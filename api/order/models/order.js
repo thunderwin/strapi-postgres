@@ -57,6 +57,14 @@ module.exports = {
     beforeFindOne(params, data) {
 
     },
+    beforeFind(params, populate){
+
+
+
+
+    },
+
+
     // Called before an entry is created
     beforeCreate(data) {},
     afterCreate(result, data){

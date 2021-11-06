@@ -56,4 +56,75 @@ module.exports = {
 
     return ctx.send(r);
   },
+
+  find: async (ctx) => {
+    // 重写find
+
+    let body = ctx.query;
+
+    console.dir("body");
+    console.log(body);
+
+    const schema = Joi.object({
+      _limit: Joi.number().default(4),
+      _sort: Joi.string().default("id:desc"),
+      _start: Joi.number().min(0).default(0),
+      paymentStatus: Joi.string(),
+      domain: Joi.string(),
+    });
+    const { error, value } = schema.validate(body);
+
+    if (error) {
+      return ctx.send(error.details);
+    }
+
+    // 加入验证当前验证该客户的权限
+
+    console.dir("value");
+    console.log(JSON.stringify(value));
+
+    let params = {
+      _limit: value._limit,
+      _sort: value._sort,
+      _start: value._start,
+      _where: {},
+    };
+
+    if (!!value.paymentStatus) {
+      params._where.paymentStatus_in = value.paymentStatus;
+    }
+
+    let user = ctx.state.user;
+
+
+    let userSites = user.shopifies.map((item) => item.domain);
+    if (!!value.domain) {
+
+
+
+      params._where.domain_in = value.domain;
+    } else {
+      // user only can see orders blongs to its sites
+      params._where.domain_in = userSites;
+    }
+
+    // value._where = {
+    //   domain_in: ['www.ivchicy.com',"wudizu.myshopify.com"],
+    //   paymentStatus_in: ['success']
+    // }
+
+    console.dir("最终提交");
+    console.log(params);
+
+    console.log(JSON.stringify(params._where));
+
+    let list = await strapi.query("order").find(params);
+    delete params._limit;
+    let count = await strapi.query("order").count(params);
+
+    return {
+      data: list,
+      count: count,
+    };
+  },
 };

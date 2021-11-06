@@ -100,9 +100,26 @@ module.exports = {
     let userSites = user.shopifies.map((item) => item.domain);
     if (!!value.domain) {
 
+      // console.dir('value.domain')
+      // console.log(JSON.stringify(value.domain))
+      if ( typeof value.domain === 'string'){
+        if (userSites.indexOf(value.domain) === -1) {
+          return ctx.send({
+            error: "没有权限",
+          });
+        }
+      }
 
+      if (Array.isArray(value.domain)) {
+        let temp = [];
+        value.domain.forEach((item) => {
+          if (userSites.indexOf(item) !== -1) {
+            temp.push(item);
+          }
+        });
+        params._where.domain_in = temp;
+      }
 
-      params._where.domain_in = value.domain;
     } else {
       // user only can see orders blongs to its sites
       params._where.domain_in = userSites;

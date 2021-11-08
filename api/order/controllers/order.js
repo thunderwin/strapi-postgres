@@ -25,8 +25,8 @@ module.exports = {
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: false,
-
-      _limit: process.env.NODE_ENV === 'development' ? 3 :  100,
+      paymentStatus: "success",
+      _limit: process.env.NODE_ENV === "development" ? 3 : 100,
       _sort: "id",
       _start: value.start,
     });
@@ -52,6 +52,7 @@ module.exports = {
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: false,
+      paymentStatus: "success",
     });
 
     return ctx.send(r);
@@ -96,20 +97,17 @@ module.exports = {
 
     let user = ctx.state.user;
 
-
     let userSites = user.shopifies.map((item) => item.domain);
     if (!!value.domain) {
-
       // console.dir('value.domain')
       // console.log(JSON.stringify(value.domain))
-      if ( typeof value.domain === 'string'){
+      if (typeof value.domain === "string") {
         if (userSites.indexOf(value.domain) === -1) {
           return ctx.send({
             error: "没有权限",
           });
         }
         params._where.domain_in = [value.domain];
-
       }
 
       if (Array.isArray(value.domain)) {
@@ -121,7 +119,6 @@ module.exports = {
         });
         params._where.domain_in = temp;
       }
-
     } else {
       // user only can see orders blongs to its sites
       params._where.domain_in = userSites;

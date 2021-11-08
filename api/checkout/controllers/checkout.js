@@ -58,33 +58,35 @@ module.exports = {
           tracking: value.capi ? [value.capi] : [],
           active: true, // 新建的订单 active
         });
+
+        return ctx.send(cart);
+      } else {
+        console.dir("同步订单");
+        if (!cart.tracking) cart.tracking = [];
+        cart.tracking = cart.tracking.concat([value.capi]);
+
+        // console.dir("cart.tracking");
+        // console.log(JSON.stringify(cart.tracking));
+
+        cart = await strapi.query("order").update(
+          { id: cart.id },
+          {
+            content: value.content,
+            tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
+          }
+        );
+
+        return ctx.send(cart);
       }
 
-      console.dir("同步订单");
-      if (!cart.tracking) cart.tracking = [];
-      cart.tracking = cart.tracking.concat([value.capi]);
-
-      console.dir("cart.tracking");
-      console.log(JSON.stringify(cart.tracking));
-
-      cart = await strapi.query("order").update(
-        { id: cart.id },
-        {
-          content: value.content,
-          tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
-        }
-      );
-
-      return ctx.send(cart);
-
-      return strapi.services.sendcapi.capi({
-        cart: value.content, // 购物车
-        capi: value.capi, // capi
-        userIp: ctx.realIp,
-        domain: value.domain,
-      });
+      // return strapi.services.sendcapi.capi({
+      //   cart: value.content, // 购物车
+      //   capi: value.capi, // capi
+      //   userIp: ctx.realIp,
+      //   domain: value.domain,
+      // });
     } catch (error) {
-      console.dir("获取购物车出错", "color:green;font-weight:bold");
+      console.dir("初始化购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
 
       strapi.services.log.logError("初始化购物车出错", error);
@@ -272,7 +274,11 @@ module.exports = {
           .query("order")
           .update(
             { id },
-            { paymentStatus: "success", active: false, paypal: verifyPayment.data }
+            {
+              paymentStatus: "success",
+              active: false,
+              paypal: verifyPayment.data,
+            }
           );
 
         console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
@@ -280,7 +286,6 @@ module.exports = {
 
         return ctx.send(order);
       }
-
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));

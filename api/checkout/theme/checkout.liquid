@@ -1416,7 +1416,6 @@
         // console.log("%c 结账返回", "color:green;font-weight:bold");
         // console.log(JSON.stringify(r));
 
-        fbq('track', 'Purchase');
 
 
         $("#check-btn").removeClass("btn--loading").prop("disabled", false);
@@ -1468,6 +1467,14 @@
           paymentFail(r.msg);
           return;
         }
+
+
+
+        fbq('track', 'Purchase',{
+          value: r.content.total_price,
+          currency:r.contetn.currency
+        });
+
 
         $("#checkoutsucceed").css("display", "block");
         clearCart();

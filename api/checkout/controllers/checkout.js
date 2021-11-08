@@ -40,7 +40,6 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-
     try {
       let cart;
       cart = await strapi
@@ -65,9 +64,8 @@ module.exports = {
       if (!cart.tracking) cart.tracking = [];
       cart.tracking = cart.tracking.concat([value.capi]);
 
-      console.dir('cart.tracking')
-      console.log(JSON.stringify(cart.tracking))
-
+      console.dir("cart.tracking");
+      console.log(JSON.stringify(cart.tracking));
 
       cart = await strapi.query("order").update(
         { id: cart.id },
@@ -77,7 +75,7 @@ module.exports = {
         }
       );
 
-       return ctx.send(cart);
+      return ctx.send(cart);
 
       return strapi.services.sendcapi.capi({
         cart: value.content, // 购物车
@@ -255,24 +253,34 @@ module.exports = {
       console.log("验证付款对不对");
       console.log(verifyPayment);
 
-      if (!verifyPayment) {
+      if (verifyPayment.code === 1) {
         return ctx.send({
           code: 1,
           msg: "payment verfiy fails",
         });
       }
 
-      let order = await strapi
-        .query("order")
-        .update(
-          { id },
-          { paymentStatus: "success", active: false, paypal: verifyPayment }
-        );
+      if (verifyPayment.code === 2) {
+        return ctx.send({
+          code: 2,
+          msg: "payment already verfied",
+        });
+      }
 
-      console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
-      console.log(JSON.stringify(order.id));
+      if (verifyPayment.code === 0) {
+        let order = await strapi
+          .query("order")
+          .update(
+            { id },
+            { paymentStatus: "success", active: false, paypal: verifyPayment.data }
+          );
 
-      return ctx.send(order);
+        console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
+        console.log(JSON.stringify(order.id));
+
+        return ctx.send(order);
+      }
+
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));

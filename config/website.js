@@ -16,7 +16,7 @@ const websites = {
   },
   "www.ivchicy.com": {
     paypalConfig: {
-      paypalAccount: "Jasminuo@163.com",
+      paypalAccount: "jasminuo@163.com",
       paypalId:
         "AZPAQ3QJ7Pex-pBFQAMeKlx1RxcrcZlLtNIreCBE0BvzNjz5rg0zJhwiXPMpcwUpKqLKl9Tk0r_rr_7l",
       paypalKey:

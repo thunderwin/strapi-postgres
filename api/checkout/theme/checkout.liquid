@@ -29,7 +29,7 @@
       <div class="">Your order has been accept, and will ship to you soon.</div>
     </div>
 
-    {% section 'product-recommendations' %}
+    <!-- {% section 'product-recommendations' %} -->
   </div>
 
   <div class="page-width notebanner" id="checkoutFailed" style="display: none">
@@ -39,10 +39,11 @@
           d="M11.768.768a2.5 2.5 0 0 0-3.536 0L.768 8.232a2.5 2.5 0 0 0 0 3.536l7.464 7.464a2.5 2.5 0 0 0 3.536 0l7.464-7.464a2.5 2.5 0 0 0 0-3.536L11.768.768zM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6zm2 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
         </path>
       </svg>
-      <span style="margin-left: 1rem">Payment failed</span>
+      <div style="margin-left: 1rem">Payment failed</div>
 
-      <span class="reason"></span>
     </div>
+    <span class="reason"></span>
+
   </div>
 </div>
 
@@ -1468,16 +1469,24 @@
           return;
         }
 
+        if (r.code === 2) {
+          paymentFail('payment already done');
+          return;
+        }
 
+
+
+        window.addEventListener('load', function () {
 
         fbq('track', 'Purchase',{
           value: r.content.total_price,
           currency:r.contetn.currency
         });
-
+        })
 
         $("#checkoutsucceed").css("display", "block");
         clearCart();
+
       },
       error: function (e) {
         console.log("%c e", "color:green;font-weight:bold");

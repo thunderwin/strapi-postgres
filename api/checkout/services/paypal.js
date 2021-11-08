@@ -1,4 +1,4 @@
-const {websites} = require("../../../config/website");
+const { websites } = require("../../../config/website");
 const paypal = require("@paypal/checkout-server-sdk");
 const { getCode } = require("country-list");
 const axios = require("axios");
@@ -165,8 +165,9 @@ module.exports = {
 
       return response.result;
     } catch (error) {
-      console.dir("paypal key error");
-      strapi.plugins.sentry.services.sentry.sendError(error);
+      // console.dir("paypal key error");
+      // strapi.plugins.sentry.services.sentry.sendError(error);
+      strapi.services.log.logError("paypal key error", error);
 
       throw error;
     }
@@ -195,32 +196,61 @@ module.exports = {
 
     try {
       let response = await client.execute(request);
-      console.log("付款验证通过" + JSON.stringify(response));
 
-      if (response.statusCode !== 201 || !response.result.id) {
-        strapi.services.log.logError("付款验证状态不对", response);
-        return false;
-      }
+      console.dir("付款验证结果");
+      console.log(JSON.stringify(response));
 
-      function genResponse(response) {
+      if (
+        response.statusCode === 201 &&
+        response.result.status === "COMPLETED"
+      ) {
         return {
-          paypalDebugId: response.headers["paypal-debug-id"],
-          transactionId: response.result.id,
-          account: paypalCredential.paypalAccount,
-          payer: response.result.payer,
+          code: 0,
+          message: "付款成功",
+          data: response.result,
         };
       }
 
-      // paypalCredential.paypalAccount  也需要更新
-      return genResponse(response);
-    } catch (error) {
-      strapi.services.log.logError("捕获付款错误", error);
+      strapi.services.log.logError("付款验证失败", response);
 
+      return {
+        code: 1,
+        message: "付款失败",
+        data: response,
+      };
+
+      // if (response.statusCode !== 201 || !response.result.id) {
+      //   strapi.services.log.logError("付款验证状态不对", response);
+      //   return {
+      //     code:1,
+      //     message: "付款验证失败",
+      //   };
+      // }
+
+      // function genResponse(response) {
+      //   return {
+      //     paypalDebugId: response.headers["paypal-debug-id"],
+      //     transactionId: response.result.id,
+      //     account: paypalCredential.paypalAccount,
+      //     payer: response.result.payer,
+      //   };
+      // }
+
+      // // paypalCredential.paypalAccount  也需要更新
+      // return genResponse(response);
+    } catch (error) {
       if (error.statusCode === 422) {
         console.log("%c 重复验证付款", "color:green;font-weight:bold");
-        return true;
+        strapi.services.log.logError("重复验证付款", error);
+        return {
+          code: 2,
+          message: "重复验证付款",
+          data: error,
+        };
       } else {
         console.log("❌" + JSON.stringify(error));
+        strapi.services.log.logError("捕获付款错误", error);
+
         throw error;
       }
     }

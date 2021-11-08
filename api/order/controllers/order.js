@@ -26,7 +26,7 @@ module.exports = {
       created_at_gt: value.from,
       active: false,
 
-      _limit: 3,
+      _limit: process.env.NODE_ENV === 'development' ? 3 :  100,
       _sort: "id",
       _start: value.start,
     });

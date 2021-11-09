@@ -599,9 +599,13 @@
 
             <div class="section__header">
               <div class="form-title">Payment method</div>
+
+              <p style="color:#666 ">
+                All transactions are secure and encrypted.
+            </p>
             </div>
 
-            <div class="payment-wrapper">
+            <div class="payment-wrapper" >
               <div class="each-radio">
                 <div class="heading-radio">
                   <input type="radio" id="paypal-express" name="payment" value="paypalExpress" checked />
@@ -611,14 +615,18 @@
                       data-pin-nopin="true" />
                   </div>
                 </div>
-                <div class="radio-wrapper" style="">
-                  <div class="blank-slate">
-                    <i class="blank-slate__icon icon icon--offsite"></i>
-                    <p>
-                      After clicking “Complete order”, you will be redirected to
-                      PayPal to complete your purchase securely.
-                    </p>
-                  </div>
+
+
+              </div>
+
+              <div class="radio-wrapper" style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:1rem; border-top: 0;">
+                <div class="blank-slate" style="text-align: center;">
+                  <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 1rem;"></i>
+
+                  <p>
+                    After clicking “Complete order”, you will be redirected to
+                    PayPal to complete your purchase securely.
+                  </p>
                 </div>
               </div>
             </div>
@@ -667,6 +675,18 @@
             <span class="step__footer__previous-link-content">Return to cart</span>
           </a>
         </div>
+
+
+        <hr  />
+        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, laviavo</div>
+        <div class="">
+          <ul class="inline-list payment-icons" style="padding-top:10px;">
+              <li style="margin:0;">
+                  <img src="//cdn.shopify.com/s/files/1/0576/7928/2353/t/2/assets/checkout-float.png?v=1582523940" style="width:90px;cursor: default;">
+              </li>
+          </ul>
+      </div>
+
       </div>
     </div>
     <div class="right-area">
@@ -1011,6 +1031,21 @@
     display: none;
   }
 
+  hr.hr--small {
+    margin: 15px
+}
+
+ hr.hr--clear {
+    border-top-color: transparent;
+}
+  hr {
+    clear: both;
+    border-top: solid #ddd;
+    border-width: 1px;
+    margin: 30px;
+    height: 0;
+}
+
   .my-form .form-title {
     font-size: 1.3rem;
     line-height: 1.3rem;
@@ -1161,6 +1196,13 @@
     border: 1px rgba(0, 0, 0, 0.1) solid;
     z-index: 2;
   }
+
+  .icon--offsite {
+    width: 102px;
+    height: 52px;
+    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-594d944a8428e634d5111579612bbc4a149cded13b9097e4ead442e82b6b6331.png);
+    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-0d8fd34431b27358e5c54a5ad660f76f8d628fad88320450d799287a8654982f.svg),none;
+}
 
   .my-flex {
     display: flex;

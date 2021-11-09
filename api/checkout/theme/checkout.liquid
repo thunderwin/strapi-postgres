@@ -678,7 +678,7 @@
 
 
         <hr  />
-        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, laviavo</div>
+        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, <span id="domain_name"></span> </div>
         <div class="">
           <ul class="inline-list payment-icons" style="padding-top:10px;">
               <li style="margin:0;">
@@ -1396,6 +1396,8 @@
     $("#country").on("change", function () {
       handleProvince();
     });
+
+    $("#domain_name").html(document.domain.split(".")[1]);
   }
   function getParams(variable) {
     var query = window.location.search.substring(1);

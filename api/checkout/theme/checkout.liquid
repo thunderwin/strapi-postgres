@@ -1308,8 +1308,8 @@
 
   function handleProvince() {
     let country = $("#country").val();
-    // console.log("%c country", "color:green;font-weight:bold");
-    // console.log(JSON.stringify(country));
+    console.log("%c country", "color:green;font-weight:bold");
+    console.log(JSON.stringify(country));
 
     let provinces = $("#country option:selected").attr("data-provinces");
     // console.log("%c provinces ", "color:green;font-weight:bold");
@@ -1394,8 +1394,12 @@
     });
 
     $("#country").on("change", function () {
+      console.log('%c 国家变动','color:green;font-weight:bold')
+
       handleProvince();
     });
+
+    handleProvince() // 初始化省份
 
     $("#domain_name").html(document.domain.split(".")[1]);
   }

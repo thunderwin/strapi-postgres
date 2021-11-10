@@ -138,10 +138,10 @@ async function fetchCartAndGenPaypalPayload(cart) {
             country_code: getCode(shippingAddress.country) || "US",
           },
         },
+
       },
     ],
   };
-
   return payload;
 }
 

@@ -456,7 +456,7 @@
             </div>
 
             <div class="section__header">
-              <div class="form-title">Shipping address</div>
+              <div id="shipping_address" class="form-title">Shipping address</div>
             </div>
 
             <div class="floating">
@@ -1718,6 +1718,7 @@
     console.log(result);
 
     if (!result) {
+      window.scrollTo(100,300);
       console.log("验证失败");
       return;
     }

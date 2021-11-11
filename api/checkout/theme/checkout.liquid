@@ -497,7 +497,7 @@
             <div class="floating">
               <select class="floating__input" autocomplete="country" id="country" name="country">
                 {{
-                  country_option_tags
+                country_option_tags
                 }}
               </select>
               <label class="floating__label" data-content="Country/region">
@@ -602,10 +602,10 @@
 
               <p style="color:#666 ">
                 All transactions are secure and encrypted.
-            </p>
+              </p>
             </div>
 
-            <div class="payment-wrapper" >
+            <div class="payment-wrapper">
               <div class="each-radio">
                 <div class="heading-radio">
                   <input type="radio" id="paypal-express" name="payment" value="paypalExpress" checked />
@@ -619,7 +619,8 @@
 
               </div>
 
-              <div class="radio-wrapper" style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:1rem; border-top: 0;">
+              <div class="radio-wrapper"
+                style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:1rem; border-top: 0;">
                 <div class="blank-slate" style="text-align: center;">
                   <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 1rem;"></i>
 
@@ -677,15 +678,17 @@
         </div>
 
 
-        <hr  />
-        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, <span id="domain_name"></span> </div>
+        <hr />
+        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, <span id="domain_name"></span>
+        </div>
         <div class="">
           <ul class="inline-list payment-icons" style="padding-top:10px;">
-              <li style="margin:0;">
-                  <img src="//cdn.shopify.com/s/files/1/0576/7928/2353/t/2/assets/checkout-float.png?v=1582523940" style="width:90px;cursor: default;">
-              </li>
+            <li style="margin:0;">
+              <img src="//cdn.shopify.com/s/files/1/0576/7928/2353/t/2/assets/checkout-float.png?v=1582523940"
+                style="width:90px;cursor: default;">
+            </li>
           </ul>
-      </div>
+        </div>
 
       </div>
     </div>
@@ -1033,18 +1036,19 @@
 
   hr.hr--small {
     margin: 15px
-}
+  }
 
- hr.hr--clear {
+  hr.hr--clear {
     border-top-color: transparent;
-}
+  }
+
   hr {
     clear: both;
     border-top: solid #ddd;
     border-width: 1px;
     margin: 30px;
     height: 0;
-}
+  }
 
   .my-form .form-title {
     font-size: 1.3rem;
@@ -1201,8 +1205,8 @@
     width: 102px;
     height: 52px;
     background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-594d944a8428e634d5111579612bbc4a149cded13b9097e4ead442e82b6b6331.png);
-    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-0d8fd34431b27358e5c54a5ad660f76f8d628fad88320450d799287a8654982f.svg),none;
-}
+    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-0d8fd34431b27358e5c54a5ad660f76f8d628fad88320450d799287a8654982f.svg), none;
+  }
 
   .my-flex {
     display: flex;
@@ -1305,7 +1309,7 @@
       : "https://gudao-api-stable-1.tokwork.com";
 
 
-  let freeShippingPrice =  69 * 100;
+  let freeShippingPrice = 69 * 100;
 
   function handleProvince() {
     let country = $("#country").val();
@@ -1395,7 +1399,7 @@
     });
 
     $("#country").on("change", function () {
-      console.log('%c 国家变动','color:green;font-weight:bold')
+      console.log('%c 国家变动', 'color:green;font-weight:bold')
 
       handleProvince();
     });
@@ -1523,17 +1527,13 @@
           return;
         }
 
-
-
-        window.addEventListener('load', function () {
-
-        fbq('track', 'Purchase',{
+        fbq('track', 'Purchase', {
           value: r.content.total_price,
-          currency:r.contetn.currency
+          currency: r.contetn.currency
         });
-        })
 
         $("#checkoutsucceed").css("display", "block");
+
         clearCart();
 
       },
@@ -1719,7 +1719,7 @@
     console.log(result);
 
     if (!result) {
-      window.scrollTo(100,300);
+      window.scrollTo(100, 300);
       console.log("验证失败");
       return;
     }

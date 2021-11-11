@@ -6,6 +6,8 @@ const Joi = require("joi");
  */
 
 module.exports = {
+
+  /** 订单API 专用 */
   sync: async (ctx) => {
     let body = ctx.query;
 
@@ -34,6 +36,7 @@ module.exports = {
     return ctx.send(r);
   },
 
+  /** 订单API 专用 */
   dayCount: async (ctx) => {
     let body = ctx.query;
 
@@ -151,13 +154,17 @@ module.exports = {
     };
   },
 
-  orderByday: async (ctx) => {
+  /** 后台控制面板专用 */
+  orderByDay: async (ctx) => {
     let body = ctx.query;
+
+
+    console.log(body);
 
     const schema = Joi.object({
       from: Joi.date().required(),
       to: Joi.date().required(),
-      domain: Joi.string().required(),
+      domain: Joi.string(),
     });
 
     const { error, value } = schema.validate(body);
@@ -166,13 +173,27 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    let r = await strapi.query("order").find({
+    let paid = {
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: false,
       paymentStatus: "success",
-    }).count()
+    }
 
-    return ctx.send(r);
+    let unpaid = {
+      created_at_lt: value.to,
+      created_at_gt: value.from,
+      active: true,
+    }
+
+    let allCount = await Promise.all([strapi.query("order").count(paid), strapi.query("order").count(unpaid)]);
+    let result = {
+      code: 0,
+      data: {
+        paid: allCount[0],
+        unpaid: allCount[1],
+      }
+    }
+    return ctx.send(result);
   }
 };

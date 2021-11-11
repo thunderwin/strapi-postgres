@@ -14,7 +14,6 @@ function genOrderConfirmEmailHTML(orderObj) {
     `;
   });
 
-
   let total = orderObj.content.total_price;
   let address = orderObj.address;
 
@@ -28,7 +27,7 @@ function genOrderConfirmEmailHTML(orderObj) {
 <h3>Order summary</h3>
 <div>${items}</div>
 
-<p>Total : $ ${total/100}</p>
+<p>Total : $ ${total / 100}</p>
 
 
 <h3>Shipping information</h3>
@@ -54,29 +53,17 @@ function genOrderConfirmEmailHTML(orderObj) {
 
 module.exports = {
   lifecycles: {
-    beforeFindOne(params, data) {
-
-    },
-    beforeFind(params, populate){
-
-
-
-
-    },
-
+    beforeFindOne(params, data) {},
+    beforeFind(params, populate) {},
 
     // Called before an entry is created
     beforeCreate(data) {},
-    afterCreate(result, data){
+    afterCreate(result, data) {
       // data 是前台发送来的
       // result 是后台返回的
 
-
-
-
-
+      strapi.addCheckout;
     },
-
 
     // Called after an entry is created
     afterUpdate(order, params, data) {
@@ -123,6 +110,5 @@ module.exports = {
         }
       }
     },
-
   },
 };

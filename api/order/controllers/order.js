@@ -70,6 +70,8 @@ module.exports = {
       _limit: Joi.number().default(10),
       _sort: Joi.string().default("id:desc"),
       _start: Joi.number().min(0).default(0),
+      _from: Joi.date(),
+      _to: Joi.date(),
       paymentStatus: Joi.string(),
       domain: Joi.string(),
     });
@@ -94,6 +96,11 @@ module.exports = {
     if (!!value.paymentStatus) {
       params._where.paymentStatus_in = value.paymentStatus;
     }
+
+    // if (!!value._from && !!value._to) {
+    //   params._where.created_at_lt = value._to;
+    //   params._where.created_at_gt = value._from;
+    // }
 
     let user = ctx.state.user;
 
@@ -143,4 +150,29 @@ module.exports = {
       count: count,
     };
   },
+
+  orderByday: async (ctx) => {
+    let body = ctx.query;
+
+    const schema = Joi.object({
+      from: Joi.date().required(),
+      to: Joi.date().required(),
+      domain: Joi.string().required(),
+    });
+
+    const { error, value } = schema.validate(body);
+
+    if (error) {
+      return ctx.send(error.details);
+    }
+
+    let r = await strapi.query("order").find({
+      created_at_lt: value.to,
+      created_at_gt: value.from,
+      active: false,
+      paymentStatus: "success",
+    }).count()
+
+    return ctx.send(r);
+  }
 };

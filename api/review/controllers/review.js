@@ -9,8 +9,8 @@ module.exports = {
       .query("review")
       .model.query((db) => {
         db.where({
-          sku,
-        }).sum("score");
+          'score' :4,
+        }).sum("id").sum("score").sum("user_avatar")
       })
       .fetch();
   },

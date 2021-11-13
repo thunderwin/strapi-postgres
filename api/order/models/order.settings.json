@@ -69,13 +69,13 @@
       "type": "integer"
     },
     "totalDiscountPrice": {
-      "type": "integer"
+      "type": "decimal"
     },
     "totalPrice": {
-      "type": "integer"
+      "type": "decimal"
     },
     "totalPaidPrice": {
-      "type": "integer"
+      "type": "decimal"
     }
   }
 }

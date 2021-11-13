@@ -1331,6 +1331,10 @@
 <!-- 分析 -->
 
 <script>
+
+  amplitude.getInstance().logEvent('EVENT_NAME_HERE');
+
+
   let endpoint =
     document.domain === "wudizu.myshopify.com"
       ? "http://localhost:1337"
@@ -1904,7 +1908,7 @@
       // console.log("%c token", "color:green;font-weight:bold");
       // console.log(JSON.stringify(token));
 
-        (successId, token);
+       handleSuccess(successId, token);
       return; //
     }
 

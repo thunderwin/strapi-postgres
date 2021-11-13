@@ -10,7 +10,7 @@ module.exports = {
       .model.query((db) => {
         db.where({
           'score' :4,
-        }).sum("id").sum("score").sum("user_avatar")
+        }).sum("id").sum("score").sum("user_avatar").count()
       })
       .fetch();
   },

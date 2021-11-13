@@ -64,6 +64,18 @@
     },
     "tracking": {
       "type": "json"
+    },
+    "subtotalPrice": {
+      "type": "integer"
+    },
+    "totalDiscountPrice": {
+      "type": "integer"
+    },
+    "totalPrice": {
+      "type": "integer"
+    },
+    "totalPaidPrice": {
+      "type": "integer"
     }
   }
 }

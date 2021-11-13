@@ -4,6 +4,9 @@ const Joi = require("joi");
 
 const requestIp = require("request-ip");
 
+
+
+
 module.exports = {
   theme: (ctx) => {
     console.log("%c req.query", "color:green;font-weight:bold");
@@ -121,6 +124,10 @@ module.exports = {
     // console.dir("%c 数通过", "color:green;font-weight:bold");
     // console.log(JSON.stringify(value));
 
+    // 补上 subtotalPrice
+    value.subtotalPrice = value.content.total_price;
+
+
     try {
       let order = await strapi.query("order").update({ id: value.id }, value);
 
@@ -186,9 +193,10 @@ module.exports = {
       }
 
       // 2 更新到订单上
+      let totalDiscountPrice = discount.reduce((sum, item) => sum + item.value, 0) // 补上优惠金额
       let updatedOrder = await strapi
         .query("order")
-        .update({ id: value.orderId }, { coupon: couponData, discount });
+        .update({ id: value.orderId }, { coupon: couponData, discount,totalDiscountPrice });
 
       if (updatedOrder.id) {
         console.dir("订单更新成功");
@@ -270,6 +278,7 @@ module.exports = {
       }
 
       if (verifyPayment.code === 0) {
+        let paidPrice = verifyPayment.data.purchase_units[0].payments.captures[0].amount.value;
         let order = await strapi
           .query("order")
           .update(
@@ -278,6 +287,7 @@ module.exports = {
               paymentStatus: "success",
               active: false,
               paypal: verifyPayment.data,
+              totalPaidPrice: paidPrice,
             }
           );
 

@@ -173,25 +173,48 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    let paid = {
-      created_at_lt: value.to,
-      created_at_gt: value.from,
-      active: false,
-      paymentStatus: "success",
-    }
+    // let paid = {
+    //   created_at_lt: value.to,
+    //   created_at_gt: value.from,
+    //   active: false,
+    //   paymentStatus: "success",
+    // }
+
+    // 组合计算
+    let promise1 = strapi
+      .query("order")
+      .model.query((db) => {
+        db.where('created_at','>=', value.from);
+        db.where('created_at','<', value.to);
+        db.where('active','=', false);
+        db.where('paymentStatus','=', 'success');
+        db.sum("shippingFee").sum("totalDiscountPrice").sum("totalPaidPrice").count()
+      })
+      .fetch();
 
     let unpaid = {
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: true,
     }
+    let promise2 = strapi.query("order").count(unpaid)
 
-    let allCount = await Promise.all([strapi.query("order").count(paid), strapi.query("order").count(unpaid)]);
+    let allCount = await Promise.all([promise1, promise2 ]);
+
+    let paid = allCount[0].toJSON();
+
+    console.log('%c paid','color:green;font-weight:bold')
+    console.log(paid)
+
+
     let result = {
       code: 0,
       data: {
-        paid: allCount[0],
-        unpaid: allCount[1],
+        paidNum: paid['count(*)'],
+        totalSales: paid['sum(`totalPaidPrice`)'],
+        totalDiscount: paid['sum(`totalDiscountPrice`)'],
+        totalShipping: paid['sum(`shippingFee`)'],
+        unpaidNum: allCount[1]
       }
     }
     return ctx.send(result);

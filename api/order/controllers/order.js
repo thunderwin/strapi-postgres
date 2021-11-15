@@ -213,10 +213,10 @@ module.exports = {
     let result = {
       code: 0,
       data: {
-        paidNum: paid['count(*)'],
-        totalSales: paid['sum(`totalPaidPrice`)'],
-        totalDiscount: paid['sum(`totalDiscountPrice`)'],
-        totalShipping: paid['sum(`shippingFee`)'],
+        paidNum: paid['count(*)'] || 0,
+        totalSales: paid['sum(`totalPaidPrice`)'] || 0,
+        totalDiscount: paid['sum(`totalDiscountPrice`)'] || 0,
+        totalShipping: paid['sum(`shippingFee`)'] || 0,
         unpaidNum: allCount[1]
       }
     }

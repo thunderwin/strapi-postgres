@@ -622,12 +622,13 @@
                 <div class="blank-slate" style="text-align: center;">
                   <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 1rem;"></i>
 
-                  <p>
+                  <div>
                     After clicking “Complete order”, you will be redirected to
                     PayPal to complete your purchase securely.
-                  </p>
+                  </div>
                 </div>
               </div>
+
             </div>
 
             <!-- <input
@@ -644,6 +645,53 @@
           </form>
         </div>
 
+        <div class="section__header">
+          <div class="form-title">Summary</div>
+
+          <div class="radio-wrapper" style="background-color: #fafafa; border: 1px solid #e6e6e6;padding:1rem; ">
+            <div class="blank-slate" style="text-align: center;">
+              <div class="summary_box">
+                <div class="summary_box_inner">
+                  <span class="summary-title">Subtotal</span>
+                  <span class="subtotal_price_amount">{{
+                    cart.total_price | money
+                    }}</span>
+                </div>
+
+                <div class="summary_box_inner">
+                  <span class="summary-title">Discount</span>
+                  <div class="summray_price_box">
+                    <span class="currency">- $</span>
+                    <span class="discount_price_amount"></span>
+                  </div>
+                </div>
+
+                <div class="summary_box_inner">
+                  <span class="summary-title">Shipping</span>
+                  <div class="summray_price_box">
+                    <span class="currency">$</span>
+                    <span class="shipping_price_amount"></span>
+                  </div>
+                </div>
+
+                <div class="summary_box_inner">
+                  <span class="summary-title">Total</span>
+                  <div class="summray_price_box">
+                    <span class="currency">$</span>
+                    <span class="total_price_amount"></span>
+                  </div>
+                </div>
+
+               </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+
         <div class="check-btn" style="text-align: center; margin-bottom: 2rem">
           <button type="submit" class="btn newsletter__submit" onclick="checkout()" id="check-btn" aria-busy="false"
             style="
@@ -656,22 +704,9 @@
           </button>
 
           <a class="step__footer__previous-link" href="/cart">
-            <!-- <svg
-          focusable="false"
-          aria-hidden="true"
-          style="width: 10px; height: 10px; margin-right: 0.2rem"
-          class="
-            icon-svg icon-svg--color-accent icon-svg--size-10
-            previous-link__icon
-          "
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 10 10"
-        >
-          <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path></svg
-        > -->
 
-            <span class="step__footer__previous-link-content">Return to cart</span>
+
+            <span class="step__footer__previous-link-content"> Return to cart</span>
           </a>
         </div>
 
@@ -1298,33 +1333,62 @@
     display: flex;
     margin-bottom: 0.5rem;
   }
+
+  .summary_box {
+    padding: 0;
+  }
+
+  .summary_box .summary_box_inner {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 6px;
+  }
 </style>
 
 <!-- 分析 -->
 <script type="text/javascript">
-  (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
-  ;r.type="text/javascript"
-  ;r.integrity="sha384-tzcaaCH5+KXD4sGaDozev6oElQhsVfbJvdi3//c2YvbY02LrNlbpGdt3Wq4rWonS"
-  ;r.crossOrigin="anonymous";r.async=true
-  ;r.src="https://cdn.amplitude.com/libs/amplitude-8.5.0-min.gz.js"
-  ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
-  console.log("[Amplitude] Error: could not load SDK")}}
-  ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
-  ;function s(e,t){e.prototype[t]=function(){
-  this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
-  var o=function(){this._q=[];return this}
-  ;var a=["add","append","clearAll","prepend","set","setOnce","unset","preInsert","postInsert","remove"]
-  ;for(var c=0;c<a.length;c++){s(o,a[c])}n.Identify=o;var u=function(){this._q=[]
-  ;return this}
-  ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
-  ;for(var p=0;p<l.length;p++){s(u,l[p])}n.Revenue=u
-  ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","enableTracking","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
-  ;function v(e){function t(t){e[t]=function(){
-  e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
-  for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
-  e=(!e||e.length===0?"$default_instance":e).toLowerCase()
-  ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
-  }return n._iq[e]};e.amplitude=n})(window,document);
+  (function (e, t) {
+    var n = e.amplitude || { _q: [], _iq: {} }; var r = t.createElement("script")
+      ; r.type = "text/javascript"
+      ; r.integrity = "sha384-tzcaaCH5+KXD4sGaDozev6oElQhsVfbJvdi3//c2YvbY02LrNlbpGdt3Wq4rWonS"
+      ; r.crossOrigin = "anonymous"; r.async = true
+      ; r.src = "https://cdn.amplitude.com/libs/amplitude-8.5.0-min.gz.js"
+      ; r.onload = function () {
+        if (!e.amplitude.runQueuedFunctions) {
+          console.log("[Amplitude] Error: could not load SDK")
+        }
+      }
+      ; var i = t.getElementsByTagName("script")[0]; i.parentNode.insertBefore(r, i)
+      ; function s(e, t) {
+        e.prototype[t] = function () {
+          this._q.push([t].concat(Array.prototype.slice.call(arguments, 0))); return this
+        }
+      }
+    var o = function () { this._q = []; return this }
+      ; var a = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset", "preInsert", "postInsert", "remove"]
+      ; for (var c = 0; c < a.length; c++) { s(o, a[c]) } n.Identify = o; var u = function () {
+        this._q = []
+        ; return this
+      }
+      ; var l = ["setProductId", "setQuantity", "setPrice", "setRevenueType", "setEventProperties"]
+      ; for (var p = 0; p < l.length; p++) { s(u, l[p]) } n.Revenue = u
+      ; var d = ["init", "logEvent", "logRevenue", "setUserId", "setUserProperties", "setOptOut", "setVersionName", "setDomain", "setDeviceId", "enableTracking", "setGlobalUserProperties", "identify", "clearUserProperties", "setGroup", "logRevenueV2", "regenerateDeviceId", "groupIdentify", "onInit", "logEventWithTimestamp", "logEventWithGroups", "setSessionId", "resetSessionId"]
+      ; function v(e) {
+        function t(t) {
+          e[t] = function () {
+            e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)))
+          }
+        }
+        for (var n = 0; n < d.length; n++) { t(d[n]) }
+      } v(n); n.getInstance = function (e) {
+        e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase()
+          ; if (!Object.prototype.hasOwnProperty.call(n._iq, e)) {
+            n._iq[e] = { _q: [] }; v(n._iq[e])
+          } return n._iq[e]
+      }; e.amplitude = n
+  })(window, document);
 
   amplitude.getInstance().init("adac5f176e3df97d4b0c2ae36f15a7ce");
 </script>
@@ -1332,7 +1396,6 @@
 
 <script>
 
-  amplitude.getInstance().logEvent('EVENT_NAME_HERE');
 
 
   let endpoint =
@@ -1342,6 +1405,11 @@
 
 
   let freeShippingPrice = 69 * 100;
+  let subtotalAmountValue = 0
+
+  let discountAmountValue = 0
+  let shippingAmountValue = 0
+  let totalAmountValue = 0
 
   function handleProvince() {
     let country = $("#country").val();
@@ -1418,11 +1486,18 @@
       $("#cart-summy").toggle();
     });
 
-    $(".each-radio").click(function () {
+    $(".each-radio").click(function (e) {
       // console.log("%c $(this)", "color:green;font-weight:bold");
-      // console.log($(this).find("input:radio"));
+      // console.log(e);
 
       $(this).find("input:radio").prop("checked", true); // radio checked
+      let chosenshippingFee = $(this).find("input:radio").val();
+
+      console.log('%c chosenshippingFee','color:green;font-weight:bold')
+      console.log(JSON.stringify(chosenshippingFee))
+
+      shippingAmountValue = Number(chosenshippingFee.split("-")[1] )
+      reSummary()
     });
 
     $("#coupon-btn").click(function () {
@@ -1614,6 +1689,8 @@
         // console.log("%c 购物车", "color:green;font-weight:bold");
         // console.log(JSON.stringify(cart));
 
+        subtotalAmountValue = Number(cart.total_price);
+
         // free shipping?
         if (cart.total_price > freeShippingPrice) {
           // console.log("%c Free shipping", "color:green;font-weight:bold");
@@ -1621,7 +1698,12 @@
           $(".free-shipping-wrapper").fadeIn();
           $("#free-shipping").prop("checked", true);
           $(".standard-shipping-wrapper").hide();
+        } else {
+
+          shippingAmountValue = 399
+
         }
+        reSummary()
 
 
         // capi
@@ -1877,13 +1959,17 @@
           let discountValue;
 
           if (discountList.length > 0) {
+            discountAmountValue = discountList[0].value;  // summary use it
+            reSummary()
             discountValue = discountList[0].value * 0.01;
+
           }
 
           let showDiscountValue = "- $ " + discountValue.toFixed(2);
           let showDiscountedValue = "$ " + (total - discountValue).toFixed(2);
 
           showSuccees(msg, showDiscountedValue, showDiscountValue);
+
         }
       },
       error: function (e) {
@@ -1892,9 +1978,21 @@
       },
     });
   }
+
   async function removeCoupon() { }
 
   async function update() { }
+
+  async function reSummary() {
+
+
+    totalAmountValue = Number(subtotalAmountValue) + Number(shippingAmountValue)  - Number(discountAmountValue);
+
+    $('.shipping_price_amount').html((shippingAmountValue * 0.01).toFixed(2));
+    $('.discount_price_amount').html((discountAmountValue * 0.01).toFixed(2));
+    $('.total_price_amount').html((totalAmountValue * 0.01).toFixed(2));
+
+  }
 
   $(function () {
     let successId = getParams("successId");

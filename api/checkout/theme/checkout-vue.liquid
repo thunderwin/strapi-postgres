@@ -1,0 +1,33 @@
+
+
+
+<div id="checkout-wrapper">
+
+ hah {{yes}}
+
+ <button @click="click">click</button>
+</div>
+
+
+
+<script>
+
+  const Checkout = {
+    data() {
+      return {
+        yes: 0
+      }
+    },
+    methods: {
+      click(){
+        this.yes ++
+      }
+    },
+    components: {
+      TodoItem // 注册一个新组件
+    }
+  }
+
+  Vue.createApp(Checkout).mount('#checkout-wrapper')
+
+</script>

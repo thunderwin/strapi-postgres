@@ -197,6 +197,7 @@ module.exports = {
       created_at_gt: value.from,
       active: true,
     }
+
     let promise2 = strapi.query("order").count(unpaid)
 
     let allCount = await Promise.all([promise1, promise2 ]);

@@ -192,7 +192,7 @@ module.exports = {
         db.sum("totalPaidPrice")
         db.count()
       })
-      .fetch();
+      .fetchAll();
 
     let unpaid = {
       created_at_lt: value.to,
@@ -208,6 +208,8 @@ module.exports = {
 
     console.log('%c paid','color:green;font-weight:bold')
     console.log(paid)
+
+    paid = paid[0]
 
 
     let result = {

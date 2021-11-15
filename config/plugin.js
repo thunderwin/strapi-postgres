@@ -4,7 +4,7 @@ module.exports = ({ env }) => ({
   sentry: {
     // https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-sentry
     dsn: env("SENTRY_DSN"),
-    sendMetadata: true,
+    sendMetadata: false,
   },
   email: {
     provider: "sendgrid",

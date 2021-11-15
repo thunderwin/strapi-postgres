@@ -156,10 +156,7 @@ module.exports = {
 
   /** 后台控制面板专用 */
   orderByDay: async (ctx) => {
-    let body = ctx.query;
-
-
-    console.log(body);
+    let body = ctx.request.body;
 
     const schema = Joi.object({
       from: Joi.date().required(),
@@ -172,6 +169,8 @@ module.exports = {
     if (error) {
       return ctx.send(error.details);
     }
+
+
 
     // let paid = {
     //   created_at_lt: value.to,

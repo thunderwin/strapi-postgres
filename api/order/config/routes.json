@@ -65,7 +65,7 @@
       }
     },
     {
-      "method": "GET",
+      "method": "POST",
       "path": "/order/orderByDay",
       "handler": "order.orderByDay",
       "config": {

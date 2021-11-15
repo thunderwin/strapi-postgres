@@ -2000,19 +2000,11 @@
     let token = getParams("token");
 
     if (!!successId && token) {
-
-
       handleSuccess(successId, token);
-      return; //
+      return;
     }
 
-    if (!!cancelId) {
-      console.log(
-        "%c cancelId,支付取消不做什么",
-        "color:green;font-weight:bold"
-      );
-      console.log(JSON.stringify(cancelId));
-    }
+
 
     $("#cart-wrapper").css("display", "block");
 

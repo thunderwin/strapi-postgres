@@ -187,7 +187,10 @@ module.exports = {
         db.where('created_at','<', value.to);
         db.where('active','=', false);
         db.where('paymentStatus','=', 'success');
-        db.sum("shippingFee").sum("totalDiscountPrice").sum("totalPaidPrice").count()
+        db.sum("shippingFee")
+        db.sum("totalDiscountPrice")
+        db.sum("totalPaidPrice")
+        db.count()
       })
       .fetch();
 

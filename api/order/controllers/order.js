@@ -187,7 +187,6 @@ module.exports = {
         db.where('created_at','<', value.to);
         db.where('active','=', false);
         db.where('paymentStatus','=', 'success');
-
         db.sum("totalPaidPrice")
         db.count()
       })
@@ -222,5 +221,8 @@ module.exports = {
       }
     }
     return ctx.send(result);
-  }
+  },
+
+
+  ads: async (ctx) => {}
 };

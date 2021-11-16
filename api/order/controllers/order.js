@@ -187,12 +187,12 @@ module.exports = {
         db.where('created_at','<', value.to);
         db.where('active','=', false);
         db.where('paymentStatus','=', 'success');
-        db.sum("shippingFee")
-        db.sum("totalDiscountPrice")
+
         db.sum("totalPaidPrice")
         db.count()
       })
-      .fetchAll();
+      .fetch();
+
 
     let unpaid = {
       created_at_lt: value.to,
@@ -209,7 +209,6 @@ module.exports = {
     console.log('%c paid','color:green;font-weight:bold')
     console.log(paid)
 
-    paid = paid[0]
 
 
     let result = {
@@ -217,8 +216,8 @@ module.exports = {
       data: {
         paidNum: paid['count(*)'] || 0,
         totalSales: paid['sum(`totalPaidPrice`)'] || 0,
-        totalDiscount: paid['sum(`totalDiscountPrice`)'] || 0,
-        totalShipping: paid['sum(`shippingFee`)'] || 0,
+        // totalDiscount: paid['sum(`totalDiscountPrice`)'] || 0,
+        // totalShipping: paid['sum(`shippingFee`)'] || 0,
         unpaidNum: allCount[1]
       }
     }

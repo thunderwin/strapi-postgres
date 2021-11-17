@@ -229,7 +229,7 @@ module.exports = {
     let result = {
       code: 0,
       data: {
-        sales: paid.sum,
+        sales: paid.sum || 0,
         paidNum: paid.count,
         unpaidNum: allCount[1],
       },

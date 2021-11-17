@@ -153,6 +153,40 @@ module.exports = {
     };
   },
 
+  salesByDay: async (ctx) => {
+    let body = ctx.request.body;
+
+    const schema = Joi.object({
+      from: Joi.date().required(),
+      to: Joi.date().required(),
+      domain: Joi.string(),
+    });
+
+    const { error, value } = schema.validate(body);
+
+    if (error) {
+      return ctx.send(error.details);
+    }
+
+    let r = await strapi
+      .query("order")
+      .model.query((db) => {
+        db.where("created_at", ">=", value.from);
+        db.where("created_at", "<", value.to);
+        db.where("active", "=", false);
+        db.where("paymentStatus", "=", "success");
+        db.sum("totalPaidPrice");
+      })
+      .fetch();
+
+    r = r.toJSON();
+
+    return {
+      totalSales: r["sum(`totalPaidPrice`)"],
+      totalDiscount: r["sum(`totalDiscountPrice`)"] || 0,
+      totalShipping: r["sum(`shippingFee`)"] || 0,
+    };
+  },
   /** 后台控制面板专用 */
   orderByDay: async (ctx) => {
     let body = ctx.request.body;
@@ -169,37 +203,19 @@ module.exports = {
       return ctx.send(error.details);
     }
 
+    // const knex = strapi.connections.default;
+    // let promise1 =  knex("orders")
+    //   .where("created_at", ">=", value.from)
+    //   .where("created_at", "<", value.to)
+    //   .where("active", false)
+    //   .where("paymentStatus", "success").sum("totalPaidPrice").count()
 
-    const knex = strapi.connections.default;
-    let promise1 =  knex("orders")
-      .where("created_at", ">=", value.from)
-      .where("created_at", "<", value.to)
-      .where("active", false)
-      .where("paymentStatus", "success").sum("totalPaidPrice").count()
-
-    // Lodash's groupBy method can be used to
-    // return a grouped key-value object generated from
-    // the response
-
-    // let paid = {
-    //   created_at_lt: value.to,
-    //   created_at_gt: value.from,
-    //   active: false,
-    //   paymentStatus: "success",
-    // }
-
-    // 组合计算
-    // let promise1 = strapi
-    //   .query("order")
-    //   .model.query((db) => {
-    //     db.where("created_at", ">=", value.from);
-    //     db.where("created_at", "<", value.to);
-    //     db.where("active", "=", false);
-    //     db.where("paymentStatus", "=", "success");
-    //     db.sum("totalPaidPrice");
-    //     db.count();
-    //   })
-    //   .fetch();
+    let paid = {
+      created_at_lt: value.to,
+      created_at_gt: value.from,
+      active: false,
+      paymentStatus: "success",
+    };
 
     let unpaid = {
       created_at_lt: value.to,
@@ -207,22 +223,16 @@ module.exports = {
       active: true,
     };
 
+    let promise1 = strapi.query("order").count(paid);
     let promise2 = strapi.query("order").count(unpaid);
 
     let allCount = await Promise.all([promise1, promise2]);
 
-    let paid = allCount[0][0]
-
-    console.log("%c paid", "color:green;font-weight:bold");
-    console.log(paid);
-
     let result = {
       code: 0,
       data: {
-        paidNum: paid["count(*)"] || 0,
-        totalSales: paid["sum(`totalPaidPrice`)"] || 0,
-        // totalDiscount: paid['sum(`totalDiscountPrice`)'] || 0,
-        // totalShipping: paid['sum(`shippingFee`)'] || 0,
+        paidNum: allCount[0],
+
         unpaidNum: allCount[1],
       },
     };

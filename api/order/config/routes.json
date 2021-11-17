@@ -73,6 +73,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/order/salesByDay",
+      "handler": "order.salesByDay",
+      "config": {
+        "policies": ["plugins::users-permissions.ratelimit"]
+      }
+    },
+    {
       "method": "GET",
       "path": "/order/ads",
       "handler": "order.ads",

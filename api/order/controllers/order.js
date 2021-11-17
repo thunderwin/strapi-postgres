@@ -181,9 +181,8 @@ module.exports = {
 
     r = r.toJSON();
 
-    console.log('%c rr','color:green;font-weight:bold')
-    console.log(r)
-
+    console.log("%c rr", "color:green;font-weight:bold");
+    console.log(r);
 
     return {
       code: 0,
@@ -206,39 +205,39 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-    // const knex = strapi.connections.default;
-    // let promise1 =  knex("orders")
-    //   .where("created_at", ">=", value.from)
-    //   .where("created_at", "<", value.to)
-    //   .where("active", false)
-    //   .where("paymentStatus", "success").sum("totalPaidPrice").count()
+    let promise1 = strapi
+      .query("order")
+      .model.query((db) => {
+        db.where("created_at", ">=", value.from);
+        db.where("created_at", "<", value.to);
+        db.where("active", "=", false);
+        db.where("paymentStatus", "=", "success");
+        db.sum("totalPaidPrice").count()
+      })
+      .fetch();
 
-    let paid = {
-      created_at_lt: value.to,
-      created_at_gt: value.from,
-      active: false,
-      paymentStatus: "success",
-    };
-
-    let unpaid = {
+    let promise2 = strapi.query("order").count({
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: true,
-    };
-
-    let promise1 = strapi.query("order").count(paid);
-    let promise2 = strapi.query("order").count(unpaid);
+    });
 
     let allCount = await Promise.all([promise1, promise2]);
+
+    let paid = allCount[0].toJSON()
+
+    console.dir('paid')
+    console.log(paid)
 
     let result = {
       code: 0,
       data: {
-        paidNum: allCount[0],
-
+        sales: paid.sum,
+        paidNum: paid.count,
         unpaidNum: allCount[1],
       },
     };
+
     return ctx.send(result);
   },
 

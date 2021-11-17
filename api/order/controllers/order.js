@@ -205,6 +205,32 @@ module.exports = {
       return ctx.send(error.details);
     }
 
+
+    let user = ctx.state.user;
+    let userSites = user.shopifies.map((item) => item.domain);
+    let domains = [];
+    if (!!value.domain){
+      if (typeof value.domain === "string"){
+        if (userSites.indexOf(value.domain) === -1){
+          return ctx.send({
+            error: "没有权限",
+          });
+        }
+        domains.push(value.domain);
+      }
+
+      if (Array.isArray(value.domain)){
+        value.domain.forEach((item) => {
+          if (userSites.indexOf(item) !== -1){
+            domains.push(item);
+          }
+        });
+      }
+    }else{
+      domains = userSites;
+    }
+
+
     let promise1 = strapi
       .query("order")
       .model.query((db) => {
@@ -212,6 +238,7 @@ module.exports = {
         db.where("created_at", "<", value.to);
         db.where("active", "=", false);
         db.where("paymentStatus", "=", "success");
+        db.where("domain", 'in' , domains);
         db.sum("totalPaidPrice").count()
       })
       .fetch();
@@ -219,6 +246,7 @@ module.exports = {
     let promise2 = strapi.query("order").count({
       created_at_lt: value.to,
       created_at_gt: value.from,
+      domain_in: domains,
       active: true,
     });
 

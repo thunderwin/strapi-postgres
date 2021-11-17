@@ -79,15 +79,16 @@ module.exports = {
           }
         );
 
-        return ctx.send(cart);
+         ctx.send(cart);
       }
 
-      // return strapi.services.sendcapi.capi({
-      //   cart: value.content, // 购物车
-      //   capi: value.capi, // capi
-      //   userIp: ctx.realIp,
-      //   domain: value.domain,
-      // });
+      return strapi.services.sendcapi.capi({
+        cart: value.content, // 购物车
+        capi: value.capi, // capi
+        userIp: ctx.realIp,
+        domain: value.domain,
+      });
+
     } catch (error) {
       console.dir("初始化购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));

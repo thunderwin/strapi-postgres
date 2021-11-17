@@ -25,7 +25,7 @@ const websites = {
     facebookConfig: {
       pixelId: "474956070463289",
       pixelAccessToken:
-        "EAAPP4FqfQH8BAMHj9BB2usiUCHMQHxsCZCjZBexZAz4MDkDF7WovnrnUrFQsgfaDX3n8TGX8QFP7q3PJMJ1o4rA8IF9bWPEWmc0Yv1xIBb42d4gfekEOZCZBhYuxBel98WAp4H0EIGcaqQweoqge2MadRWu4W6oeAAeGHPZCzP4fWFnJBYZAYGZA",
+        "EAAPP4FqfQH8BAAJYOie5IlFLnhCEKOzR0p1vlV9d8h0702tPzZCu8TemBJca7VxiDqFRZAkxtpthaXKoYXp65ZClRvUu8ChvzsBRlrkaW9cep7Eurk0m85OtVSISNxA9ktuqICE7TsG7ey7fd7JEOaPw7qBpPY8ZCHCLn9yhzHL3RuoGLJZAa",
       capiTestId: "TEST30858",
     },
   },

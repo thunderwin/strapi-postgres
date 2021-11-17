@@ -224,5 +224,10 @@ module.exports = {
   },
 
 
-  ads: async (ctx) => {}
+  ads: async (ctx) => {
+
+    let r = await strapi.services.fbad.findAdAccounts(ctx);
+    return ctx.send(r);
+
+  }
 };

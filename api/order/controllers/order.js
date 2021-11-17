@@ -153,42 +153,7 @@ module.exports = {
     };
   },
 
-  salesByDay: async (ctx) => {
-    let body = ctx.request.body;
 
-    const schema = Joi.object({
-      from: Joi.date().required(),
-      to: Joi.date().required(),
-      domain: Joi.string(),
-    });
-
-    const { error, value } = schema.validate(body);
-
-    if (error) {
-      return ctx.send(error.details);
-    }
-
-    let r = await strapi
-      .query("order")
-      .model.query((db) => {
-        db.where("created_at", ">=", value.from);
-        db.where("created_at", "<", value.to);
-        db.where("active", "=", false);
-        db.where("paymentStatus", "=", "success");
-        db.sum("totalPaidPrice");
-      })
-      .fetch();
-
-    r = r.toJSON();
-
-    console.log("%c rr", "color:green;font-weight:bold");
-    console.log(r);
-
-    return {
-      code: 0,
-      totalSales: r.sum,
-    };
-  },
   /** 后台控制面板专用 */
   orderByDay: async (ctx) => {
     let body = ctx.request.body;
@@ -230,6 +195,10 @@ module.exports = {
       domains = userSites;
     }
 
+    console.dir('domains')
+    console.log(JSON.stringify(domains))
+
+
 
     let promise1 = strapi
       .query("order")
@@ -238,7 +207,7 @@ module.exports = {
         db.where("created_at", "<", value.to);
         db.where("active", "=", false);
         db.where("paymentStatus", "=", "success");
-        db.where("domain", domains);
+        db.where("domain", 'IN', domains);
         db.sum("totalPaidPrice").count()
       })
       .fetch();

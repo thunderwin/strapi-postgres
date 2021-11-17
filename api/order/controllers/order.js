@@ -6,7 +6,6 @@ const Joi = require("joi");
  */
 
 module.exports = {
-
   /** 订单API 专用 */
   sync: async (ctx) => {
     let body = ctx.query;
@@ -171,6 +170,16 @@ module.exports = {
     }
 
 
+    const knex = strapi.connections.default;
+    let promise1 =  knex("orders")
+      .where("created_at", ">=", value.from)
+      .where("created_at", "<", value.to)
+      .where("active", false)
+      .where("paymentStatus", "success").sum("totalPaidPrice").count()
+
+    // Lodash's groupBy method can be used to
+    // return a grouped key-value object generated from
+    // the response
 
     // let paid = {
     //   created_at_lt: value.to,
@@ -180,54 +189,48 @@ module.exports = {
     // }
 
     // 组合计算
-    let promise1 = strapi
-      .query("order")
-      .model.query((db) => {
-        db.where('created_at','>=', value.from);
-        db.where('created_at','<', value.to);
-        db.where('active','=', false);
-        db.where('paymentStatus','=', 'success');
-        db.sum("totalPaidPrice")
-        db.count()
-      })
-      .fetch();
-
+    // let promise1 = strapi
+    //   .query("order")
+    //   .model.query((db) => {
+    //     db.where("created_at", ">=", value.from);
+    //     db.where("created_at", "<", value.to);
+    //     db.where("active", "=", false);
+    //     db.where("paymentStatus", "=", "success");
+    //     db.sum("totalPaidPrice");
+    //     db.count();
+    //   })
+    //   .fetch();
 
     let unpaid = {
       created_at_lt: value.to,
       created_at_gt: value.from,
       active: true,
-    }
+    };
 
-    let promise2 = strapi.query("order").count(unpaid)
+    let promise2 = strapi.query("order").count(unpaid);
 
-    let allCount = await Promise.all([promise1, promise2 ]);
+    let allCount = await Promise.all([promise1, promise2]);
 
-    let paid = allCount[0].toJSON();
+    let paid = allCount[0][0]
 
-    console.log('%c paid','color:green;font-weight:bold')
-    console.log(paid)
-
-
+    console.log("%c paid", "color:green;font-weight:bold");
+    console.log(paid);
 
     let result = {
       code: 0,
       data: {
-        paidNum: paid['count(*)'] || 0,
-        totalSales: paid['sum(`totalPaidPrice`)'] || 0,
+        paidNum: paid["count(*)"] || 0,
+        totalSales: paid["sum(`totalPaidPrice`)"] || 0,
         // totalDiscount: paid['sum(`totalDiscountPrice`)'] || 0,
         // totalShipping: paid['sum(`shippingFee`)'] || 0,
-        unpaidNum: allCount[1]
-      }
-    }
+        unpaidNum: allCount[1],
+      },
+    };
     return ctx.send(result);
   },
 
-
   ads: async (ctx) => {
-
     let r = await strapi.services.fbad.findAdAccounts(ctx);
     return ctx.send(r);
-
-  }
+  },
 };

@@ -238,7 +238,7 @@ module.exports = {
         db.where("created_at", "<", value.to);
         db.where("active", "=", false);
         db.where("paymentStatus", "=", "success");
-        db.where("domain", 'in' , domains);
+        db.where("domain", domains);
         db.sum("totalPaidPrice").count()
       })
       .fetch();

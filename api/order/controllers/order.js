@@ -186,9 +186,8 @@ module.exports = {
 
 
     return {
-      totalSales: r["sum(`totalPaidPrice`)"],
-      totalDiscount: r["sum(`totalDiscountPrice`)"] || 0,
-      totalShipping: r["sum(`shippingFee`)"] || 0,
+      code: 0,
+      totalSales: r.sum,
     };
   },
   /** 后台控制面板专用 */

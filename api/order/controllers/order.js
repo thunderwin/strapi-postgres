@@ -181,6 +181,10 @@ module.exports = {
 
     r = r.toJSON();
 
+    console.log('%c rr','color:green;font-weight:bold')
+    console.log(r)
+
+
     return {
       totalSales: r["sum(`totalPaidPrice`)"],
       totalDiscount: r["sum(`totalDiscountPrice`)"] || 0,

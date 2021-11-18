@@ -79,15 +79,17 @@ module.exports = {
           }
         );
 
-         ctx.send(cart);
+        return ctx.send(cart);
       }
 
-      return strapi.services.sendcapi.capi({
-        cart: value.content, // 购物车
-        capi: value.capi, // capi
-        userIp: ctx.realIp,
-        domain: value.domain,
-      });
+      // ? 不知道为什么 capi 通知 总是失败
+
+      // return strapi.services.sendcapi.capi({
+      //   cart: value.content, // 购物车
+      //   capi: value.capi, // capi
+      //   userIp: ctx.realIp,
+      //   domain: value.domain,
+      // });
 
     } catch (error) {
       console.dir("初始化购物车出错", "color:green;font-weight:bold");

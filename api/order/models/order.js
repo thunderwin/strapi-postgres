@@ -1,5 +1,6 @@
 "use strict";
 const sgMail = require("@sendgrid/mail");
+const { getCode } = require("country-list");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/concepts/models.html#lifecycle-hooks)
@@ -51,6 +52,81 @@ function genOrderConfirmEmailHTML(orderObj) {
   };
 }
 
+async function syncCustomer(order) {
+
+
+  let newCustomer = {
+    email: order.email,
+    firstname: order.address.firstname,
+    lastname: order.address.lastname,
+    domain: order.domain,
+    phone: order.address.phone,
+    address: order.address,
+  };
+  let isIn = await strapi.query("customer").findOne({ email: order.email });
+  if (isIn) {
+    // update newest custom info, cause customer may change checkout info
+    strapi.query("customer").update({id: isIn.id},newCustomer);
+  } else {
+    strapi.query("customer").create(newCustomer);
+  }
+}
+
+async function recodeCustomerSpent(order) {
+  let customer = await strapi.query("customer").findOne({ email: order.email });
+
+  // console.dir("customer");
+  // console.log(JSON.stringify(customer));
+
+  // console.dir("order");
+  // console.log(JSON.stringify(order));
+
+  strapi
+    .query("customer")
+    .model.query((q) => {
+      q.where("id", customer.id);
+      q.increment("shopcount", 1);
+      q.update(
+        'spent',order.totalPaidPrice + customer.spent  // add spent
+      )
+    })
+    .fetch();
+}
+
+async function initProduct(obj) {
+  let isIn = await strapi.query("product").findOne({ handle: obj.handle });
+
+  console.dir("产品是不是已经记录");
+  console.log(JSON.stringify(isIn));
+  if (isIn) {
+    strapi
+      .query("product")
+      .model.query((q) => {
+        q.where("id", isIn.id);
+        q.increment("addcheckouts", obj.quantity);
+      })
+      .fetch();
+  } else {
+    strapi.query("product").create({
+      handle: obj.handle,
+      title: obj.title,
+      price: obj.line_price,
+      image: obj.featured_image.url,
+      addcheckouts: obj.quantity,
+    });
+  }
+}
+
+function addProductSales(obj) {
+  strapi
+    .query("product")
+    .model.query((q) => {
+      q.where("handle", obj.handle);
+      q.increment("sales", obj.quantity);
+    })
+    .fetch();
+}
+
 module.exports = {
   lifecycles: {
     beforeFindOne(params, data) {},
@@ -62,7 +138,11 @@ module.exports = {
       // data 是前台发送来的
       // result 是后台返回的
 
-      strapi.addCheckout;
+      // console.dir("result");
+      // console.log(JSON.stringify(result));
+
+      let promises = result.content.items.map((x) => initProduct(x));
+      Promise.all(promises);
     },
 
     // Called after an entry is created
@@ -74,6 +154,8 @@ module.exports = {
       // https://github.com/sendgrid/sendgrid-nodejs
 
       if (order.active === false) {
+        // 结账成功
+
         let html = genOrderConfirmEmailHTML(order);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
@@ -91,8 +173,16 @@ module.exports = {
             console.log(err.response.body);
           });
 
+        // 记录下销售额
+        let promises = order.content.items.map((x) => addProductSales(x));
+        Promise.all(promises);
+
+        // 记录下用户消费
+        recodeCustomerSpent(order);
+
         return;
 
+        // 未知原因，plugin not working
         try {
           let html = genOrderConfirmEmailHTML(order);
 
@@ -108,6 +198,9 @@ module.exports = {
         } catch (error) {
           return "email fault";
         }
+      } else {
+        // 单纯的更新，同步下用户信息
+        syncCustomer(order);
       }
     },
   },

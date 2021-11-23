@@ -5,6 +5,22 @@
       "path": "/shopifies",
       "handler": "shopify.find",
       "config": {
+        "policies": ["global::filter-by-domain"]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/shopifies/:id",
+      "handler": "shopify.findOne",
+      "config": {
+        "policies": ["global::filter-by-domain"]
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/shopifies/:id",
+      "handler": "shopify.update",
+      "config": {
         "policies": []
       }
     },

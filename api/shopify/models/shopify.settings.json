@@ -17,7 +17,7 @@
       "required": true,
       "unique": true
     },
-    "email": {
+    "adminEmail": {
       "type": "email",
       "unique": false
     },
@@ -29,6 +29,13 @@
       "collection": "user",
       "via": "shopifies",
       "dominant": true
+    },
+    "freeShippingAmount": {
+      "type": "decimal"
+    },
+    "facebook": {
+      "type": "json",
+      "private": false
     }
   }
 }

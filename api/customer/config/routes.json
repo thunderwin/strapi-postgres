@@ -5,7 +5,7 @@
       "path": "/customers",
       "handler": "customer.find",
       "config": {
-        "policies": []
+        "policies": ["global::filter-by-domain"]
       }
     },
     {
@@ -13,7 +13,7 @@
       "path": "/customers/count",
       "handler": "customer.count",
       "config": {
-        "policies": []
+        "policies": ["global::filter-by-domain"]
       }
     },
     {
@@ -21,7 +21,7 @@
       "path": "/customers/:id",
       "handler": "customer.findOne",
       "config": {
-        "policies": []
+        "policies": ["global::filter-by-domain"]
       }
     },
     {

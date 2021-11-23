@@ -32,6 +32,9 @@
     },
     "image": {
       "type": "string"
+    },
+    "domain": {
+      "type": "string"
     }
   }
 }

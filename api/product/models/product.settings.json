@@ -24,11 +24,7 @@
     },
     "sales": {
       "type": "biginteger",
-      "default": "0"
-    },
-    "addcheckouts": {
-      "type": "biginteger",
-      "default": "0"
+      "default": "1"
     },
     "image": {
       "type": "string"

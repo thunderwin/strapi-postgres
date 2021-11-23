@@ -56,15 +56,15 @@ async function syncCustomer(order) {
   let newCustomer = {
     email: order.email,
     firstname: order.address ? order.address.firstname : null,
-    lastname: order.address ? order.address.lastname: null,
+    lastname: order.address ? order.address.lastname : null,
     domain: order.domain,
-    phone: order.address? order.address.phone: null,
+    phone: order.address ? order.address.phone : null,
     address: order.address,
   };
   let isIn = await strapi.query("customer").findOne({ email: order.email });
   if (isIn) {
     // update newest custom info, cause customer may change checkout info
-    strapi.query("customer").update({id: isIn.id},newCustomer);
+    strapi.query("customer").update({ id: isIn.id }, newCustomer);
   } else {
     strapi.query("customer").create(newCustomer);
   }
@@ -85,66 +85,54 @@ async function recodeCustomerSpent(order) {
       q.where("id", customer.id);
       q.increment("shopcount", 1);
       q.update(
-        'spent',order.totalPaidPrice + customer.spent  // add spent
-      )
+        "spent",
+        order.totalPaidPrice + customer.spent // add spent
+      );
     })
     .fetch();
 }
 
-async function initProduct(obj,domain) {
-  let isIn = await strapi.query("product").findOne({ handle: obj.handle });
+function recodeProduct(order) {
+  async function initProduct(obj) {
+    console.dir('obj')
+    console.log(JSON.stringify(obj))
 
-  // console.dir("产品是不是已经记录");
-  // console.log(JSON.stringify(isIn));
-  if (isIn) {
-    strapi
-      .query("product")
-      .model.query((q) => {
-        q.where("id", isIn.id);
-        q.increment("addcheckouts", obj.quantity);
-      })
-      .fetch();
-  } else {
-    strapi.query("product").create({
-      handle: obj.handle,
-      title: obj.title,
-      price: obj.line_price,
-      image: obj.featured_image.url,
-      addcheckouts: obj.quantity,
-      domain: domain
-    });
+    let isIn = await strapi.query("product").findOne({ handle: obj.handle });
+    if (isIn) {
+      strapi
+        .query("product")
+        .model.query((q) => {
+          q.where("id", isIn.id);
+          q.increment("sales", obj.quantity);
+        })
+        .fetch();
+    } else {
+      strapi.query("product").create({
+        handle: obj.handle,
+        title: obj.title,
+        price: obj.line_price,
+        image: obj.featured_image.url,
+        domain: order.domain,
+      });
+    }
   }
+
+  return Promise.all(order.content.items.map((obj) => initProduct(obj)));
 }
 
-function addProductSales(obj) {
-  strapi
-    .query("product")
-    .model.query((q) => {
-      q.where("handle", obj.handle);
-      q.increment("sales", obj.quantity);
-    })
-    .fetch();
-}
+
 
 module.exports = {
   lifecycles: {
     beforeFindOne(params, data) {},
     beforeFind(params, populate) {},
 
-    // Called before an entry is created
     beforeCreate(data) {},
     afterCreate(result, data) {
       // data 是前台发送来的
       // result 是后台返回的
-
-      // console.dir("result");
-      // console.log(JSON.stringify(result));
-
-      let promises = result.content.items.map((x) => initProduct(x, result.domain));
-      Promise.all(promises);
     },
 
-    // Called after an entry is created
     afterUpdate(order, params, data) {
       // console.dir("创建新订单结果");
       // console.log(JSON.stringify(order));
@@ -173,9 +161,7 @@ module.exports = {
           });
 
         // 记录下销售额
-        let promises = order.content.items.map((x) => addProductSales(x));
-        Promise.all(promises);
-
+        recodeProduct(order);
         // 记录下用户消费
         recodeCustomerSpent(order);
 

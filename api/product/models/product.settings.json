@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "name": "product",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "handle": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "title": {
+      "type": "string"
+    },
+    "sales": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "addcheckouts": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "image": {
+      "type": "string"
+    }
+  }
+}

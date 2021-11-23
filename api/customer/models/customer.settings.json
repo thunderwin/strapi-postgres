@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "customers",
+  "info": {
+    "name": "customer",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "phone": {
+      "type": "biginteger"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "address": {
+      "type": "json"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "spent": {
+      "type": "float",
+      "default": 0
+    },
+    "shopcount": {
+      "type": "integer",
+      "default": 1
+    }
+  }
+}

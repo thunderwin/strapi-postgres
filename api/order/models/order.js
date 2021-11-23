@@ -53,14 +53,12 @@ function genOrderConfirmEmailHTML(orderObj) {
 }
 
 async function syncCustomer(order) {
-
-
   let newCustomer = {
     email: order.email,
-    firstname: order.address.firstname,
-    lastname: order.address.lastname,
+    firstname: order.address ? order.address.firstname : null,
+    lastname: order.address ? order.address.lastname: null,
     domain: order.domain,
-    phone: order.address.phone,
+    phone: order.address? order.address.phone: null,
     address: order.address,
   };
   let isIn = await strapi.query("customer").findOne({ email: order.email });
@@ -96,8 +94,8 @@ async function recodeCustomerSpent(order) {
 async function initProduct(obj) {
   let isIn = await strapi.query("product").findOne({ handle: obj.handle });
 
-  console.dir("产品是不是已经记录");
-  console.log(JSON.stringify(isIn));
+  // console.dir("产品是不是已经记录");
+  // console.log(JSON.stringify(isIn));
   if (isIn) {
     strapi
       .query("product")

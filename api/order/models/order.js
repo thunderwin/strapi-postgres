@@ -113,6 +113,7 @@ async function initProduct(obj) {
       price: obj.line_price,
       image: obj.featured_image.url,
       addcheckouts: obj.quantity,
+      domain: obj.domain
     });
   }
 }

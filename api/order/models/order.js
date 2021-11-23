@@ -91,7 +91,7 @@ async function recodeCustomerSpent(order) {
     .fetch();
 }
 
-async function initProduct(obj) {
+async function initProduct(obj,domain) {
   let isIn = await strapi.query("product").findOne({ handle: obj.handle });
 
   // console.dir("产品是不是已经记录");
@@ -111,7 +111,7 @@ async function initProduct(obj) {
       price: obj.line_price,
       image: obj.featured_image.url,
       addcheckouts: obj.quantity,
-      domain: obj.domain
+      domain: domain
     });
   }
 }
@@ -140,7 +140,7 @@ module.exports = {
       // console.dir("result");
       // console.log(JSON.stringify(result));
 
-      let promises = result.content.items.map((x) => initProduct(x));
+      let promises = result.content.items.map((x) => initProduct(x, result.domain));
       Promise.all(promises);
     },
 

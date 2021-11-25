@@ -239,7 +239,20 @@ module.exports = {
   },
 
   ads: async (ctx) => {
-    let r = await strapi.services.fbad.findAdAccounts(ctx);
+    let r = await strapi.services.myads.allMyAds();
     return ctx.send(r);
   },
+
+  adsdetail: async (ctx) => {
+    let accountId = ctx.params.id
+
+    console.log('%c accountId','color:green;font-weight:bold')
+    console.log(JSON.stringify(accountId))
+
+    let r = await strapi.services.myads.adsdetail(accountId)
+    return ctx.send(r);
+  }
 };
+
+
+

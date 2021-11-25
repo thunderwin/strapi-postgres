@@ -25,9 +25,9 @@
       "type": "json"
     },
     "users_permissions_users": {
+      "via": "shopifies",
       "plugin": "users-permissions",
       "collection": "user",
-      "via": "shopifies",
       "dominant": true
     },
     "freeShippingAmount": {

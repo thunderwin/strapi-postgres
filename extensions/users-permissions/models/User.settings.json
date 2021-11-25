@@ -62,6 +62,10 @@
     "shopifies": {
       "via": "users_permissions_users",
       "collection": "shopify"
+    },
+    "tokens": {
+      "type": "json",
+      "private": true
     }
   }
 }

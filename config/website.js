@@ -68,9 +68,9 @@ const websites = {
         "EFZrIisWYYC8jUYZSPWjJ6H5OItKYPuEDdUyn_avva8Hh4eLG34Kre2MxL7ZgPOtxvEqOOcrN863q_hi",
     },
     facebookConfig: {
-      pixelId: "110986787786144",
+      pixelId: "271219534959974",
       pixelAccessToken:
-        "EAAny9poEXpcBAK2oKjlpINt2TbA6cDVTPvEaMyLI6yxObxwONc8I2XkMblfJTDcm8pJLrr9XATxHu7KQVaBSuEvZA8zZCvgxcsE9OOtiCUwYNmUBtDpTNVAy3piugOMqC2fc8eVoQAZC3d4SafM96xXGvBv4MsqjZBQAcd6sIBePt9F0PORMiUgIcqwoKIAZD",
+        "EAAG27dIsmAEBAPxqS2LokLsZBTcOKaMV4Mpr2ZBV9jG0SinSZCuZBwqrfWGe8NsYZA0Jc0rnuzg4IBdZCZBHQOYdYuzcJXMEQacGD7HMZCLQnd9ZCwrtlCPZAMukny0GsHVddXZBNRt5zCqZCuBheZCOdHohJZCTxi0c66zrZBZBZAYVYoJM59x0sgFSCdgHaKoZB4GrclMPkZD",
     },
   },
 };

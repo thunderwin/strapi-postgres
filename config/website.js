@@ -70,7 +70,7 @@ const websites = {
     facebookConfig: {
       pixelId: "271219534959974",
       pixelAccessToken:
-        "EAAG27dIsmAEBAPxqS2LokLsZBTcOKaMV4Mpr2ZBV9jG0SinSZCuZBwqrfWGe8NsYZA0Jc0rnuzg4IBdZCZBHQOYdYuzcJXMEQacGD7HMZCLQnd9ZCwrtlCPZAMukny0GsHVddXZBNRt5zCqZCuBheZCOdHohJZCTxi0c66zrZBZBZAYVYoJM59x0sgFSCdgHaKoZB4GrclMPkZD",
+        "EAAG27dIsmAEBAOMoZBQEaHYeVzus9ZCUxznIaeizjWOqlaZBRrtTKkc73BNZBBtvhaJLNZByFeSBJhbpnIip49tSD80eUSqGxelIi18WsDWj75nrfdHBCh6N7WZBDgjHjonT8IKB1X8HchFX2vrlZCSmfEFLCrnbPeF1vWQnp9oIvLCnJTvU8GoZCKnKfhQueSYZD",
     },
   },
 };

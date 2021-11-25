@@ -28,9 +28,13 @@ sb-qolrx340835@business.example.com
 // let PaypalKey =
 //   "EP5SHbGNiYoBx7x0Y2VAInORcFsiyeCHuH0DhHGj3Y8ecnhJ2kaNBhOALZxiOttH1ZvOXeQW8wprPCQO";
 
-function genPaypalClient(domain) {
-  let paypalCredential = websites[domain]; //  拿到paypal 配置
-  paypalCredential = paypalCredential.paypalConfig;
+function genPaypalClient(config) {
+
+  console.dir('config')
+  console.log(JSON.stringify(config))
+
+
+  let paypalCredential = config.paypal; //  拿到paypal 配置
 
   let environment =
     process.env.NODE_ENV === "development"
@@ -146,7 +150,7 @@ async function fetchCartAndGenPaypalPayload(cart) {
 }
 
 module.exports = {
-  async paypalPrepay(cart) {
+  async paypalPrepay(cart,config) {
     //1 组合参数
     let payload = await fetchCartAndGenPaypalPayload(cart);
     // return payload;
@@ -155,7 +159,7 @@ module.exports = {
     console.log(JSON.stringify(payload));
 
     // 3 获取paypal 客户端
-    let { client, request } = genPaypalClient(cart.domain);
+    let { client, request } = genPaypalClient(config);
 
     // 4 执行支付
     request.requestBody(payload);
@@ -173,10 +177,9 @@ module.exports = {
     }
   },
 
-  async paypalCaptureOrder(token, domain) {
-    let webConfig = websites[domain]; //  拿到paypal 配置
+  async paypalCaptureOrder(token, domain, config) {
 
-    paypalCredential = webConfig.paypalConfig;
+    paypalCredential = config.paypal;
 
     let environment =
       process.env.NODE_ENV === "development"

@@ -4,9 +4,6 @@ const Joi = require("joi");
 
 const requestIp = require("request-ip");
 
-
-
-
 module.exports = {
   theme: (ctx) => {
     console.log("%c req.query", "color:green;font-weight:bold");
@@ -79,7 +76,7 @@ module.exports = {
           }
         );
 
-         ctx.send(cart);
+        ctx.send(cart);
       }
 
       // ? 不知道为什么 capi 通知 总是失败
@@ -88,7 +85,7 @@ module.exports = {
         capi: value.capi, // capi
         userIp: ctx.realIp,
         domain: value.domain,
-      });
+      }, ctx.config);
 
     } catch (error) {
       console.dir("初始化购物车出错", "color:green;font-weight:bold");
@@ -128,7 +125,6 @@ module.exports = {
 
     // 补上 subtotalPrice
     value.subtotalPrice = value.content.total_price;
-
 
     try {
       let order = await strapi.query("order").update({ id: value.id }, value);
@@ -195,10 +191,16 @@ module.exports = {
       }
 
       // 2 更新到订单上
-      let totalDiscountPrice = discount.reduce((sum, item) => sum + item.value, 0) // 补上优惠金额
+      let totalDiscountPrice = discount.reduce(
+        (sum, item) => sum + item.value,
+        0
+      ); // 补上优惠金额
       let updatedOrder = await strapi
         .query("order")
-        .update({ id: value.orderId }, { coupon: couponData, discount,totalDiscountPrice });
+        .update(
+          { id: value.orderId },
+          { coupon: couponData, discount, totalDiscountPrice }
+        );
 
       if (updatedOrder.id) {
         console.dir("订单更新成功");
@@ -280,18 +282,18 @@ module.exports = {
       }
 
       if (verifyPayment.code === 0) {
-        let paidPrice = verifyPayment.data.purchase_units[0].payments.captures[0].amount.value;
-        let order = await strapi
-          .query("order")
-          .update(
-            { id },
-            {
-              paymentStatus: "success",
-              active: false,
-              paypal: verifyPayment.data,
-              totalPaidPrice: paidPrice,
-            }
-          );
+        let paidPrice =
+          verifyPayment.data.purchase_units[0].payments.captures[0].amount
+            .value;
+        let order = await strapi.query("order").update(
+          { id },
+          {
+            paymentStatus: "success",
+            active: false,
+            paypal: verifyPayment.data,
+            totalPaidPrice: paidPrice,
+          }
+        );
 
         console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
         console.log(JSON.stringify(order.id));

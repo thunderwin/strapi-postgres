@@ -70,35 +70,22 @@ module.exports = {
   // 有地址，邮箱，addPaymentinfo
   // 有checkout payment
 
-  capi({ cart, capi, userIp, domain, userDetail = {} }) {
-
-    console.dir('开始发送事件')
-
-    try {
-      axios.post(`https://graph.facebook.com/v12.0/271219534959974/events?data=%5B%0A%20%20%7B%0A%20%20%20%20%22event_name%22%3A%20%22AddPaymentInfo%22%2C%0A%20%20%20%20%22event_time%22%3A%201637815953%2C%0A%20%20%20%20%22action_source%22%3A%20%22email%22%2C%0A%20%20%20%20%22user_data%22%3A%20%7B%0A%20%20%20%20%20%20%22em%22%3A%20%5B%0A%20%20%20%20%20%20%20%20%227b17fb0bd173f625b58636fb796407c22b3d16fc78302d79f0fd30c2fc2fc068%22%0A%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%22ph%22%3A%20%5B%0A%20%20%20%20%20%20%20%20null%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%2C%0A%20%20%20%20%22custom_data%22%3A%20%7B%0A%20%20%20%20%20%20%22currency%22%3A%20%22USD%22%2C%0A%20%20%20%20%20%20%22value%22%3A%20%22142.52%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%5D&test_event_code=TEST15703&access_token=EAAG27dIsmAEBAB2OC6xmjmWlKfUZAVc4x1dhSSIahZCdbDzxNjkPsv7blZCfsX7vQ8vYzT5PqRFhkfEau3GgQX9KYVuUhFl9TCglrMyvl2cugtol9sni04APtfyEdzzPsyPFLSfEgj5gcfusHUYJuz1FdAdAbodLZAmulQZAs2AUlv0DGQ2piRLLknHyj5LMZD`)
-
-    } catch (error) {
-      console.log('%c 出错','color:green;font-weight:bold')
-      console.log(JSON.stringify(error))
-
-    }
+  capi({ cart, capi, userIp, domain, userDetail = {} },config) {
 
 
-    return
+
 
 
     if (!domain){
       throw new Error("domain is required");
     }
 
-    let websiteConfig = websites[domain];
 
-    console.log('%c ?????','color:green;font-weight:bold')
-    console.log(JSON.stringify(websiteConfig))
 
-    let facebookConfig = websiteConfig.facebookConfig;
+    let facebookConfig = config.facebook;
 
     const api = bizSdk.FacebookAdsApi.init(facebookConfig.pixelAccessToken);
+
     let current_timestamp = Math.floor(new Date() / 1000);
 
     let customData = genCustomData(cart);

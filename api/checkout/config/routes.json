@@ -21,7 +21,10 @@
       "path": "/checkout/init",
       "handler": "checkout.init",
       "config": {
-        "policies": ["plugins::users-permissions.ratelimit"]
+        "policies": [
+          "plugins::users-permissions.ratelimit",
+          "global::loading-website-config"
+        ]
       }
     },
     {

@@ -72,6 +72,9 @@ module.exports = {
 
   capi({ cart, capi, userIp, domain, userDetail = {} }) {
 
+    console.dir('开始发送事件')
+
+
     if (!domain){
       throw new Error("domain is required");
     }

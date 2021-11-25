@@ -148,7 +148,7 @@ module.exports = {
       //   },
       // });
       // 如果要求结账, 获取paypal
-      let paypalLinks = await strapi.services.paypal.paypalPrepay(order);
+      let paypalLinks = await strapi.services.paypal.paypalPrepay(order, ctx.config);
 
       // console.log("%c paypalLinks", "color:green;font-weight:bold");
       // console.log(JSON.stringify(paypalLinks));
@@ -261,7 +261,8 @@ module.exports = {
     try {
       let verifyPayment = await strapi.services.paypal.paypalCaptureOrder(
         token,
-        domain
+        domain,
+        ctx.config
       );
 
       console.log("验证付款对不对");

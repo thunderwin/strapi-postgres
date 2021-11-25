@@ -32,7 +32,10 @@
       "path": "/checkout/updateOrder",
       "handler": "checkout.updateOrder",
       "config": {
-        "policies": ["plugins::users-permissions.ratelimit"]
+        "policies": [
+          "plugins::users-permissions.ratelimit",
+          "global::loading-website-config"
+        ]
       }
     },
     {
@@ -40,7 +43,10 @@
       "path": "/checkout/placeOrder",
       "handler": "checkout.placeOrder",
       "config": {
-        "policies": ["plugins::users-permissions.ratelimit"]
+        "policies": [
+          "plugins::users-permissions.ratelimit",
+          "global::loading-website-config"
+        ]
       }
     },
     {

@@ -1,7 +1,7 @@
 "use strict";
 const bizSdk = require("facebook-nodejs-business-sdk");
-const axios = require('axios')
-const {websites} = require("../../../config/website");
+const axios = require("axios");
+const { websites } = require("../../../config/website");
 
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;
@@ -9,8 +9,6 @@ const DeliveryCategory = bizSdk.DeliveryCategory;
 const EventRequest = bizSdk.EventRequest;
 const UserData = bizSdk.UserData;
 const ServerEvent = bizSdk.ServerEvent;
-
-
 
 // curl -i -X POST \
 //  "https://graph.facebook.com/v12.0/{PIXEL_ID}/events/?access_token=EAAMXXNt4pbABAEKyDOE8nMMcVZAMSdeaZBkOjHqX11HMYfra0ZCwKVIVzzxebbUCyZAV1mLwPQXviPlUMTuYLioaJLXwZBTsv9xmibaShtN1ZAMENoInW2PzZCxe5YH3l0GF7cuLX6C8XuK4QAkMYecxRztiiAkFAkk4JHwmdSaoZAp2SmmTg13dgiRLCzQbuP1upz5po4dtNAmjSZCevdpVZCzp1UZBYTqCK6shkVkXmZC8wypbOuY4qngJ"
@@ -70,17 +68,10 @@ module.exports = {
   // 有地址，邮箱，addPaymentinfo
   // 有checkout payment
 
-  capi({ cart, capi, userIp, domain, userDetail = {} },config) {
-
-
-
-
-
-    if (!domain){
+  capi({ cart, capi, userIp, domain, userDetail = {} }, config) {
+    if (!domain) {
       throw new Error("domain is required");
     }
-
-
 
     let facebookConfig = config.facebook;
 
@@ -141,7 +132,9 @@ module.exports = {
     const eventRequest = new EventRequest(
       facebookConfig.pixelAccessToken,
       facebookConfig.pixelId
-    ).setTestEventCode(facebookConfig.capiTestId).setEvents(eventsData);
+    )
+      .setTestEventCode(facebookConfig.capiTestId)
+      .setEvents(eventsData);
 
     console.dir("事件列表");
     console.log(JSON.stringify(eventsData));
@@ -155,8 +148,4 @@ module.exports = {
       }
     );
   },
-
-
-
-
 };

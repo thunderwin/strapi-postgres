@@ -1,12 +1,12 @@
 const websites = {
   "www.chocolateladie.com": {
-    paypalConfig: {
-      paypalAccount: "beeavern@163.com",
-      paypalId:
-        "ASXrp1yKHKzPNxHXE8_oHL8PoP_pqtCE9GsOrbIajds_tRvJg6QOqpOYYUZgNujdK65UJR5jvUvnbbHq",
-      paypalKey:
-        "ECj_FNMNZbYcBtbxX43KSkwg2KUIFekT9wXICvLBx7EZV44ECAMrpQPRxs15A8ZAI6JElsnc5NFmLIVV",
-    },
+      paypalConfig: {
+        paypalAccount: "beeavern@163.com",
+        paypalId:
+          "ASXrp1yKHKzPNxHXE8_oHL8PoP_pqtCE9GsOrbIajds_tRvJg6QOqpOYYUZgNujdK65UJR5jvUvnbbHq",
+        paypalKey:
+          "ECj_FNMNZbYcBtbxX43KSkwg2KUIFekT9wXICvLBx7EZV44ECAMrpQPRxs15A8ZAI6JElsnc5NFmLIVV",
+      },
     facebookConfig: {
       pixelId: "110986787786144",
       pixelAccessToken:
@@ -71,6 +71,8 @@ const websites = {
       pixelId: "271219534959974",
       pixelAccessToken:
         "EAAG27dIsmAEBAOMoZBQEaHYeVzus9ZCUxznIaeizjWOqlaZBRrtTKkc73BNZBBtvhaJLNZByFeSBJhbpnIip49tSD80eUSqGxelIi18WsDWj75nrfdHBCh6N7WZBDgjHjonT8IKB1X8HchFX2vrlZCSmfEFLCrnbPeF1vWQnp9oIvLCnJTvU8GoZCKnKfhQueSYZD",
+        capiTestId: "TEST90933"
+
     },
   },
 };

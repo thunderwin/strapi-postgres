@@ -47,7 +47,8 @@ const genCustomData = (orderContent) => {
     return new Content()
       .setId(x.product_id)
       .setQuantity(x.quantity)
-      .setDeliveryCategory(DeliveryCategory.HOME_DELIVERY);
+      .setDeliveryCategory(DeliveryCategory.HOME_DELIVERY)
+
   });
 
   //  const content = new Content()
@@ -57,6 +58,7 @@ const genCustomData = (orderContent) => {
 
   const customData = new CustomData()
     .setContents(contents)
+    .setContentType('product')
     .setCurrency(currency)
     .setValue(total_price);
 
@@ -141,7 +143,7 @@ module.exports = {
 
     eventRequest.execute().then(
       (response) => {
-        console.log("Response: ", response);
+        console.log("capi成功");
       },
       (err) => {
         console.error("Error: ", err);

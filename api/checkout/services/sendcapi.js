@@ -51,16 +51,13 @@ const genCustomData = (orderContent) => {
 
   });
 
-  //  const content = new Content()
-  //  .setId("product123")
-  //  .setQuantity(1)
-  //  .setDeliveryCategory(DeliveryCategory.HOME_DELIVERY);
+
 
   const customData = new CustomData()
     .setContents(contents)
     .setContentType('product')
     .setCurrency(currency)
-    .setValue(total_price);
+    .setValue((total_price/100).toFixed(2));
 
   return customData;
 };

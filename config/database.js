@@ -15,6 +15,7 @@ module.exports = ({ env }) => {
           database,
           username: user,
           password,
+          ssl:true,
         },
         options: {
 					autoMigration: true,

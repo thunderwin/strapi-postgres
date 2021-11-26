@@ -1,6 +1,6 @@
 module.exports = async (ctx, next) => {
-  // console.dir("ctx");
-  // console.log(JSON.stringify(ctx.query));
+  console.dir("ctx");
+  console.log(JSON.stringify(ctx.query));
 
   if (ctx.state.user && ctx.query) {
     // console.dir("ctx.state.user");

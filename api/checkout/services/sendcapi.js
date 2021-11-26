@@ -1,7 +1,6 @@
 "use strict";
 const bizSdk = require("facebook-nodejs-business-sdk");
 const axios = require("axios");
-const { websites } = require("../../../config/website");
 
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;
@@ -51,16 +50,13 @@ const genCustomData = (orderContent) => {
 
   });
 
-  //  const content = new Content()
-  //  .setId("product123")
-  //  .setQuantity(1)
-  //  .setDeliveryCategory(DeliveryCategory.HOME_DELIVERY);
+
 
   const customData = new CustomData()
     .setContents(contents)
     .setContentType('product')
     .setCurrency(currency)
-    .setValue(total_price);
+    .setValue((total_price/100).toFixed(2));
 
   return customData;
 };

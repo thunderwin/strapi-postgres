@@ -31,9 +31,13 @@ ax.interceptors.response.use(
 
 
 const adsfields = `name,status,conversion_domain,insights{spend,clicks,cpc,cpm,cpp,reach,date_start,date_stop,impressions},preview_shareable_link,adcreatives{link_url,name,title,object_url,link_destination_display_url,status,url_tags,object_story_spec}}`
-const token = `EAANTZCILthtMBAO68xmBOzsRP1mcHfPS0HTze45iPv22iDuZCYuJFM3dGfhvNiOcNJJ6h3Qc1jWg9CsIbedHKRCTMz5DBj3eEQRrTP50KO1y3HVY8X1ofxGlSaWn07Nj3EEh4eNrhC98PAGfP4LZA6BBHbynYySgr4V7ir8TuGGhNaluFO6`;
+
 module.exports = {
+
   async allMyAds(ctx) {
+
+    let token = ctx.state.user.tokens.facebookAppToken
+
     let path = `me?fields=adaccounts{name,balance}`;
     let r = await ax.get(`${path}&access_token=${token}`);
 
@@ -42,7 +46,8 @@ module.exports = {
     return accountList;
   },
 
-  async adsdetail(adAccountId){
+  async adsdetail(adAccountId,ctx){
+    let token = ctx.state.user.tokens.facebookAppToken
 
     let path = `${adAccountId}?fields=name,balance,ads{name,status,conversion_domain,insights{spend,clicks,cpc,cpm,cpp,reach,date_start,date_stop,impressions},preview_shareable_link,adcreatives{link_url,name,title,object_url,link_destination_display_url,status,url_tags,object_story_spec}}`;
 

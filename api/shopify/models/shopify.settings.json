@@ -19,10 +19,12 @@
     },
     "adminEmail": {
       "type": "email",
-      "unique": false
+      "unique": false,
+      "private": true
     },
     "paypal": {
-      "type": "json"
+      "type": "json",
+      "private": true
     },
     "users_permissions_users": {
       "via": "shopifies",
@@ -31,11 +33,12 @@
       "dominant": true
     },
     "freeShippingAmount": {
-      "type": "decimal"
+      "type": "decimal",
+      "private": true
     },
     "facebook": {
       "type": "json",
-      "private": false
+      "private": true
     }
   }
 }

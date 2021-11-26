@@ -3,7 +3,7 @@ const { parse } = require("pg-connection-string");
 module.exports = ({ env }) => {
   const { host, port, database, user, password } = parse(env("DATABASE_URL"));
 
-  return {
+  let config = {
     defaultConnection: "default",
     connections: {
       default: {
@@ -15,7 +15,6 @@ module.exports = ({ env }) => {
           database,
           username: user,
           password,
-          ssl:true,
         },
         options: {
 					autoMigration: true,
@@ -23,4 +22,8 @@ module.exports = ({ env }) => {
       },
     },
   };
+  if (process.env.NODE_ENV === 'development'){
+    config.connections.default.settings.ssl = true
+  }
+  return config
 };

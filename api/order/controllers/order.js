@@ -60,7 +60,7 @@ module.exports = {
     return ctx.send(r);
   },
 
-  find: async (ctx) => {
+  find11: async (ctx) => {
     // 重写find
 
     let body = ctx.query;

@@ -49,7 +49,6 @@
           "plugins::users-permissions.ratelimit",
           "plugins::users-permissions.isauthenticated",
           "global::filter-by-domain"
-
         ]
       }
     },

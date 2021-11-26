@@ -17,13 +17,11 @@ module.exports = ({ env }) => {
           password,
         },
         options: {
-					autoMigration: true,
-				},
+          autoMigration: true,
+        },
       },
     },
   };
-  if (process.env.NODE_ENV === 'development'){
-    config.connections.default.settings.ssl = true
-  }
-  return config
+
+  return config;
 };

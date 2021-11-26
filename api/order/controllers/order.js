@@ -238,17 +238,13 @@ module.exports = {
   },
 
   ads: async (ctx) => {
-    let r = await strapi.services.myads.allMyAds();
+    let r = await strapi.services.myads.allMyAds(ctx);
     return ctx.send(r);
   },
 
   adsdetail: async (ctx) => {
     let accountId = ctx.params.id
-
-    console.log('%c accountId','color:green;font-weight:bold')
-    console.log(JSON.stringify(accountId))
-
-    let r = await strapi.services.myads.adsdetail(accountId)
+    let r = await strapi.services.myads.adsdetail(accountId,ctx)
     return ctx.send(r);
   }
 };

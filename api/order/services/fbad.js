@@ -1,5 +1,5 @@
 const bizSdk = require("facebook-nodejs-business-sdk");
-const { websites } = require("../../../config/website");
+// const { websites } = require("../../../config/website");
 
 const accessToken = "936768923600595|yJrXD_laEG9IixUg_zd3kPUXJ_s";
 const accountId = "act_687321151405224"; // 广告账户id

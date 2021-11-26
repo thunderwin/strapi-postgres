@@ -1,7 +1,7 @@
 "use strict";
 const bizSdk = require("facebook-nodejs-business-sdk");
 const axios = require("axios");
-const { websites } = require("../../../config/website");
+// const { websites } = require("../../../config/website_deleting");
 
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;

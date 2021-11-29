@@ -9,8 +9,7 @@ const EventRequest = bizSdk.EventRequest;
 const UserData = bizSdk.UserData;
 const ServerEvent = bizSdk.ServerEvent;
 
-// curl -i -X POST \
-//  "https://graph.facebook.com/v12.0/{PIXEL_ID}/events/?access_token=EAAMXXNt4pbABAEKyDOE8nMMcVZAMSdeaZBkOjHqX11HMYfra0ZCwKVIVzzxebbUCyZAV1mLwPQXviPlUMTuYLioaJLXwZBTsv9xmibaShtN1ZAMENoInW2PzZCxe5YH3l0GF7cuLX6C8XuK4QAkMYecxRztiiAkFAkk4JHwmdSaoZAp2SmmTg13dgiRLCzQbuP1upz5po4dtNAmjSZCevdpVZCzp1UZBYTqCK6shkVkXmZC8wypbOuY4qngJ"
+
 
 const genUserData = ({ email, phone, ip, userAgent, browserId, clickId }) => {
   const userData = new UserData();
@@ -67,6 +66,7 @@ module.exports = {
   // 有checkout payment
 
   capi({ cart, capi, userIp, domain, userDetail = {} }, config) {
+
     if (!domain) {
       throw new Error("domain is required");
     }

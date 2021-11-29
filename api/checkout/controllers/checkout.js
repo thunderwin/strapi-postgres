@@ -136,8 +136,19 @@ module.exports = {
         return ctx.send(order);
       }
 
+
+
+      // 如果要求结账, 获取paypal
+      let paypalLinks = await strapi.services.paypal.paypalPrepay(order, ctx.config);
+
+      // console.log("%c paypalLinks", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(paypalLinks));
+
+       ctx.send(paypalLinks);
+
+
       // send evernt to capi
-      strapi.services.sendcapi.capi({
+      return  strapi.services.sendcapi.capi({
         cart: value.content, // 购物车
         capi: value.capi, // capi
         userIp: ctx.realIp,
@@ -146,15 +157,8 @@ module.exports = {
           email: value.email,
           phone: value.phone,
         },
-      });
+      },ctx.config);
 
-      // 如果要求结账, 获取paypal
-      let paypalLinks = await strapi.services.paypal.paypalPrepay(order, ctx.config);
-
-      // console.log("%c paypalLinks", "color:green;font-weight:bold");
-      // console.log(JSON.stringify(paypalLinks));
-
-      return ctx.send(paypalLinks);
     } catch (error) {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));

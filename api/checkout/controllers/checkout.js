@@ -146,7 +146,7 @@ module.exports = {
           email: value.email,
           phone: value.phone,
         },
-      });
+      },ctx.config);
 
       // 如果要求结账, 获取paypal
       let paypalLinks = await strapi.services.paypal.paypalPrepay(order, ctx.config);

@@ -23,8 +23,8 @@ module.exports = {
     }
 
     let r = await strapi.query("order").find({
-      created_at_lt: value.to,
-      created_at_gt: value.from,
+      updated_at_lt: value.to,
+      updated_at_gt: value.from,
       active: false,
       paymentStatus: "success",
       _limit: process.env.NODE_ENV === "development" ? 3 : 100,
@@ -51,8 +51,8 @@ module.exports = {
     }
 
     let r = await strapi.query("order").count({
-      created_at_lt: value.to,
-      created_at_gt: value.from,
+      updated_at_lt: value.to,
+      updated_at_gt: value.from,
       active: false,
       paymentStatus: "success",
     });

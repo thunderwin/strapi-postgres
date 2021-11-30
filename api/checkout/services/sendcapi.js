@@ -92,7 +92,7 @@ module.exports = {
     let eventList = [];
 
     const initiateCheckoutEvent = new ServerEvent()
-      .setEventName("initiateCheckout")
+      .setEventName("InitiateCheckout")
       .setEventTime(current_timestamp)
       .setUserData(userData)
       .setCustomData(customData)
@@ -104,7 +104,7 @@ module.exports = {
 
     if (userDetail.email) {
       const addPaymentInfoEvent = new ServerEvent()
-        .setEventName("addPaymentInfo")
+        .setEventName("AddPaymentInfo")
         .setEventTime(current_timestamp)
         .setUserData(userData)
         .setCustomData(customData)
@@ -113,7 +113,7 @@ module.exports = {
         .setEventId("input" + cart.token);
 
       const purchaseEvent = new ServerEvent()
-        .setEventName("purchase")
+        .setEventName("Purchase")
         .setEventTime(current_timestamp)
         .setUserData(userData)
         .setCustomData(customData)

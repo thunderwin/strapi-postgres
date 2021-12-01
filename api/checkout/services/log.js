@@ -3,6 +3,10 @@ module.exports = {
     strapi.query("log-checkout").create({ reason, error });
   },
 
+  logTracking: function (reason, error) {
+    strapi.query("log-capi").create({ reason, error });
+  },
+
   cookieHandler: function () {
     let cookies = [
       "smidV2=2020090214473281ec91bee543a2c07f67021b142e5a020061933cc354e5570",

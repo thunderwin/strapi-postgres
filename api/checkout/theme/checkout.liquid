@@ -1622,6 +1622,12 @@
   function handleSuccess(id, token) {
     $("#cart-wrapper").css("display", "none");
     $("#checkoutPaymentStatus").css("display", "block");
+
+   // capi
+   let capi = CAPI() //get capi
+        console.log('%c 支付成功 capi', 'color:green;font-weight:bold')
+        console.log(JSON.stringify(capi))
+
     let total
     $.ajax({
       type: "POST",
@@ -1637,6 +1643,7 @@
         domain: document.domain,
         id: id,
         token: token,
+        capi
       }),
       success: function (r) {
         console.log("%c 结账成功返回", "color:green;font-weight:bold");

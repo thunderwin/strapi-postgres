@@ -59,7 +59,7 @@ module.exports = {
           active: true, // 新建的订单 active
         });
 
-        return ctx.send(cart);
+        ctx.send(cart);
       } else {
         console.dir("同步订单");
         if (!cart.tracking) cart.tracking = [];
@@ -75,18 +75,26 @@ module.exports = {
             tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
           }
         );
-
         ctx.send(cart);
       }
 
-      // ? 不知道为什么 capi 通知 总是失败
-      return strapi.services.sendcapi.capi({
-        cart: value.content, // 购物车
-        capi: value.capi, // capi
-        userIp: ctx.realIp,
-        domain: value.domain,
-      }, ctx.config);
+      return strapi.services.sendcapi.sendEvent(
+        "InitiateCheckout",
+        cart,
+        value.capi,
+        ctx
+      );
 
+      // ? 不知道为什么 capi 通知 总是失败
+      return strapi.services.sendcapi.capi(
+        {
+          cart: value.content, // 购物车
+          capi: value.capi, // capi
+          userIp: ctx.realIp,
+          domain: value.domain,
+        },
+        ctx.config
+      );
     } catch (error) {
       console.dir("初始化购物车出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -136,29 +144,38 @@ module.exports = {
         return ctx.send(order);
       }
 
-
-
       // 如果要求结账, 获取paypal
-      let paypalLinks = await strapi.services.paypal.paypalPrepay(order, ctx.config);
+      let paypalLinks = await strapi.services.paypal.paypalPrepay(
+        order,
+        ctx.config
+      );
 
       // console.log("%c paypalLinks", "color:green;font-weight:bold");
       // console.log(JSON.stringify(paypalLinks));
 
-       ctx.send(paypalLinks);
+      ctx.send(paypalLinks);
 
+      return strapi.services.sendcapi.sendEvent(
+        "AddPaymentInfo",
+        order,
+        value.capi,
+        ctx
+      );
 
       // send evernt to capi
-      return  strapi.services.sendcapi.capi({
-        cart: value.content, // 购物车
-        capi: value.capi, // capi
-        userIp: ctx.realIp,
-        domain: order.domain,
-        userDetail: {
-          email: value.email,
-          phone: value.phone,
+      return strapi.services.sendcapi.capi(
+        {
+          cart: value.content, // 购物车
+          capi: value.capi, // capi
+          userIp: ctx.realIp,
+          domain: order.domain,
+          userDetail: {
+            email: value.email,
+            phone: value.phone,
+          },
         },
-      },ctx.config);
-
+        ctx.config
+      );
     } catch (error) {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -250,6 +267,8 @@ module.exports = {
       id: Joi.number().required(),
       token: Joi.string().required(),
       domain: Joi.string().required(),
+      capi: Joi.object(),
+
     });
 
     const { error, value } = schema.validate(body);
@@ -304,7 +323,16 @@ module.exports = {
         console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
         console.log(JSON.stringify(order.id));
 
-        return ctx.send(order);
+        ctx.send(order);
+
+        return strapi.services.sendcapi.sendEvent(
+          "Purchase",
+          order,
+          value.capi,
+          ctx
+        );
+
+        // 发送支付成功事件
       }
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");

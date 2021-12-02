@@ -616,7 +616,7 @@
                         }}</span>
                     </div>
 
-                    <div class="summary_box_inner" style="font-weight: bold; color: red;">
+                    <div class="summary_box_inner sammy_discount" style="font-weight: bold; color: red; display: none;">
                       <span class="summary-title">Discount</span>
                       <div class="summray_price_box">
                         <span class="currency">- $</span>
@@ -1939,6 +1939,7 @@
       $(".discounted-price").fadeIn();
       $(".discounted-price-value").html(value);
       $(".discount-value").html(discount);
+      $('.sammy_discount').fadeIn()
     }
 
     // console.log("%c code", "color:green;font-weight:bold");

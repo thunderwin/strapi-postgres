@@ -15,8 +15,6 @@ const Promise = require("bluebird");
 
 function genPaypalClient(config) {
 
-  console.dir('config')
-  console.log(JSON.stringify(config))
 
 
   let paypalCredential = config.paypal; //  拿到paypal 配置

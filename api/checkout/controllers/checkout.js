@@ -6,14 +6,17 @@ const requestIp = require("request-ip");
 
 module.exports = {
   theme: (ctx) => {
-    // console.log("%c req.query", "color:green;font-weight:bold");
-    // console.log(JSON.stringify(ctx.query));
+    console.log("%c req.query", "color:green;font-weight:bold");
+    console.log(JSON.stringify(ctx.query));
 
     ctx.set("Content-Type", "application/liquid");
     //   res.header("Content-Length", 2400);
     //   res.cookie("state", shopState);
-
     let filePath = "/api/checkout/theme/checkout.liquid";
+
+    if (ctx.query.shop === 'wudizu.myshopify.com') {
+      filePath= "/api/checkout/theme/checkout-vue.liquid";
+    }
 
     // console.dir("filePath");
     // console.log(JSON.stringify(filePath));

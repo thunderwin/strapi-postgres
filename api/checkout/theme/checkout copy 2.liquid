@@ -1,0 +1,2056 @@
+<div class="note-wrapper" style="padding: 0 17px">
+  <div class="notebanner" id="checkoutPaymentStatus" style="display: none">
+    <div style="display: flex; align-items: center" class="">
+      <span class="Polaris-Spinner Polaris-Spinner--sizeLarge"><svg viewBox="0 0 44 44"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.542 1.487A21.507 21.507 0 00.5 22c0 11.874 9.626 21.5 21.5 21.5 9.847 0 18.364-6.675 20.809-16.072a1.5 1.5 0 00-2.904-.756C37.803 34.755 30.473 40.5 22 40.5 11.783 40.5 3.5 32.217 3.5 22c0-8.137 5.3-15.247 12.942-17.65a1.5 1.5 0 10-.9-2.863z">
+          </path>
+        </svg></span><span role="status"><span class="Polaris-VisuallyHidden"
+          style="margin-left: 1rem">Loading..</span></span>
+    </div>
+
+    <span>Checking Your Payment Status</span>
+  </div>
+
+  <div class="page-width notebanner" id="checkoutsucceed" style="display: none">
+    <div class="thank-you">
+      <div class="heading">
+        <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+          <path fill-rule="evenodd"
+            d="M0 10a10 10 0 1 0 20 0 10 10 0 0 0-20 0zm15.2-1.8a1 1 0 0 0-1.4-1.4L9 11.6 6.7 9.3a1 1 0 0 0-1.4 1.4l3 3c.4.4 1 .4 1.4 0l5.5-5.5z">
+          </path>
+        </svg>
+        <span class="" style="margin-left: 1rem">Payment Success</span>
+      </div>
+      <div class="order_num"></div>
+      <div class="">Your order has been accept, and will ship to you soon.</div>
+    </div>
+
+    <!-- {% section 'product-recommendations' %} -->
+  </div>
+
+  <div class="page-width notebanner" id="checkoutFailed" style="display: none">
+    <div class="heading">
+      <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+        <path
+          d="M11.768.768a2.5 2.5 0 0 0-3.536 0L.768 8.232a2.5 2.5 0 0 0 0 3.536l7.464 7.464a2.5 2.5 0 0 0 3.536 0l7.464-7.464a2.5 2.5 0 0 0 0-3.536L11.768.768zM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6zm2 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
+        </path>
+      </svg>
+      <div style="margin-left: 1rem">Payment failed</div>
+
+    </div>
+    <span class="reason"></span>
+
+  </div>
+</div>
+
+<div id="cart-wrapper" class="" style="display: none">
+  <div style="
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      justify-content: space-between;
+    ">
+    <div class="left-area">
+      <aside class="mob-toggle" style="
+          background: #fafafa;
+          border-top: 1px solid #e6e6e6;
+          border-bottom: 1px solid #e6e6e6;
+          width: 100%;
+        " role="complementary">
+        <div id="order-summary-toggle" style="width: 100%; padding: 0 17px">
+          <span class="wrap">
+            <span class="my-flex">
+              <span class="order-summary-toggle__icon-wrapper">
+                <svg width="20" height="19" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__icon">
+                  <path
+                    d="M17.178 13.088H5.453c-.454 0-.91-.364-.91-.818L3.727 1.818H0V0h4.544c.455 0 .91.364.91.818l.09 1.272h13.45c.274 0 .547.09.73.364.18.182.27.454.18.727l-1.817 9.18c-.09.455-.455.728-.91.728zM6.27 11.27h10.09l1.454-7.362H5.634l.637 7.362zm.092 7.715c1.004 0 1.818-.813 1.818-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817zm9.18 0c1.004 0 1.817-.813 1.817-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817z">
+                  </path>
+                </svg>
+              </span>
+              <span class="
+                  order-summary-toggle__text order-summary-toggle__text--show
+                ">
+                <span>Show order summary</span>
+                <svg width="11" height="6" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown"
+                  fill="#000">
+                  <path
+                    d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z">
+                  </path>
+                </svg>
+              </span>
+              <span style="display: none" class="
+                  order-summary-toggle__text order-summary-toggle__text--hide
+                ">
+                <span>Hide order summary</span>
+                <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg" class="order-summary-toggle__dropdown"
+                  fill="#000">
+                  <path
+                    d="M6.138.876L5.642.438l-.496.438L.504 4.972l.992 1.124L6.138 2l-.496.436 3.862 3.408.992-1.122L6.138.876z">
+                  </path>
+                </svg>
+              </span>
+
+              <dl class="my-flex" id="base-price">
+                <div class="discouted-price">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd>
+                    <span class="
+                        order-summary__emphasis
+                        total-recap__final-price
+                        skeleton-while-loading
+                      ">{{ cart.total_price | money }}</span>
+                  </dd>
+                </div>
+              </dl>
+
+              <dl style="display: none" class="discounted-price">
+                <div class="base-price my-flex">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd>
+                    <span style="text-decoration: line-through">{{
+                      cart.total_price | money
+                      }}</span>
+                  </dd>
+                </div>
+
+                <div class="discouted-price my-flex">
+                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <dd style="display: flex">
+                    <span class="discounted-price-value"></span>
+                  </dd>
+                </div>
+              </dl>
+            </span></span>
+        </div>
+      </aside>
+
+      <div class="page-width" style="display: none; padding-top: 1rem; background-color: #fafafa" id="cart-summy"
+        data-section-id="{{ section.id }}" data-section-type="cart-template">
+        {% if cart.item_count > 0 %}
+
+        <form action="/cart" method="post" novalidate class="cart">
+          <div style="font-size: 14px">
+            <div>
+              {% for item in cart.items %}
+              <div style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 1em;
+                " class="cart__row border-bottom line{{
+                  forloop.index
+                }}{% if forloop.first %} border-top{% endif %}">
+                <div class="cat-item-left my-flex">
+                  <div class="cart__image-wrapper" style="position: relative; padding: 0; margin-right: 1rem">
+                    <div class="product-thumbnail">
+                      <div class="">
+                        <img style="width: 100%; height: 100%" class="" src="{{ item | img_url: '95x95', scale: 2 }}"
+                          alt="{{ item.title | escape }}" data-item-url="{{ item.url }}" />
+                      </div>
+                      <span style="
+                          position: absolute;
+                          right: -0.75em;
+                          top: -0.75em;
+                          z-index: 3;
+                          font-size: 0.8571428571em;
+                          font-weight: 500;
+                          line-height: 1.75em;
+                          white-space: nowrap;
+                          text-align: center;
+                          border-radius: 1.75em;
+                          background-color: rgba(114, 114, 114, 0.9);
+                          color: #fff;
+                          min-width: 1.75em;
+                          height: 1.75em;
+                        " class="product-thumbnail__quantity" aria-hidden="true">{{ item.quantity }}</span>
+                    </div>
+                  </div>
+                  <div style="text-align: left" class="cart__meta small--text-left">
+                    <div class="list-view-item__title">
+                      <a href="{{ item.url }}">
+                        {{ item.product.title }}
+                        {% if item.quantity > 1 %}
+                        <span class="medium-up--hide"><span class="visually-hidden">{{
+                            "cart.label.quantity" | t
+                            }}</span>(x{{ item.quantity }})</span>
+                        {% endif %}
+                      </a>
+                    </div>
+                    {% unless item.variant.title contains 'Default' %}
+                    <div class="cart__meta-text">
+                      {% for option in item.product.options %}
+                      {{ option }}: {{ item.variant.options[forloop.index0]
+                      }}<br />
+                      {% endfor %}
+                    </div>
+                    {% endunless %} {% comment %} Optional, loop through custom
+                    product line items if available Line item properties come in
+                    as having two parts. The first part will be passed with the
+                    default form, but p.last is the actual custom property and
+                    may be blank. If it is, don't show it. For more info on line
+                    item properties, visit: -
+                    http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                    {% endcomment %} {%- assign property_size = item.properties
+                    | size -%} {% if property_size > 0 %}
+                    <div class="cart__meta-text">
+                      {% for p in item.properties %} {% unless p.last == blank
+                      %}
+                      {{ p.first }}: {% comment %} Check if there was an
+                      uploaded file associated {% endcomment %} {% if p.last
+                      contains '/uploads/' %}
+                      <a href="{{ p.last }}">{{
+                        p.last | split: "/" | last
+                        }}</a>
+                      {% else %}
+                      {{ p.last }}
+                      {% endif %} {% endunless %} {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <p class="small--hide">
+                      <a href="/cart/change?line={{
+                          forloop.index
+                        }}&amp;quantity=0" class="btn btn--small btn--tertiary cart__remove" aria-label="{{ 'cart.general.remove' | t }} {{
+                          item.product.title
+                        }}">{{ "cart.general.remove" | t }}</a>
+                    </p>
+                  </div>
+                </div>
+                <div class="cart__price-wrapper">
+                  {{ item.price | money }}
+
+                  {% for discount in item.discounts %}
+                  <div class="cart-item__discount medium-up--hide">
+                    {{ discount.title }}
+                  </div>
+                  {% endfor %}
+
+                  <div class="cart__edit medium-up--hide">
+                    <button type="button" class="
+                        btn btn--secondary btn--small
+                        js-edit-toggle
+                        cart__edit--active
+                      " data-target="line{{ forloop.index }}" aria-label="{{ 'cart.general.edit' | t }} {{
+                        item.product.title
+                      }}" aria-expanded="false">
+                      <span class="cart__edit-text--edit">{{
+                        "cart.general.edit" | t
+                        }}</span>
+                      <span class="cart__edit-text--cancel">{{
+                        "cart.general.cancel" | t
+                        }}</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="text-right small--hide">
+                  {{ item.quantity }}
+                  <!-- <div class="cart__qty">
+              <label
+                for="updates_large_{{ item.key }}"
+                class="cart__qty-label"
+                >{{ "cart.label.quantity" | t }}</label
+              >
+              <input
+                class="cart__qty-input"
+                type="number"
+                name="updates[]"
+                id="updates_large_{{ item.key }}"
+                value="{{ item.quantity }}"
+                min="0"
+                pattern="[0-9]*"
+                data-quantity-item="{{ forloop.index }}"
+              />
+            </div> -->
+                </div>
+                <div class="text-right small--hide">
+                  {% if item.original_line_price != item.line_price %}
+                  <div class="cart-item__original-price">
+                    <s>{{ item.original_line_price | money }}</s>
+                  </div>
+                  {% endif %}
+
+                  <div>
+                    {{ item.line_price | money }}
+                  </div>
+
+                  {% for discount in item.discounts %}
+                  <div class="cart-item__discount">{{ discount.title }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="medium-up--hide cart__update-wrapper">
+                <div colspan="3" class="text-right">
+                  <div class="cart__update-controls">
+                    <a href="/cart/change?line={{
+                        forloop.index
+                      }}&amp;quantity=0" class="
+                        btn btn--small btn--tertiary
+                        cart__remove
+                        medium-up--hide
+                        cart__update-control
+                      " aria-label="{{ 'cart.general.remove' | t }} {{
+                        item.product.title
+                      }}">
+                      {{ "cart.general.remove" | t }}
+                    </a>
+                    <div class="cart__qty cart__update-control">
+                      <label for="updates_{{ item.key }}" class="cart__qty-label">
+                        {{ "cart.label.quantity" | t }}
+                      </label>
+                      <input class="cart__qty-input" type="number" id="updates_{{ item.key }}"
+                        value="{{ item.quantity }}" min="0" pattern="[0-9]*" data-quantity-item="{{ forloop.index }}" />
+                    </div>
+                    <button type="submit" name="update" class="
+                        btn btn--small
+                        medium-up--hide
+                        cart__update-control
+                      " aria-label="{{ 'cart.general.update' | t }} {{
+                        item.product.title
+                      }}">
+                      {{ "cart.general.update" | t }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="cart__footer">
+            <div class="grid">
+              {% if section.settings.cart_notes_enable %}
+              <div class="grid__item medium-up--one-half cart-note">
+                <label for="CartSpecialInstructions" class="cart-note__label small--text-center">{{ "cart.general.note"
+                  | t }}</label>
+                <textarea name="note" id="CartSpecialInstructions" class="cart-note__input">{{ cart.note }}</textarea>
+              </div>
+              {% endif %}
+              <div class="
+                  grid__item
+                  text-right
+                  small--text-center{%
+                  if
+                  section.settings.cart_notes_enable
+                  %}
+                  medium-up--one-half{%
+                  endif
+                  %}
+                ">
+                <div class="my-flex discounted-price" style="padding-bottom: 1rem; display: none">
+                  <span class="cart__subtotal-title">Discount</span>
+
+                  <div class="cart__subtotal my-flex">
+                    <!-- <div class="currency"> </div> -->
+                    <div class="discount-value"></div>
+                  </div>
+                </div>
+
+                <div class="my-flex" style="padding-bottom: 1rem">
+                  <span class="cart__subtotal-title">{{
+                    "cart.general.subtotal" | t
+                    }}</span>
+                  <span class="cart__subtotal">{{
+                    cart.total_price | money
+                    }}</span>
+                </div>
+
+                <div class="my-flex discounted-price" style="
+                    border-bottom: 1px solid #e6e6e6;
+                    display: none;
+                    padding-bottom: 1rem;
+                  ">
+                  <span class="cart__subtotal-title">Total</span>
+                  <span class="cart__subtotal discounted-price-value"></span>
+                </div>
+
+                {% if cart.total_discounts > 0 %}
+                <div class="cart__savings">
+                  {{ "cart.general.savings" | t }}
+                  <span class="cart__savings-amount">{{
+                    cart.total_discounts | money
+                    }}</span>
+                </div>
+                {% endif %} {%- capture taxes_shipping_checkout -%} {%- if
+                shop.taxes_included and shop.shipping_policy.body != blank -%}
+                {{
+                "cart.general.taxes_included_and_shipping_policy_html"
+                | t: link:shop.shipping_policy.url
+                }}
+                {%- elsif shop.taxes_included -%}
+                {{ "cart.general.taxes_included_but_shipping_at_checkout" | t }}
+                {%- elsif shop.shipping_policy.body != blank -%}
+                {{
+                "cart.general.taxes_and_shipping_policy_at_checkout_html"
+                | t: link:shop.shipping_policy.url
+                }}
+                {%- else -%}
+                {{ "cart.general.taxes_and_shipping_at_checkout" | t }}
+                {%- endif -%} {%- endcapture -%}
+                <!-- <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div> -->
+                <!-- <div class="cart__submit-controls">
+            <a
+              href="collections/all"
+              class="
+                btn btn--secondary
+                cart__continue
+                small--hide
+                cart__submit-control
+              "
+            >
+              {{ "cart.general.continue_shopping" | t }}
+            </a>
+            <input
+              type="submit"
+              name="update"
+              class="btn btn--secondary small--hide cart__submit-control"
+              value="{{ 'cart.general.update' | t }}"
+            />
+            <input
+              type="submit"
+              name="checkout"
+              class="btn btn--small-wide cart__submit cart__submit-control"
+              value="{{ 'cart.general.checkout' | t }}"
+            />
+          </div> -->
+
+                <!-- 这里会显示paypal快速支付按钮 -->
+                <!-- {% if additional_checkout_buttons %}
+                <div class="additional-checkout-buttons">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+                {% endif %} -->
+              </div>
+            </div>
+          </div>
+        </form>
+        {% else %}
+        <div class="empty-page-content text-center">
+          <h1>{{ "cart.general.title" | t }}</h1>
+          <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
+          <div class="cookie-message">
+            <p>{{ "cart.general.cookies_required" | t }}</p>
+          </div>
+          <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ "general.404.link" | t }}{% include
+            'icon-arrow-right' %}</a>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="page-width my-form" style="margin-top: 1rem">
+
+        <div id="smart-button-container">
+          <div style="text-align: center;">
+
+            <div id="paypal-button-container"></div>
+          </div>
+        </div>
+
+        <div>
+          <form id="checkout">
+            <div class="section__header">
+              <div class="form-title">Contact information</div>
+            </div>
+
+            <div class="floating">
+              <input type="text" id="email" required name="email" value="" autocomplete="email" placeholder="email"
+                class="floating__input" />
+              <label data-content="email" class="floating__label">
+                <span class="hidden--visually">Email</span>
+              </label>
+            </div>
+
+            <div class="section__header">
+              <div id="shipping_address" class="form-title">Shipping address</div>
+            </div>
+
+            <div class="floating">
+              <input id="firstname" class="floating__input" name="firstname" type="text" autocomplete="given-name"
+                placeholder="First name" />
+              <label class="floating__label" data-content="First name">
+                <span class="hidden--visually">First name</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="lastname" class="floating__input" name="lastname" type="text" autocomplete="family-name"
+                placeholder="Last name" />
+              <label class="floating__label" data-content="Last name">
+                <span class="hidden--visually">Last name</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="address1" class="floating__input" name="address1" type="text" autocomplete="address-line1"
+                placeholder="Address" />
+              <label class="floating__label" data-content="Address">
+                <span class="hidden--visually">Address</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="address2" class="floating__input" name="address2" type="text" autocomplete="address-line2"
+                placeholder="Apartment, suite, etc. (optional)" />
+              <label class="floating__label" data-content="Apartment, suite, etc. (optional)">
+                <span class="hidden--visually">Apartment, suite, etc. (optional)</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="city" class="floating__input" name="city" type="text" autocomplete="address-level2"
+                placeholder="City" />
+              <label class="floating__label" data-content="City">
+                <span class="hidden--visually">City</span></label>
+            </div>
+
+            <div class="floating">
+              <select class="floating__input" autocomplete="country" id="country" name="country">
+                {{
+                country_option_tags
+                }}
+              </select>
+              <label class="floating__label" data-content="Country/region">
+                <span class="hidden--visually">Country/region</span></label>
+            </div>
+
+            <div class="floating" id="AddressProvinceContainer" style="display: none">
+              <select class="floating__input" autocomplete="address-level1" id="province" name="province"></select>
+              <label class="floating__label" data-content="Province">
+                <span class="hidden--visually">Province</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="zip" class="floating__input" name="zip" type="text" autocomplete="postal-code"
+                placeholder="Postcode" />
+              <label class="floating__label" data-content="Postcode">
+                <span class="hidden--visually">Postcode</span></label>
+            </div>
+
+            <div class="floating">
+              <input id="phone" class="floating__input" name="phone" type="number" autocomplete="phone"
+                placeholder="Phone" />
+              <label class="floating__label" data-content="Phone">
+                <span class="hidden--visually">Phone</span></label>
+            </div>
+
+            <div class="section__header">
+              <div class="form-title">Shipping method</div>
+            </div>
+
+            <div class="shipping-wrapper">
+              <div class="each-radio free-shipping-wrapper" style="border-bottom: 0; display: none">
+                <div class="heading-radio">
+                  <div class="radio-left my-flex">
+                    <input type="radio" id="free-shipping" name="shipping" value="freeShipping-0" checked />
+                    <div for="huey">Free shipping</div>
+                  </div>
+                  <div class="price-amount">$ 0</div>
+                </div>
+                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items may arrive in multiple ship.)</div>
+              </div>
+
+              <div class="each-radio standard-shipping-wrapper" style="border-bottom: 0">
+                <div class="heading-radio">
+                  <div class="radio-left my-flex">
+                    <input type="radio" id="standard-shipping" name="shipping" value="standardShipping-399" checked />
+                    <div for="huey">Standard Shipping</div>
+                  </div>
+                  <div class="price-amount">$ 3.99</div>
+                </div>
+                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items may arrive in multiple ship.)</div>
+              </div>
+
+              <div class="each-radio">
+                <div class="heading-radio">
+                  <div class="radio-left my-flex">
+                    <input type="radio" id="express-shipping" name="shipping" value="expressShipping-899" />
+                    <div for="dewey">Express Shipping</div>
+                  </div>
+
+                  <div class="price-amount">$ 8.99</div>
+                </div>
+                <div class="times">(Delivery can be expected within 7-13 business days. Mon-Sat delivery only. Items may arrive in multiple ship.) </div>
+              </div>
+            </div>
+
+            <div class="section__header">
+              <div class="form-title">Coupon</div>
+            </div>
+
+            <div class="coupon-wrapper my-flex" style="align-items: flex-start">
+              <div class="floating" style="margin-bottom: 0">
+                <input id="coupon" class="floating__input" name="coupon" type="text" autocomplete="address-level2"
+                  placeholder="coupon" />
+                <label class="floating__label" data-content="Coupon">
+                  <span class="hidden--visually">Coupon</span></label>
+              </div>
+
+              <div class="btn" id="coupon-btn" aria-busy="false"
+                style="width: 100px; border-radius: 4px; padding: 0.9rem 0">
+                <span class="">Apply</span>
+              </div>
+            </div>
+            <div style="display: none" id="coupon-msg"></div>
+            <div class="" id="working-coupon" style="
+            border-radius: 4px;
+            height: 30px;
+            border: 1px solid #ddd;
+            line-height: 30px;
+            width: auto;
+            text-align: center;
+            background-color: #ddd;
+            color: #000;
+            text-transform: uppercase;
+            display: none;
+            font-weight: bold;
+          "></div>
+
+
+            <div class="section__header">
+              <div class="form-title">Summary</div>
+
+              <div class="radio-wrapper" style="background-color: #fafafa; border: 1px solid #e6e6e6;padding:1rem; ">
+                <div class="blank-slate" style="text-align: center;">
+                  <div class="summary_box">
+                    <div class="summary_box_inner">
+                      <span class="summary-title">Subtotal</span>
+                      <span class="subtotal_price_amount">{{
+                        cart.total_price | money
+                        }}</span>
+                    </div>
+
+                    <div class="summary_box_inner sammy_discount" style="font-weight: bold; color: red; display: none;">
+                      <span class="summary-title">Discount</span>
+                      <div class="summray_price_box">
+                        <span class="currency">- $</span>
+                        <span class="discount_price_amount"></span>
+                      </div>
+                    </div>
+
+                    <div class="summary_box_inner">
+                      <span class="summary-title">Shipping</span>
+                      <div class="summray_price_box">
+                        <span class="currency">$</span>
+                        <span class="shipping_price_amount"></span>
+                      </div>
+                    </div>
+
+                    <div class="summary_box_inner" style="    font-weight: bold;
+                    font-size: 16px;
+                    margin-top: 2
+                px
+                ; ">
+                      <span class="summary-title">Total</span>
+                      <div class="summray_price_box">
+                        <span class="currency">$</span>
+                        <span class="total_price_amount"></span>
+                      </div>
+                    </div>
+
+                   </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+
+
+
+            <div class="section__header">
+              <div class="form-title">Payment method</div>
+
+              <p style="color:#666 ">
+                All transactions are secure and encrypted.
+              </p>
+            </div>
+
+            <div class="payment-wrapper">
+              <div class="each-radio">
+                <div class="heading-radio">
+                  <input type="radio" id="paypal-express" name="payment" value="paypalExpress" checked />
+                  <div for="paypal-express">
+                    <img alt="PayPal" width="95" height="24" class="offsite-payment-gateway-logo"
+                      src="https://www.paypalobjects.com/checkoutweb/release/hermione/media/logo.7e5b43e3.svg"
+                      data-pin-nopin="true" />
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="radio-wrapper"
+                style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:1rem; border-top: 0;">
+                <div class="blank-slate" style="text-align: center;">
+                  <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 1rem;"></i>
+
+                  <div>
+                    After clicking “Complete order”, you will be redirected to
+                    PayPal to complete your purchase securely.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- <input
+        style="
+          padding: 1.4em 1.7em;
+          width: 100%;
+          border-radius: 4px;
+          margin: 1rem 0;
+        "
+        class="submit btn newsletter__submit"
+        type="submit"
+        value="Submit"
+      /> -->
+          </form>
+        </div>
+
+
+
+        <div class="check-btn" style="text-align: center; margin-bottom: 2rem">
+          <button type="submit" class="btn newsletter__submit" onclick="checkout()" id="check-btn" aria-busy="false"
+            style="
+              padding: 1.4em 1.7em;
+              width: 100%;
+              border-radius: 4px;
+              margin: 1rem 0;
+            ">
+            <span class="newsletter__submit-text--large">Complete order</span>
+          </button>
+
+          <a class="step__footer__previous-link" href="/cart">
+
+
+            <span class="step__footer__previous-link-content"> Return to cart</span>
+          </a>
+        </div>
+
+
+        <!-- <hr />
+        <div style="text-align: center;" class="site-footer__links">Copyright © 2021, <span id="domain_name"></span>
+        </div>
+        <div class="">
+          <ul class="inline-list payment-icons" style="padding-top:10px;">
+            <li style="margin:0;">
+              <img src="//cdn.shopify.com/s/files/1/0576/7928/2353/t/2/assets/checkout-float.png?v=1582523940"
+                style="width:90px;cursor: default;">
+            </li>
+          </ul>
+        </div> -->
+
+      </div>
+    </div>
+    <div class="right-area">
+      <div class="page-width" style="padding-top: 1rem; background-color: #fafafa" id="cart-summy"
+        data-section-id="{{ section.id }}" data-section-type="cart-template">
+        {% if cart.item_count > 0 %}
+
+        <form action="/cart" method="post" novalidate class="cart">
+          <div style="font-size: 14px">
+            <div>
+              {% for item in cart.items %}
+              <div style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 1em;
+                " class="cart__row border-bottom line{{
+                  forloop.index
+                }}{% if forloop.first %} border-top{% endif %}">
+                <div class="cat-item-left my-flex">
+                  <div class="cart__image-wrapper" style="position: relative; padding: 0; margin-right: 1rem">
+                    <div class="product-thumbnail">
+                      <div class="">
+                        <img style="width: 100%; height: 100%" class="" src="{{ item | img_url: '95x95', scale: 2 }}"
+                          alt="{{ item.title | escape }}" data-item-url="{{ item.url }}" />
+                      </div>
+                      <span style="
+                          position: absolute;
+                          right: -0.75em;
+                          top: -0.75em;
+                          z-index: 3;
+                          font-size: 0.8571428571em;
+                          font-weight: 500;
+                          line-height: 1.75em;
+                          white-space: nowrap;
+                          text-align: center;
+                          border-radius: 1.75em;
+                          background-color: rgba(114, 114, 114, 0.9);
+                          color: #fff;
+                          min-width: 1.75em;
+                          height: 1.75em;
+                        " class="product-thumbnail__quantity" aria-hidden="true">{{ item.quantity }}</span>
+                    </div>
+                  </div>
+                  <div style="text-align: left" class="cart__meta small--text-left">
+                    <div class="list-view-item__title">
+                      <a href="{{ item.url }}">
+                        {{ item.product.title }}
+                        {% if item.quantity > 1 %}
+                        <span class="medium-up--hide"><span class="visually-hidden">{{
+                            "cart.label.quantity" | t
+                            }}</span>(x{{ item.quantity }})</span>
+                        {% endif %}
+                      </a>
+                    </div>
+                    {% unless item.variant.title contains 'Default' %}
+                    <div class="cart__meta-text">
+                      {% for option in item.product.options %}
+                      {{ option }}: {{ item.variant.options[forloop.index0]
+                      }}<br />
+                      {% endfor %}
+                    </div>
+                    {% endunless %} {% comment %} Optional, loop through custom
+                    product line items if available Line item properties come in
+                    as having two parts. The first part will be passed with the
+                    default form, but p.last is the actual custom property and
+                    may be blank. If it is, don't show it. For more info on line
+                    item properties, visit: -
+                    http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                    {% endcomment %} {%- assign property_size = item.properties
+                    | size -%} {% if property_size > 0 %}
+                    <div class="cart__meta-text">
+                      {% for p in item.properties %} {% unless p.last == blank
+                      %}
+                      {{ p.first }}: {% comment %} Check if there was an
+                      uploaded file associated {% endcomment %} {% if p.last
+                      contains '/uploads/' %}
+                      <a href="{{ p.last }}">{{
+                        p.last | split: "/" | last
+                        }}</a>
+                      {% else %}
+                      {{ p.last }}
+                      {% endif %} {% endunless %} {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <p class="small--hide">
+                      <a href="/cart/change?line={{
+                          forloop.index
+                        }}&amp;quantity=0" class="btn btn--small btn--tertiary cart__remove" aria-label="{{ 'cart.general.remove' | t }} {{
+                          item.product.title
+                        }}">{{ "cart.general.remove" | t }}</a>
+                    </p>
+                  </div>
+                </div>
+                <div class="cart__price-wrapper">
+                  {{ item.price | money }}
+
+                  {% for discount in item.discounts %}
+                  <div class="cart-item__discount medium-up--hide">
+                    {{ discount.title }}
+                  </div>
+                  {% endfor %}
+
+                  <div class="cart__edit medium-up--hide">
+                    <button type="button" class="
+                        btn btn--secondary btn--small
+                        js-edit-toggle
+                        cart__edit--active
+                      " data-target="line{{ forloop.index }}" aria-label="{{ 'cart.general.edit' | t }} {{
+                        item.product.title
+                      }}" aria-expanded="false">
+                      <span class="cart__edit-text--edit">{{
+                        "cart.general.edit" | t
+                        }}</span>
+                      <span class="cart__edit-text--cancel">{{
+                        "cart.general.cancel" | t
+                        }}</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="text-right small--hide">
+                  {{ item.quantity }}
+                  <!-- <div class="cart__qty">
+              <label
+                for="updates_large_{{ item.key }}"
+                class="cart__qty-label"
+                >{{ "cart.label.quantity" | t }}</label
+              >
+              <input
+                class="cart__qty-input"
+                type="number"
+                name="updates[]"
+                id="updates_large_{{ item.key }}"
+                value="{{ item.quantity }}"
+                min="0"
+                pattern="[0-9]*"
+                data-quantity-item="{{ forloop.index }}"
+              />
+            </div> -->
+                </div>
+                <div class="text-right small--hide">
+                  {% if item.original_line_price != item.line_price %}
+                  <div class="cart-item__original-price">
+                    <s>{{ item.original_line_price | money }}</s>
+                  </div>
+                  {% endif %}
+
+                  <div>
+                    {{ item.line_price | money }}
+                  </div>
+
+                  {% for discount in item.discounts %}
+                  <div class="cart-item__discount">{{ discount.title }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="medium-up--hide cart__update-wrapper">
+                <div colspan="3" class="text-right">
+                  <div class="cart__update-controls">
+                    <a href="/cart/change?line={{
+                        forloop.index
+                      }}&amp;quantity=0" class="
+                        btn btn--small btn--tertiary
+                        cart__remove
+                        medium-up--hide
+                        cart__update-control
+                      " aria-label="{{ 'cart.general.remove' | t }} {{
+                        item.product.title
+                      }}">
+                      {{ "cart.general.remove" | t }}
+                    </a>
+                    <div class="cart__qty cart__update-control">
+                      <label for="updates_{{ item.key }}" class="cart__qty-label">
+                        {{ "cart.label.quantity" | t }}
+                      </label>
+                      <input class="cart__qty-input" type="number" id="updates_{{ item.key }}"
+                        value="{{ item.quantity }}" min="0" pattern="[0-9]*" data-quantity-item="{{ forloop.index }}" />
+                    </div>
+                    <button type="submit" name="update" class="
+                        btn btn--small
+                        medium-up--hide
+                        cart__update-control
+                      " aria-label="{{ 'cart.general.update' | t }} {{
+                        item.product.title
+                      }}">
+                      {{ "cart.general.update" | t }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="cart__footer">
+            <div class="grid">
+              {% if section.settings.cart_notes_enable %}
+              <div class="grid__item medium-up--one-half cart-note">
+                <label for="CartSpecialInstructions" class="cart-note__label small--text-center">{{ "cart.general.note"
+                  | t }}</label>
+                <textarea name="note" id="CartSpecialInstructions" class="cart-note__input">{{ cart.note }}</textarea>
+              </div>
+              {% endif %}
+              <div class="
+                  grid__item
+                  text-right
+                  small--text-center{%
+                  if
+                  section.settings.cart_notes_enable
+                  %}
+                  medium-up--one-half{%
+                  endif
+                  %}
+                ">
+                <div class="my-flex discounted-price" style="padding-bottom: 1rem; display: none">
+                  <span class="cart__subtotal-title">Discount</span>
+
+                  <div class="cart__subtotal my-flex">
+                    <!-- <div class="currency"> </div> -->
+                    <div class="discount-value"></div>
+                  </div>
+                </div>
+
+                <div class="my-flex" style="padding-bottom: 1rem">
+                  <span class="cart__subtotal-title">{{
+                    "cart.general.subtotal" | t
+                    }}</span>
+                  <span class="cart__subtotal">{{
+                    cart.total_price | money
+                    }}</span>
+                </div>
+
+                <div class="my-flex discounted-price" style="
+                    border-bottom: 1px solid #e6e6e6;
+                    display: none;
+                    padding-bottom: 1rem;
+                  ">
+                  <span class="cart__subtotal-title">Total</span>
+                  <span class="cart__subtotal discounted-price-value"></span>
+                </div>
+
+                {% if cart.total_discounts > 0 %}
+                <div class="cart__savings">
+                  {{ "cart.general.savings" | t }}
+                  <span class="cart__savings-amount">{{
+                    cart.total_discounts | money
+                    }}</span>
+                </div>
+                {% endif %} {%- capture taxes_shipping_checkout -%} {%- if
+                shop.taxes_included and shop.shipping_policy.body != blank -%}
+                {{
+                "cart.general.taxes_included_and_shipping_policy_html"
+                | t: link:shop.shipping_policy.url
+                }}
+                {%- elsif shop.taxes_included -%}
+                {{ "cart.general.taxes_included_but_shipping_at_checkout" | t }}
+                {%- elsif shop.shipping_policy.body != blank -%}
+                {{
+                "cart.general.taxes_and_shipping_policy_at_checkout_html"
+                | t: link:shop.shipping_policy.url
+                }}
+                {%- else -%}
+                {{ "cart.general.taxes_and_shipping_at_checkout" | t }}
+                {%- endif -%} {%- endcapture -%}
+                <!-- <div class="cart__shipping rte">{{ taxes_shipping_checkout }}</div> -->
+                <!-- <div class="cart__submit-controls">
+            <a
+              href="collections/all"
+              class="
+                btn btn--secondary
+                cart__continue
+                small--hide
+                cart__submit-control
+              "
+            >
+              {{ "cart.general.continue_shopping" | t }}
+            </a>
+            <input
+              type="submit"
+              name="update"
+              class="btn btn--secondary small--hide cart__submit-control"
+              value="{{ 'cart.general.update' | t }}"
+            />
+            <input
+              type="submit"
+              name="checkout"
+              class="btn btn--small-wide cart__submit cart__submit-control"
+              value="{{ 'cart.general.checkout' | t }}"
+            />
+          </div> -->
+
+                <!-- {% if additional_checkout_buttons %}
+                <div class="additional-checkout-buttons">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+                {% endif %} -->
+              </div>
+            </div>
+          </div>
+        </form>
+        {% else %}
+        <div class="empty-page-content text-center">
+          <h1>{{ "cart.general.title" | t }}</h1>
+          <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
+          <div class="cookie-message">
+            <p>{{ "cart.general.cookies_required" | t }}</p>
+          </div>
+          <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ "general.404.link" | t }}{% include
+            'icon-arrow-right' %}</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  @media (min-width: 1000px) {
+    .mob-toggle {
+      display: none;
+    }
+
+    #cart-wrapper .small--hide {
+      display: none;
+    }
+
+    .my-form {
+      max-width: 570px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .right-area {
+      display: none;
+    }
+  }
+
+  .page-width {}
+
+  .cart__edit,
+  .cart__update-wrapper {
+    display: none;
+  }
+
+  hr.hr--small {
+    margin: 15px
+  }
+
+  hr.hr--clear {
+    border-top-color: transparent;
+  }
+
+  hr {
+    clear: both;
+    border-top: solid #ddd;
+    border-width: 1px;
+    margin: 30px;
+    height: 0;
+  }
+
+  .my-form .form-title {
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    margin-bottom: 1rem;
+    margin-top: 1.3rem;
+  }
+
+  /* 实现 floating label  */
+
+  :root {
+    --color__accent: #333;
+    --field__background: #f5f5f5;
+    --field__background--hover: #e9e9e9;
+    --input__border: rgba(0, 0, 0, 0.42);
+    --input__border--hover: rgba(0, 0, 0, 0.62);
+    --label__color: #222;
+    --font__size: 16px;
+    --font__family: Roboto, Arial, sans-serif;
+  }
+
+  .hidden--visually {
+    border: 0;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .floating {
+    margin-bottom: 0.85rem;
+    border-radius: 4px;
+  }
+
+  .floating:hover,
+  .floating:focus-within {
+    /* background-color: var(--field__background--hover); */
+  }
+
+  .floating__input {
+    padding: 1.3rem 1rem 0.5rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+    caret-color: var(--color__accent);
+    border-radius: 4px;
+    line-height: initial;
+  }
+
+  .floating:hover .floating__input {
+    border-color: var(--input__border--hover);
+    border-color: #111111;
+    -webkit-box-shadow: 0 0 0 1px #111111;
+    box-shadow: 0 0 0 1px #111111;
+    border-radius: 4px;
+  }
+
+  .floating__input::placeholder {
+    color: rgba(0, 0, 0, 0);
+  }
+
+  .floating__label {
+    display: block;
+    position: relative;
+    max-height: 0;
+    font-size: 1rem !important;
+    pointer-events: none;
+    text-transform: capitalize !important;
+    letter-spacing: normal !important;
+  }
+
+  .floating__label::before {
+    color: var(--label__color);
+    content: attr(data-content);
+    display: inline-block;
+    filter: blur(0);
+    backface-visibility: hidden;
+    transform-origin: left top;
+    transition: transform 0.1s ease;
+    left: 1rem;
+    position: relative;
+    color: #666;
+  }
+
+  .floating__label::after {
+    bottom: 1rem;
+    content: "";
+    height: 0.1rem;
+    position: absolute;
+    /* transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 180ms cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease; */
+    opacity: 0;
+    left: 0;
+    top: 100%;
+    margin-top: -0.1rem;
+    /* transform: scale3d(0, 1, 1); */
+    width: 100%;
+    /* background-color: var(--color__accent); */
+  }
+
+  .floating__input:focus+.floating__label::after {
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+
+  .floating__input:placeholder-shown+.floating__label::before {
+    transform: translate3d(0, -2.2rem, 0) scale3d(1, 1, 1);
+  }
+
+  .floating__label::before,
+  .floating__input:focus+.floating__label::before {
+    transform: translate3d(0, -2.6rem, 0) scale3d(0.82, 0.82, 1);
+  }
+
+  .floating__input:focus+.floating__label::before {
+    color: var(--color__accent);
+  }
+
+  /* 实现 floating label  */
+
+  /* 处理表格  */
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+  }
+
+  .product-thumbnail {
+    border-radius: 8px;
+    width: 4.6em;
+    height: 4.6em;
+    overflow: hidden;
+  }
+
+  .product-thumbnail::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 8px;
+    border: 1px rgba(0, 0, 0, 0.1) solid;
+    z-index: 2;
+  }
+
+  .icon--offsite {
+    width: 102px;
+    height: 52px;
+    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-594d944a8428e634d5111579612bbc4a149cded13b9097e4ead442e82b6b6331.png);
+    background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-0d8fd34431b27358e5c54a5ad660f76f8d628fad88320450d799287a8654982f.svg), none;
+  }
+
+  .my-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #checkout label.error {
+    position: absolute;
+    text-transform: inherit !important;
+    letter-spacing: inherit !important;
+    display: none !important;
+  }
+
+  .each-radio {
+    border: 1px solid #e6e6e6;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+
+  .each-radio label {
+    text-transform: inherit !important;
+  }
+
+  .heading-radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* 处理表格  */
+
+  @keyframes Polaris-Spinner--loading {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .Polaris-Spinner svg {
+    animation: Polaris-Spinner--loading 500ms linear infinite;
+    fill: var(--p-border-highlight);
+  }
+
+  .Polaris-Spinner--sizeSmall svg {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .Polaris-Spinner--sizeLarge svg {
+    height: 4.4rem;
+    width: 4.4rem;
+  }
+
+  #checkoutFailed {
+    box-shadow: rgb(224, 179, 178) 0px 1px 0px 0px inset,
+      rgb(224, 179, 178) 0px 0px 0px 1px inset;
+    background-color: rgb(255, 244, 244);
+    outline: 0.1rem solid transparent;
+  }
+
+  #checkoutFailed svg {
+    fill: #d72c0d;
+  }
+
+  #checkoutsucceed {
+    box-shadow: rgb(149, 201, 180) 0px 1px 0px 0px inset,
+      rgb(149, 201, 180) 0px 0px 0px 1px inset;
+    background-color: rgb(241, 248, 245);
+    outline: 0.1rem solid transparent;
+  }
+
+  #checkoutsucceed svg {
+    fill: #007f5f;
+  }
+
+  .notebanner {
+    padding: 17px;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 17px;
+  }
+
+  .notebanner svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .notebanner .heading {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+
+  .summary_box {
+    padding: 0;
+  }
+
+  .summary_box .summary_box_inner {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    line-height: 20px;
+  }
+
+  .shipping-wrapper .times{
+    font-size: 13px;
+    margin-top: 4px;
+    color: #666;
+  }
+</style>
+
+
+
+
+
+
+<script>
+
+
+
+  let endpoint =
+    document.domain === "wudizu.myshopify.com"
+      ? "http://localhost:1337"
+      : "https://gudao-api-stable-1.tokwork.com";
+
+
+  let freeShippingPrice = 69 * 100;
+  let subtotalAmountValue = 0
+
+  let discountAmountValue = 0
+  let shippingAmountValue = 0
+  let totalAmountValue = 0
+
+  function initPayPalButton() {
+    paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'gold',
+        layout: 'vertical',
+        label: 'paypal',
+
+      },
+
+      createOrder: function (data, actions) {
+        return actions.order.create({
+          purchase_units: [{ "amount": { "currency_code": "USD", "value": totalAmountValue } }]
+        });
+      },
+
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (orderData) {
+
+          // Full available details
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+          // Show a success message within this page, e.g.
+          const element = document.getElementById('paypal-button-container');
+          element.innerHTML = '';
+          element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+          // Or go to another URL:  actions.redirect('thank_you.html');
+
+        });
+      },
+
+      onError: function (err) {
+        console.log(err);
+      }
+    }).render('#paypal-button-container');
+  }
+  // initPayPalButton(); // show paypal
+
+  function handleProvince() {
+    let country = $("#country").val();
+    console.log("%c country", "color:green;font-weight:bold");
+    console.log(JSON.stringify(country));
+
+    let provinces = $("#country option:selected").attr("data-provinces");
+    // console.log("%c provinces ", "color:green;font-weight:bold");
+
+    provinces = JSON.parse(provinces);
+
+    // console.log("%c provinces", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(provinces));
+
+    if (provinces.length > 0) {
+      $("#AddressProvinceContainer").css("display", "block");
+
+      provinces.forEach((x) => {
+        $("#province").append(
+          '<option value="' + x[1] + '">' + x[0] + "</option>"
+        );
+      });
+    } else {
+      // console.log("%c 关闭省份", "color:green;font-weight:bold");
+      $("#AddressProvinceContainer").css("display", "none");
+    }
+  }
+
+  function initFormValidation() {
+    $("#checkout").validate({
+      rules: {
+        firstname: "required",
+        lastname: "required",
+        email: {
+          required: true,
+          email: true,
+        },
+        phone: {
+          required: true,
+          number: true,
+        },
+        address1: {
+          required: true,
+          minlength: 3,
+        },
+        city: {
+          required: true,
+          minlength: 1,
+        },
+        country: {
+          required: true,
+        },
+        zip: {
+          required: true,
+        }
+      },
+      messages: {},
+
+      submitHandler: function (form) {
+        form.submit();
+      },
+    });
+  }
+  function initMovement() {
+    $("#order-summary-toggle").click(function () {
+      let cssDisplay = $(".order-summary-toggle__text--hide").css("display");
+      if (cssDisplay === "none") {
+        $(".order-summary-toggle__text--show").css("display", "none");
+        $(".order-summary-toggle__text--hide").css("display", "block");
+      } else {
+        $(".order-summary-toggle__text--show").css("display", "block");
+        $(".order-summary-toggle__text--hide").css("display", "none");
+      }
+      $("#cart-summy").toggle();
+    });
+
+    $(".each-radio").click(function (e) {
+      // console.log("%c $(this)", "color:green;font-weight:bold");
+      // console.log(e);
+
+      $(this).find("input:radio").prop("checked", true); // radio checked
+      let chosenshippingFee = $(this).find("input:radio").val();
+
+      console.log('%c chosenshippingFee','color:green;font-weight:bold')
+      console.log(JSON.stringify(chosenshippingFee))
+
+      shippingAmountValue = Number(chosenshippingFee.split("-")[1] )
+      reSummary()
+    });
+
+    $("#coupon-btn").click(function () {
+      let code = $("#coupon").val();
+      applyCoupon(code);
+    });
+
+    $("#country").on("change", function () {
+      console.log('%c 国家变动', 'color:green;font-weight:bold')
+
+      handleProvince();
+    });
+
+    handleProvince() // 初始化省份
+
+    $("#domain_name").html(document.domain.split(".")[1]);
+  }
+  function getParams(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      if (pair[0] == variable) {
+        return pair[1];
+      }
+    }
+    return false;
+  }
+  function initFormValue(formObj) {
+    // console.log("%c 需要恢复的值", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(formObj));
+
+    for (let x in formObj) {
+      $("#" + x).val(formObj[x]);
+
+      if (x === "country") {
+        handleProvince();
+      }
+      // $(`input[name='${x}']`).val(formObj[x]);
+    }
+  }
+
+  function getFormData() {
+    let formData = $("#checkout").serializeArray();
+    console.log("%c formData", "color:green;font-weight:bold");
+    console.log(JSON.stringify(formData));
+
+    let obj = {};
+
+    formData.forEach((x) => (obj[x.name] = x.value));
+    console.log("%c 最终地址", "color:green;font-weight:bold");
+    console.log(JSON.stringify(obj));
+
+    return obj;
+  }
+
+  function syncCart(payload) {
+
+
+    // 单纯的同步购物车
+
+    $("#check-btn").addClass("btn--loading").prop("disabled", true);
+
+    $.ajax({
+      type: "POST",
+      contentType: "json",
+      dataType: "json",
+      url: endpoint + "/checkout/updateOrder",
+      crossDomain: true,
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify(payload),
+      success: function (r) {
+        // console.log("%c 结账返回", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(r));
+
+
+
+        // $("#check-btn").removeClass("btn--loading").prop("disabled", false);
+
+        if (r.status === "CREATED") {
+          console.log("paypal");
+          let paypalLink = r.links.find((x) => x.rel === "approve");
+          window.location.href = paypalLink.href;
+        }
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+  }
+
+  function paymentFail(msg) {
+    $("#checkoutPaymentStatus").css("display", "none");
+    $("#checkoutFailed").css("display", "block");
+    $("#checkoutFailed span").html(msg);
+  }
+
+  function handleSuccess(id, token) {
+    $("#cart-wrapper").css("display", "none");
+    $("#checkoutPaymentStatus").css("display", "block");
+
+   // capi
+   let capi = CAPI() //get capi
+        console.log('%c 支付成功 capi', 'color:green;font-weight:bold')
+        console.log(JSON.stringify(capi))
+
+    let total
+    $.ajax({
+      type: "POST",
+      contentType: "json",
+      dataType: "json",
+      url: endpoint + "/checkout/placeOrder",
+      crossDomain: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        domain: document.domain,
+        id: id,
+        token: token,
+        capi
+      }),
+      success: function (r) {
+        console.log("%c 结账成功返回", "color:green;font-weight:bold");
+        console.log(JSON.stringify(r));
+        $("#checkoutPaymentStatus").css("display", "none");
+
+        if (r.code === 1) {
+          paymentFail(r.msg);
+          return;
+        }
+
+        if (r.code === 2) {
+          paymentFail('payment already done');
+          return;
+        }
+
+
+
+        $("#checkoutsucceed").css("display", "block");
+
+        clearCart();
+
+
+        total = r
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+        paymentFail(e);
+      },
+    });
+
+    // if (!!total) {
+    //   fbq('track', 'Purchase', {
+    //     value: total.content.total_price,
+    //     currency: total.contetn.currency
+    //   });
+    // }
+
+
+
+  }
+
+  function clearCart() {
+    $.ajax({
+      type: "POST",
+      url: "/cart/clear.js",
+      dataType: "json",
+      success: function (e) {
+        console.log("%c 清空购物车返回", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+  }
+  function initCart() {
+
+
+
+
+
+    let domain = document.domain;
+    // 初始化购物车
+    $.ajax({
+      type: "GET",
+      url: "/cart.js",
+      dataType: "json",
+
+      success: function (cart) {
+        // console.log("%c 购物车", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(cart));
+
+        subtotalAmountValue = Number(cart.total_price);
+
+        // free shipping?
+        if (cart.total_price > freeShippingPrice) {
+          // console.log("%c Free shipping", "color:green;font-weight:bold");
+
+          $(".free-shipping-wrapper").fadeIn();
+          $("#free-shipping").prop("checked", true);
+          $(".standard-shipping-wrapper").hide();
+        } else {
+
+          shippingAmountValue = 399
+
+        }
+        reSummary()
+
+
+        // capi
+        let capi = CAPI() //get capi
+        console.log('%c capi', 'color:green;font-weight:bold')
+        console.log(JSON.stringify(capi))
+
+
+        if (cart.token && cart.item_count >= 1) {
+          $.ajax({
+            type: "POST",
+            contentType: "json",
+            url: endpoint + "/checkout/init",
+            crossDomain: true,
+
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+
+            data: JSON.stringify({
+              token: cart.token,
+              content: cart,
+              domain: domain,
+              capi: capi,
+            }),
+
+            success: function (r) {
+              window.globalCart = r; // 拿到的购物车挂到window
+
+              // console.log("%c 后台返回购物车", "color:green;font-weight:bold");
+              // console.log(JSON.stringify(r));
+
+              if (!!r.address) {
+                if (!!r.email) {
+                  r.address.email = r.email;
+                }
+                // console.log("%c 已有地址同步", "color:green;font-weight:bold");
+                initFormValue(r.address);
+              }
+            },
+
+            error: function (e) {
+              console.log("%c 出错", "color:green;font-weight:bold");
+              console.log(JSON.stringify(e));
+            },
+          });
+        }
+
+        // console.log("%c cart", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(window.cart));
+        // if (cart.address) {
+        //   initFormValue(cart.address);
+        // }
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+
+  }
+
+  function CAPI() {
+
+    let fbp = document.cookie.split(';').filter(c => c.includes('_fbp=')).map(c => c.split('_fbp=')[1]);
+    let fbc = document.cookie.split(';').filter(c => c.includes('_fbc=')).map(c => c.split('_fbc=')[1]);
+    let params = document.cookie.split(';').filter(c => c.includes('custom_params=')).map(c => c.split('custom_params=')[1]);
+
+    fbp = (fbp.length && fbp[0]) || null;
+    fbc = (fbc.length && fbc[0]) || null;
+    params = (params.length && params[0]) || null;
+
+    if (!fbc && window.location.search.includes('fbclid=')) {
+      fbc = 'fb.1.' + (+new Date()) + '.' + window.location.search.split('fbclid=')[1];
+    }
+
+    function genUrlParams() {
+      let obj = {}
+      params.split('&').forEach(x => {
+        let [key, value] = x.split('=');
+        obj[key] = value;
+      });
+      return obj;
+    }
+
+    return {
+      fbp,
+      fbc,
+      userAgent: navigator.userAgent,
+      "url": window.location.origin + window.location.pathname,
+      params: params ? genUrlParams() : {}
+    }
+
+
+  }
+
+
+  // 表单使用教程 https://stackoverflow.com/questions/2276463/how-can-i-get-form-data-with-javascript-jquery
+
+  function handleAddress() {
+    $("#country").on("change", function () {
+      let country = $("#country").val();
+
+      // console.log("%c country", "color:green;font-weight:bold");
+      // console.log(JSON.stringify(country));
+
+      let provinces = $("#country option:selected").attr("data-provinces");
+      // console.log("%c provinces ", "color:green;font-weight:bold");
+
+      provinces = JSON.parse(provinces);
+
+      console.log("%c provinces", "color:green;font-weight:bold");
+      console.log(JSON.stringify(provinces));
+
+      if (provinces.length > 0) {
+        $("#AddressProvinceContainer").css("display", "block");
+
+        provinces.forEach((x) => {
+          $("#province").append(
+            '<option value="' + x[1] + '">' + x[0] + "</option>"
+          );
+        });
+      } else {
+        // console.log("%c 关闭省份", "color:green;font-weight:bold");
+        $("#AddressProvinceContainer").css("display", "none");
+      }
+    });
+  }
+
+  async function checkout() {
+    var validator = $("#checkout").validate();
+    let result = validator.form();
+
+    console.log("result");
+    console.log(result);
+
+    if (!result) {
+      window.scrollTo(100, 300);
+      console.log("验证失败");
+      return;
+    }
+
+    $.ajax({
+      type: "GET",
+      url: "/cart.js",
+      dataType: "json",
+
+      success: function (content) {
+        let cart = window.globalCart;
+        if (!cart.id) return;
+        let payload = {};
+        payload.token = cart.token;
+        payload.id = cart.id;
+        payload.content = content; // 这样拿到的购物车 content才是最新的
+
+        let f = getFormData(); // 加上地址
+
+        console.log(f);
+
+        payload.address = {
+          firstname: f.firstname,
+          lastname: f.lastname,
+          address1: f.address1,
+          address2: f.address2,
+          city: f.city,
+          country: f.country,
+          province: f.province,
+          zip: f.zip,
+          phone: f.phone,
+        };
+
+        payload.email = f.email;
+        payload.payment = f.payment;
+
+        let shippingStr = f.shipping.split("-");
+        payload.shipping = shippingStr[0];
+        payload.shippingFee = shippingStr[1];
+
+        payload.checkout = true;
+
+        payload.capi = CAPI();
+
+        // console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(payload));
+
+        syncCart(payload);
+      },
+    });
+  }
+
+  async function applyCoupon(e) {
+    $("#coupon-msg").hide();
+    $("#working-coupon").hide();
+
+    function showError(msg) {
+      $("#coupon-msg").html(`<p style="color:#d02e2e">${msg}</p>`);
+      $("#coupon-msg").fadeIn();
+    }
+
+    function showSuccees(msg, value, discount) {
+      $("#working-coupon").html(`<p style="color:#000">${msg}</p>`);
+      $("#working-coupon").fadeIn();
+
+      // 修改显示
+      $("#base-price").hide();
+      $(".discounted-price").fadeIn();
+      $(".discounted-price-value").html(value);
+      $(".discount-value").html(discount);
+      $('.sammy_discount').fadeIn()
+    }
+
+    // console.log("%c code", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(e));
+
+    if (!e) {
+      showError("Code is missing");
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      contentType: "json",
+      dataType: "json",
+      url: endpoint + "/checkout/applyCoupon",
+      crossDomain: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        couponCode: e,
+        orderId: window.globalCart.id,
+      }),
+      success: function (r) {
+        // console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(r));
+        if (r.code === 1) {
+          showError(r.msg);
+        }
+
+        // console.log("%c type", "color:green;font-weight:bold");
+        // console.log(JSON.stringify(typeof r));
+
+        if ($.isArray(r)) {
+          showError(r[0].message);
+        }
+
+        if (r.code === 0) {
+          let coupon = r.data.coupon;
+          let total = r.data.content.original_total_price * 0.01;
+          let msg = coupon.label;
+          let discountList = r.data.discount;
+          let discountValue;
+
+          if (discountList.length > 0) {
+            discountAmountValue = discountList[0].value;  // summary use it
+            reSummary()
+            discountValue = discountList[0].value * 0.01;
+
+          }
+
+          let showDiscountValue = "- $ " + discountValue.toFixed(2);
+          let showDiscountedValue = "$ " + (total - discountValue).toFixed(2);
+
+          showSuccees(msg, showDiscountedValue, showDiscountValue);
+
+        }
+      },
+      error: function (e) {
+        console.log("%c e", "color:green;font-weight:bold");
+        console.log(JSON.stringify(e));
+      },
+    });
+  }
+
+  async function removeCoupon() { }
+
+  async function update() { }
+
+  async function reSummary() {
+
+
+    totalAmountValue = Number(subtotalAmountValue) + Number(shippingAmountValue)  - Number(discountAmountValue);
+
+    $('.shipping_price_amount').html((shippingAmountValue * 0.01).toFixed(2));
+    $('.discount_price_amount').html((discountAmountValue * 0.01).toFixed(2));
+    $('.total_price_amount').html((totalAmountValue * 0.01).toFixed(2));
+
+  }
+
+  $(function () {
+    let successId = getParams("successId");
+    let cancelId = getParams("cancelId");
+    let token = getParams("token");
+
+    if (!!successId && token) {
+      handleSuccess(successId, token);
+      return;
+    }
+
+
+
+    $("#cart-wrapper").css("display", "block");
+
+    initCart(); // 初始化购物车
+
+    // window.addEventListener('load', function () {
+
+    //   fbq('track', 'InitiateCheckout');
+    //   fbq('track', 'AddPaymentInfo');
+    // });
+
+
+    initMovement(); // 一些jquery特效
+
+    initFormValidation(); // 开启表单验证
+
+
+
+
+
+  });
+</script>

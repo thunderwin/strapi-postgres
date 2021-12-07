@@ -77,7 +77,7 @@
     },
     {
       "method": "POST",
-      "path": "/orders/orderByDay",
+      "path": "/order/orderByDay",
       "handler": "order.orderByDay",
       "config": {
         "policies": [

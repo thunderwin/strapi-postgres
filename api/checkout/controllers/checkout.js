@@ -14,9 +14,9 @@ module.exports = {
     //   res.cookie("state", shopState);
     let filePath = "/api/checkout/theme/checkout.liquid";
 
-    if (ctx.query.shop === 'wudizu.myshopify.com') {
-      filePath= "/api/checkout/theme/checkout-vue.liquid";
-    }
+    // if (ctx.query.shop === 'wudizu.myshopify.com') {
+    //   filePath= "/api/checkout/theme/checkout-vue.liquid";
+    // }
 
     // console.dir("filePath");
     // console.log(JSON.stringify(filePath));
@@ -320,6 +320,7 @@ module.exports = {
             active: false,
             paypal: verifyPayment.data,
             totalPaidPrice: paidPrice,
+            purchasedAt: new Date(),
           }
         );
 

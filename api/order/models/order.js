@@ -139,6 +139,7 @@ module.exports = {
 
       // using Twilio SendGrid's v3 Node.js Library
       // https://github.com/sendgrid/sendgrid-nodejs
+      // https://github.com/sendgrid/sendgrid-nodejs/blob/main/docs/use-cases/cc-bcc-reply-to.md  replay to
 
       if (order.active === false) {
         // 结账成功
@@ -148,6 +149,8 @@ module.exports = {
         const msg = {
           to: order.email, // Change to your recipient
           from: "info@wudizu.com", // Change to your verified sender
+          replyTo: 'service@novachique.com',
+
           subject: html.title,
           html: html.body,
         };

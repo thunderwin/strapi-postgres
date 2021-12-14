@@ -304,7 +304,9 @@ module.exports = {
         console.dir("%c 修改状态为支付", "color:green;font-weight:bold");
         console.log(JSON.stringify(order.id));
 
-        return ctx.send(order);
+         ctx.send(order);
+
+        return strapi.services.sendmail.sendOrderConfirmEmail(ctx, order)
       }
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");

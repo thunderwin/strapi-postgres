@@ -95,7 +95,7 @@ results
 node_modules
 .node_history
 
-
+.strapi-updater.json
 ############################
 # Tests
 ############################

@@ -94,7 +94,7 @@
 
               <dl class="my-flex" id="base-price">
                 <div class="discouted-price">
-                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <!-- <dt class="visually-hidden"><span>Sale price</span></dt> -->
                   <dd>
                     <span class="
                         order-summary__emphasis
@@ -107,7 +107,7 @@
 
               <dl style="display: none" class="discounted-price">
                 <div class="base-price my-flex">
-                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <!-- <dt class="visually-hidden"><span>Sale price</span></dt> -->
                   <dd>
                     <span style="text-decoration: line-through">{{
                       cart.total_price | money
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="discouted-price my-flex">
-                  <dt class="visually-hidden"><span>Sale price</span></dt>
+                  <!-- <dt class="visually-hidden"><span>Sale price</span></dt> -->
                   <dd style="display: flex">
                     <span class="discounted-price-value"></span>
                   </dd>
@@ -126,7 +126,7 @@
         </div>
       </aside>
 
-      <div class="page-width" style="display: none; padding-top: 1rem; background-color: #fafafa" id="cart-summy"
+      <div class="page-width" style="display: none; padding: 16px; background-color: #fafafa" id="cart-summy"
         data-section-id="{{ section.id }}" data-section-type="cart-template">
         {% if cart.item_count > 0 %}
 
@@ -172,9 +172,7 @@
                       <a href="{{ item.url }}">
                         {{ item.product.title }}
                         {% if item.quantity > 1 %}
-                        <span class="medium-up--hide"><span class="visually-hidden">{{
-                            "cart.label.quantity" | t
-                            }}</span>(x{{ item.quantity }})</span>
+                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity }})</span>
                         {% endif %}
                       </a>
                     </div>
@@ -783,9 +781,7 @@
                       <a href="{{ item.url }}">
                         {{ item.product.title }}
                         {% if item.quantity > 1 %}
-                        <span class="medium-up--hide"><span class="visually-hidden">{{
-                            "cart.label.quantity" | t
-                            }}</span>(x{{ item.quantity }})</span>
+                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity }})</span>
                         {% endif %}
                       </a>
                     </div>

@@ -634,9 +634,7 @@
 
                     <div class="summary_box_inner" style="    font-weight: bold;
                     font-size: 16px;
-                    margin-top: 2
-                px
-                ; ">
+                    margin-top: 2px; ">
                       <span class="summary-title">Total</span>
                       <div class="summray_price_box">
                         <span class="currency">$</span>
@@ -709,7 +707,7 @@
 
 
         <div class="check-btn" style="text-align: center; margin-bottom: 2rem">
-          <button type="submit" class="btn newsletter__submit" onclick="checkout()" id="check-btn" aria-busy="false"
+          <button type="submit" class="btn " onclick="checkout()" id="check-btn" aria-busy="false"
             style="
               padding: 1.4em 1.7em;
               width: 100%;
@@ -1056,6 +1054,9 @@
   </div>
 </div>
 <style>
+  #cart-wrapper , #note-wrapper {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  }
   @media (min-width: 1000px) {
     .mob-toggle {
       display: none;
@@ -1099,11 +1100,15 @@
     height: 0;
   }
 
+  .my-form{
+    padding: 0 20px;
+  }
+
   .my-form .form-title {
-    font-size: 1.3rem;
-    line-height: 1.3rem;
-    margin-bottom: 1rem;
-    margin-top: 1.3rem;
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: 16px;
+    margin-top: 20px;
   }
 
   /* 实现 floating label  */
@@ -1132,7 +1137,7 @@
   }
 
   .floating {
-    margin-bottom: 0.85rem;
+    margin-bottom: 14px;
     border-radius: 4px;
   }
 
@@ -1142,13 +1147,14 @@
   }
 
   .floating__input {
-    padding: 1.3rem 1rem 0.5rem;
+    padding: 20px 8px 8px;
     width: 100%;
-    font-size: 1rem;
+    font-size: 16px;
     transition: border-color 0.2s ease;
     caret-color: var(--color__accent);
     border-radius: 4px;
     line-height: initial;
+    border: 1px solid;
   }
 
   .floating:hover .floating__input {
@@ -1167,7 +1173,7 @@
     display: block;
     position: relative;
     max-height: 0;
-    font-size: 1rem !important;
+    font-size: 16px !important;
     pointer-events: none;
     text-transform: capitalize !important;
     letter-spacing: normal !important;
@@ -1208,12 +1214,12 @@
   }
 
   .floating__input:placeholder-shown+.floating__label::before {
-    transform: translate3d(0, -2.2rem, 0) scale3d(1, 1, 1);
+    transform: translate3d(0, -30px, 0) scale3d(1, 1, 1);
   }
 
   .floating__label::before,
   .floating__input:focus+.floating__label::before {
-    transform: translate3d(0, -2.6rem, 0) scale3d(0.82, 0.82, 1);
+    transform: translate3d(0, -45px, 0) scale3d(0.82, 0.82, 1);
   }
 
   .floating__input:focus+.floating__label::before {

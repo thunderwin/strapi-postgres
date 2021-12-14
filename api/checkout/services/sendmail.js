@@ -56,6 +56,9 @@ module.exports = {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
+    console.dir('emailAddress')
+    console.log(JSON.stringify(emailAddress))
+
 
     const msg = {
       to: order.email, // Change to your recipient

@@ -329,7 +329,7 @@ module.exports = {
 
          ctx.send(order);
 
-        return strapi.services.sendmail.sendOrderConfirmEmail(ctx, order)
+        return strapi.services.sendmail.sendOrderConfirmEmail(ctx.config, order)
       }
     } catch (error) {
       console.dir("生产订单出错", "color:green;font-weight:bold");

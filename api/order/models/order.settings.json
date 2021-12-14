@@ -76,6 +76,9 @@
     },
     "totalPaidPrice": {
       "type": "decimal"
+    },
+    "purchasedAt": {
+      "type": "datetime"
     }
   }
 }

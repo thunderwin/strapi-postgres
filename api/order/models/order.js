@@ -94,10 +94,8 @@ module.exports = {
       // console.log(JSON.stringify(order));
 
 
-
       if (order.active === false) {
         // 结账成功
-
 
 
         // 记录下销售额

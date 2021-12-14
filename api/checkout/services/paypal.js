@@ -11,26 +11,10 @@ const Promise = require("bluebird");
 
 // https://github.com/paypal/Checkout-NodeJS-SDK  最新文档
 
-/**
- * 测试账户
-sb-mz3sa340502@personal.example.com
-$V!0d$xS
 
-测试收钱账户
-sb-qolrx340835@business.example.com
-5me[]O^9
-
- */
-
-// let PaypalId =
-//   "AbZ5LVK5D2LWA3Cq2jZHwZGdl3rQs8iskKlezfFlsOv4FEkGTn3jd2QSwFXRWUoouw_5pFchavaQXsyo";
-// let PaypalKey =
-//   "EP5SHbGNiYoBx7x0Y2VAInORcFsiyeCHuH0DhHGj3Y8ecnhJ2kaNBhOALZxiOttH1ZvOXeQW8wprPCQO";
 
 function genPaypalClient(config) {
 
-  console.dir('config')
-  console.log(JSON.stringify(config))
 
 
   let paypalCredential = config.paypal; //  拿到paypal 配置

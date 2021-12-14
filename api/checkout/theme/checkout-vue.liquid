@@ -1,11 +1,14 @@
 
+{% layout 'custom' %}
 
 
 <div id="checkout-wrapper">
 
- hah {{yes}}
+  <p>{{yes}}</p>
 
- <button @click="click">click</button>
+ 不显示 {{yes}}
+
+ <button v-if @click="click">click</button>
 </div>
 
 
@@ -15,16 +18,21 @@
   const Checkout = {
     data() {
       return {
-        yes: 0
+        yes: '呵呵',
+
       }
     },
     methods: {
       click(){
-        this.yes ++
+        console.log(11)
+
+
+        this.yes++
+        console.log(JSON.stringify(this.yes))
+
       }
     },
     components: {
-      TodoItem // 注册一个新组件
     }
   }
 

@@ -74,6 +74,17 @@
           "plugins::users-permissions.isauthenticated"
         ]
       }
+    },
+    {
+      "method": "POST",
+      "path": "/order/orderByDay",
+      "handler": "order.orderByDay",
+      "config": {
+        "policies": [
+          "plugins::users-permissions.ratelimit",
+          "plugins::users-permissions.isauthenticated"
+        ]
+      }
     }
   ]
 }

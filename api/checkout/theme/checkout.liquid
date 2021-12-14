@@ -337,7 +337,7 @@
                   endif
                   %}
                 " style="max-width: 100%;">
-                <div class="my-flex discounted-price" style="padding-bottom: 1rem; display: none">
+                <div class="my-flex discounted-price" style="padding-bottom: 10px; display: none">
                   <span class="cart__subtotal-title">Discount</span>
 
                   <div class="cart__subtotal my-flex">
@@ -346,7 +346,7 @@
                   </div>
                 </div>
 
-                <div class="my-flex" style="padding-bottom: 1rem">
+                <div class="my-flex" style="padding-bottom: 10px">
                   <span class="cart__subtotal-title">Subtotal</span>
                   <span class="cart__subtotal">{{
                     cart.total_price | money
@@ -356,7 +356,7 @@
                 <div class="my-flex discounted-price" style="
                     border-bottom: 1px solid #e6e6e6;
                     display: none;
-                    padding-bottom: 1rem;
+                    padding-bottom: 10px;
                   ">
                   <span class="cart__subtotal-title">Total</span>
                   <span class="cart__subtotal discounted-price-value"></span>
@@ -435,7 +435,7 @@
         {% endif %}
       </div>
 
-      <div class="page-width my-form" style="margin-top: 1rem">
+      <div class="page-width my-form" style="margin-top: 16px">
 
         <div id="smart-button-container">
           <div style="text-align: center;">
@@ -580,7 +580,7 @@
               </div>
 
               <div class="btn" id="coupon-btn" aria-busy="false"
-                style="width: 100px; border-radius: 4px; padding: 0.9rem 0">
+                style="width: 100px; border-radius: 4px; padding: 14px 0">
                 <span class="">Apply</span>
               </div>
             </div>
@@ -596,13 +596,14 @@
             display: none;
             font-weight: bold;
             margin-top: 10px;
+            padding: 10px
           "></div>
 
 
             <div class="section__header">
               <div class="form-title">Summary</div>
 
-              <div class="radio-wrapper" style="background-color: #fafafa; border: 1px solid #e6e6e6;padding:1rem; ">
+              <div class="radio-wrapper" style="background-color: #fafafa; border: 1px solid #e6e6e6;padding:15px; ">
                 <div class="blank-slate" style="text-align: center;">
                   <div class="summary_box">
                     <div class="summary_box_inner">
@@ -673,9 +674,9 @@
               </div>
 
               <div class="radio-wrapper"
-                style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:1rem; border-top: 0;">
+                style="background-color: #fafafa;border: 1px solid #e6e6e6;padding:15px; border-top: 0;">
                 <div class="blank-slate" style="text-align: center;">
-                  <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 1rem;"></i>
+                  <i class="blank-slate__icon icon icon--offsite" style="margin-bottom: 15px;"></i>
 
                   <div style="font-size: 14px;">
                     After clicking “Complete order”, you will be redirected to
@@ -702,13 +703,13 @@
 
 
 
-        <div class="check-btn" style="text-align: center; margin-bottom: 2rem">
+        <div class="check-btn" style="text-align: center; margin-bottom: 30px">
           <button type="submit" class="btn " onclick="checkout()" id="check-btn" aria-busy="false"
             style="
               padding: 1.4em 1.7em;
               width: 100%;
               border-radius: 4px;
-              margin: 1rem 0;
+              margin: 16px 0;
             ">
             <span class="newsletter__submit-text--large">Complete order</span>
 
@@ -735,7 +736,7 @@
       </div>
     </div>
     <div class="right-area">
-      <div class="page-width" style="padding-top: 1rem; background-color: #fafafa" id="cart-summy"
+      <div class="page-width" style="padding-top: 16px; background-color: #fafafa" id="cart-summy"
         data-section-id="{{ section.id }}" data-section-type="cart-template">
         {% if cart.item_count > 0 %}
 
@@ -1999,7 +2000,7 @@
     }
 
     function showSuccees(msg, value, discount) {
-      $("#working-coupon").html(`<p style="color:#000">${msg}</p>`);
+      $("#working-coupon").html(`<div style="color:#000">${msg}</div>`);
       $("#working-coupon").fadeIn();
 
       // 修改显示

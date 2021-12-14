@@ -55,6 +55,8 @@ module.exports = {
     let html = genOrderConfirmEmailHTML(order);
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+
+
     const msg = {
       to: order.email, // Change to your recipient
       from: "info@wudizu.com", // Change to your verified sender

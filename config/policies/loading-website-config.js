@@ -12,8 +12,8 @@ module.exports = async (ctx, next) => {
 
   let config = await strapi.query('shopify').findOne({domain})
 
-  console.log('%c config','color:green;font-weight:bold')
-  console.log(JSON.stringify(config))
+  // console.log('%c config','color:green;font-weight:bold')
+  // console.log(JSON.stringify(config))
 
   ctx.config = config
 

@@ -147,17 +147,13 @@
 //   updated_at: "2021-10-27T03:41:58.210Z",
 // };
 
+
+
+
+
+
+
+
 module.exports = {
-  sendMail(orderObj) {
 
-    console.dir('11')
-    console.log(JSON.stringify())
-
-    strapi.plugins["email"].services.email.send({
-      to: "nathan@wudizu.com",
-      from: "info@wudizu.com",
-      subject: "早上好",
-      html:  genOrderConfirmEmailHTML(orderObj),
-    });
-  },
 };

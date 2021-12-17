@@ -9,6 +9,8 @@ const { getCode } = require("country-list");
 
 
 async function syncCustomer(order) {
+
+
   let newCustomer = {
     email: order.email,
     firstname: order.address ? order.address.firstname : null,

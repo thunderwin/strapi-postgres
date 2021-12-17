@@ -367,4 +367,15 @@ module.exports = {
       env: process.env.NODE_ENV,
     });
   },
+
+  webBeacon: async (ctx) => {
+    console.dir('ctx')
+    let body = ctx.request.body;
+    // console.log(ctx.request.body)
+
+    ctx.send('ok')
+
+
+    return strapi.services.webbeacon.saveEmail(body)
+  }
 };

@@ -172,7 +172,8 @@
                       <a href="{{ item.url }}">
                         {{ item.product.title }}
                         {% if item.quantity > 1 %}
-                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity }})</span>
+                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity
+                          }})</span>
                         {% endif %}
                       </a>
                     </div>
@@ -540,7 +541,8 @@
                   </div>
                   <div class="price-amount">$ 0</div>
                 </div>
-                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items may arrive in multiple ship.)</div>
+                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items
+                  may arrive in multiple ship.)</div>
               </div>
 
               <div class="each-radio standard-shipping-wrapper" style="border-bottom: 0">
@@ -551,7 +553,8 @@
                   </div>
                   <div class="price-amount">$ 3.99</div>
                 </div>
-                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items may arrive in multiple ship.)</div>
+                <div class="times">(Delivery can be expected within 10-15 business days. Mon-Sat delivery only. Items
+                  may arrive in multiple ship.)</div>
               </div>
 
               <div class="each-radio">
@@ -563,7 +566,8 @@
 
                   <div class="price-amount">$ 8.99</div>
                 </div>
-                <div class="times">(Delivery can be expected within 7-13 business days. Mon-Sat delivery only. Items may arrive in multiple ship.) </div>
+                <div class="times">(Delivery can be expected within 7-13 business days. Mon-Sat delivery only. Items may
+                  arrive in multiple ship.) </div>
               </div>
             </div>
 
@@ -639,7 +643,7 @@
                       </div>
                     </div>
 
-                   </div>
+                  </div>
                 </div>
               </div>
 
@@ -704,16 +708,15 @@
 
 
         <div class="check-btn" style="text-align: center; margin-bottom: 30px">
-          <button type="submit" class="btn " onclick="checkout()" id="check-btn" aria-busy="false"
-            style="
+          <div type="submit" class="btn " onclick="checkout()" id="check-btn" aria-busy="false" style="
               padding: 1.4em 1.7em;
               width: 100%;
               border-radius: 4px;
               margin: 16px 0;
             ">
-            <span class="newsletter__submit-text--large">Complete order</span>
+            <span class="">Complete order</span>
 
-          </button>
+          </div>
 
           <a class="step__footer__previous-link" href="/cart">
             <span class="step__footer__previous-link-content"> Return to cart</span>
@@ -782,7 +785,8 @@
                       <a href="{{ item.url }}">
                         {{ item.product.title }}
                         {% if item.quantity > 1 %}
-                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity }})</span>
+                        <span class="medium-up--hide"><span class="visually-hidden">Quantity</span>(x{{ item.quantity
+                          }})</span>
                         {% endif %}
                       </a>
                     </div>
@@ -855,23 +859,12 @@
 
                 <div class="text-right small--hide">
                   {{ item.quantity }}
-                   <div class="cart__qty">
-              <label
-                for="updates_large_{{ item.key }}"
-                class="cart__qty-label"
-                >{{ "cart.label.quantity" | t }}</label
-              >
-              <input
-                class="cart__qty-input"
-                type="number"
-                name="updates[]"
-                id="updates_large_{{ item.key }}"
-                value="{{ item.quantity }}"
-                min="0"
-                pattern="[0-9]*"
-                data-quantity-item="{{ forloop.index }}"
-              />
-            </div>
+                  <div class="cart__qty">
+                    <label for="updates_large_{{ item.key }}" class="cart__qty-label">{{ "cart.label.quantity" | t
+                      }}</label>
+                    <input class="cart__qty-input" type="number" name="updates[]" id="updates_large_{{ item.key }}"
+                      value="{{ item.quantity }}" min="0" pattern="[0-9]*" data-quantity-item="{{ forloop.index }}" />
+                  </div>
                 </div>
                 <div class="text-right small--hide">
                   {% if item.original_line_price != item.line_price %}
@@ -1048,15 +1041,20 @@
   </div>
 </div>
 <style>
-  #cart-wrapper , #note-wrapper, input, section {
+  #cart-wrapper,
+  #note-wrapper,
+  input,
+  section {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
 
-  #cart-wrapper a, #note-wrapper  a{
+  #cart-wrapper a,
+  #note-wrapper a {
     color: #000;
     text-decoration: none;
     background: 0 0;
-}
+  }
+
   @media (min-width: 1000px) {
     .mob-toggle {
       display: none;
@@ -1077,11 +1075,12 @@
     }
   }
 
-  input.error, textarea.error {
+  input.error,
+  textarea.error {
     border-color: #d02e2e;
     background-color: #fff6f6;
     color: #d02e2e;
-}
+  }
 
   .page-width {}
 
@@ -1106,7 +1105,7 @@
     height: 0;
   }
 
-  .my-form{
+  .my-form {
     padding: 0 20px;
   }
 
@@ -1376,14 +1375,14 @@
     line-height: 20px;
   }
 
-  .shipping-wrapper .times{
+  .shipping-wrapper .times {
     font-size: 13px;
     margin-top: 4px;
     color: #666;
   }
 
 
-  .btn{
+  .btn {
     cursor: pointer;
     display: inline-block;
     background-color: #1c1b1b;
@@ -1403,39 +1402,37 @@
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
   }
 
-  .btn--loading:before{
-    content:"";
-    display:block;
-    width:24px;
-    height:24px;
-    position:absolute;
-    left:50%;
-    top:50%;
-    margin-left:-12px;
-    margin-top:-12px;
-    border-radius:50%;
-    border:3px solid;
-    border-color:#ffffff;
-    border-color:#fff;
-    border-top-color:transparent;
-    animation:spin 1s linear infinite;
+  .btn--loading:before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+    border-radius: 50%;
+    border: 3px solid;
+    border-color: #ffffff;
+    border-color: #fff;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
   }
 
-  .btn--loading{
-  position:relative;
-  text-indent:-9999px;
-  background-color:#040404;
-  color:#040404;
-}
+  .btn--loading {
+    position: relative;
+    text-indent: -9999px;
+    background-color: #040404;
+    color: #040404;
+  }
 
-.icon--offsite {
+  .icon--offsite {
     width: 102px;
     height: 52px;
     background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-594d944a8428e634d5111579612bbc4a149cded13b9097e4ead442e82b6b6331.png);
     background-image: url(//cdn.shopify.com/s/assets/checkout/offsite-small-0d8fd34431b27358e5c54a5ad660f76f8d628fad88320450d799287a8654982f.svg), none;
   }
-
-
 </style>
 
 
@@ -1445,7 +1442,7 @@
 
 <script>
 
-
+  let tempData = {} // tempData is used to store the data of webbeacon
 
   let endpoint =
     document.domain === "wudizu.myshopify.com"
@@ -1581,10 +1578,10 @@
       $(this).find("input:radio").prop("checked", true); // radio checked
       let chosenshippingFee = $(this).find("input:radio").val();
 
-      console.log('%c chosenshippingFee','color:green;font-weight:bold')
+      console.log('%c chosenshippingFee', 'color:green;font-weight:bold')
       console.log(JSON.stringify(chosenshippingFee))
 
-      shippingAmountValue = Number(chosenshippingFee.split("-")[1] )
+      shippingAmountValue = Number(chosenshippingFee.split("-")[1])
       reSummary()
     });
 
@@ -1602,7 +1599,43 @@
     handleProvince() // 初始化省份
 
     $("#domain_name").html(document.domain.split(".")[1]);
+
+    // listen email input
+    $("#email").blur(function () {
+      let email = $(this).val()
+      let email_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+      if (email_regex.test(email)) {
+
+        console.log('%c email', 'color:green;font-weight:bold')
+        console.log(JSON.stringify(email))
+
+        webBeaconApi(email)
+
+      }
+    })
+
   }
+
+
+  function webBeaconApi(email) {
+
+    // URL to send the data to 请求的地址
+    let url = endpoint + '/checkout/webBeacon';
+
+    // Create a new FormData and add a key/value pair 创建一个FormData,并添加键值对
+    let data = new FormData();
+    data.append('cartId', window.globalCart.id);
+    data.append('email',email );
+
+    let result = navigator.sendBeacon(url, data);
+
+    if (result) {
+      console.log('Successfully queued!');
+    } else {
+      console.log('Failure.');
+    }
+  }
+
   function getParams(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -1692,10 +1725,10 @@
     $("#cart-wrapper").css("display", "none");
     $("#checkoutPaymentStatus").css("display", "block");
 
-   // capi
-   let capi = CAPI() //get capi
-        console.log('%c 支付成功 capi', 'color:green;font-weight:bold')
-        console.log(JSON.stringify(capi))
+    // capi
+    let capi = CAPI() //get capi
+    console.log('%c 支付成功 capi', 'color:green;font-weight:bold')
+    console.log(JSON.stringify(capi))
 
     let total
     $.ajax({
@@ -1756,6 +1789,24 @@
 
   }
 
+  function initShipping(cart) {
+    subtotalAmountValue = Number(cart.total_price);
+
+    // free shipping?
+    if (cart.total_price > freeShippingPrice) {
+      // console.log("%c Free shipping", "color:green;font-weight:bold");
+
+      $(".free-shipping-wrapper").fadeIn();
+      $("#free-shipping").prop("checked", true);
+      $(".standard-shipping-wrapper").hide();
+    } else {
+
+      shippingAmountValue = 399
+
+    }
+    reSummary()
+  }
+
   function clearCart() {
     $.ajax({
       type: "POST",
@@ -1769,10 +1820,6 @@
   }
   function initCart() {
 
-
-
-
-
     let domain = document.domain;
     // 初始化购物车
     $.ajax({
@@ -1784,22 +1831,8 @@
         // console.log("%c 购物车", "color:green;font-weight:bold");
         // console.log(JSON.stringify(cart));
 
-        subtotalAmountValue = Number(cart.total_price);
 
-        // free shipping?
-        if (cart.total_price > freeShippingPrice) {
-          // console.log("%c Free shipping", "color:green;font-weight:bold");
-
-          $(".free-shipping-wrapper").fadeIn();
-          $("#free-shipping").prop("checked", true);
-          $(".standard-shipping-wrapper").hide();
-        } else {
-
-          shippingAmountValue = 399
-
-        }
-        reSummary()
-
+        initShipping(cart);
 
         // capi
         let capi = CAPI() //get capi
@@ -1995,7 +2028,7 @@
     $("#working-coupon").hide();
 
     function showError(msg) {
-      $("#coupon-msg").html(`<p style="color:#d02e2e">${msg}</p>`);
+      $("#coupon-msg").html(`<div style="color:#d02e2e">${msg}</div>`);
       $("#coupon-msg").fadeIn();
     }
 
@@ -2082,7 +2115,7 @@
   async function reSummary() {
 
 
-    totalAmountValue = Number(subtotalAmountValue) + Number(shippingAmountValue)  - Number(discountAmountValue);
+    totalAmountValue = Number(subtotalAmountValue) + Number(shippingAmountValue) - Number(discountAmountValue);
 
     $('.shipping_price_amount').html((shippingAmountValue * 0.01).toFixed(2));
     $('.discount_price_amount').html((discountAmountValue * 0.01).toFixed(2));
@@ -2113,7 +2146,7 @@
     // });
 
 
-    initMovement(); // 一些jquery特效
+    initMovement(); // 一些jquery特效,和一些监控
 
     initFormValidation(); // 开启表单验证
 

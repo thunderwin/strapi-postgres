@@ -1443,6 +1443,7 @@
 <script>
 
   let tempData = {} // tempData is used to store the data of webbeacon
+  let clickCheckout = false // clickCheckout is used to check if the checkout button is clicked
 
   let endpoint =
     document.domain === "wudizu.myshopify.com"
@@ -1625,7 +1626,7 @@
     // Create a new FormData and add a key/value pair 创建一个FormData,并添加键值对
     let data = new FormData();
     data.append('cartId', window.globalCart.id);
-    data.append('email',email );
+    data.append('email', email);
 
     let result = navigator.sendBeacon(url, data);
 
@@ -1634,6 +1635,37 @@
     } else {
       console.log('Failure.');
     }
+  }
+
+  function beforeUserLeave() {
+    // user leave without checkout
+    if (clickCheckout === true) return
+    console.log('%c user leave without checkout', 'color:green;font-weight:bold')
+
+    let userInputed = getCheckoutPayload()
+
+    console.log('%c 用户的输入', 'color:green;font-weight:bold')
+    console.log(JSON.stringify(userInputed))
+
+    // URL to send the data to 请求的地址
+    let url = endpoint + '/checkout/webBeacon';
+
+    // Create a new FormData and add a key/value pair 创建一个FormData,并添加键值对
+    let data = new FormData();
+    data.append('cartId', window.globalCart.id);
+    data.append('userInputed', JSON.stringify(userInputed) );
+
+
+
+    let result = navigator.sendBeacon(url, data);
+
+    if (result) {
+      console.log('before leave Successfully queued!');
+    } else {
+      console.log('Failure.');
+    }
+
+
   }
 
   function getParams(variable) {
@@ -1697,9 +1729,6 @@
       success: function (r) {
         // console.log("%c 结账返回", "color:green;font-weight:bold");
         // console.log(JSON.stringify(r));
-
-
-
         // $("#check-btn").removeClass("btn--loading").prop("disabled", false);
 
         if (r.status === "CREATED") {
@@ -1962,6 +1991,52 @@
     });
   }
 
+
+  function getCheckoutPayload(content) {
+    let cart = window.globalCart;
+
+
+
+    if (!cart.id) return;
+    let payload = {};
+
+    payload.token = cart.token;
+    payload.id = cart.id;
+    payload.content = content || cart.content; // 这样拿到的购物车 content才是最新的, 不然就拿旧的
+
+    let f = getFormData(); // 加上地址
+
+    // console.log(f);
+
+    payload.address = {
+      firstname: f.firstname,
+      lastname: f.lastname,
+      address1: f.address1,
+      address2: f.address2,
+      city: f.city,
+      country: f.country,
+      province: f.province,
+      zip: f.zip,
+      phone: f.phone,
+    };
+
+    payload.email = f.email;
+    payload.payment = f.payment;
+
+    let shippingStr = f.shipping.split("-");
+    payload.shipping = shippingStr[0];
+    payload.shippingFee = shippingStr[1];
+
+    payload.checkout = true;
+
+    payload.capi = CAPI();
+
+    // console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
+    // console.log(JSON.stringify(payload));
+
+    return payload
+  }
+
   async function checkout() {
     var validator = $("#checkout").validate();
     let result = validator.form();
@@ -1975,52 +2050,20 @@
       return;
     }
 
+    clickCheckout = true
     $.ajax({
       type: "GET",
       url: "/cart.js",
       dataType: "json",
 
       success: function (content) {
-        let cart = window.globalCart;
-        if (!cart.id) return;
-        let payload = {};
-        payload.token = cart.token;
-        payload.id = cart.id;
-        payload.content = content; // 这样拿到的购物车 content才是最新的
 
-        let f = getFormData(); // 加上地址
-
-        console.log(f);
-
-        payload.address = {
-          firstname: f.firstname,
-          lastname: f.lastname,
-          address1: f.address1,
-          address2: f.address2,
-          city: f.city,
-          country: f.country,
-          province: f.province,
-          zip: f.zip,
-          phone: f.phone,
-        };
-
-        payload.email = f.email;
-        payload.payment = f.payment;
-
-        let shippingStr = f.shipping.split("-");
-        payload.shipping = shippingStr[0];
-        payload.shippingFee = shippingStr[1];
-
-        payload.checkout = true;
-
-        payload.capi = CAPI();
-
-        // console.log("%c 结账之前的购物车", "color:green;font-weight:bold");
-        // console.log(JSON.stringify(payload));
+        let payload = getCheckoutPayload(content);
 
         syncCart(payload);
       },
     });
+
   }
 
   async function applyCoupon(e) {
@@ -2144,6 +2187,9 @@
     //   fbq('track', 'InitiateCheckout');
     //   fbq('track', 'AddPaymentInfo');
     // });
+
+    window.addEventListener('beforeunload', beforeUserLeave);
+
 
 
     initMovement(); // 一些jquery特效,和一些监控

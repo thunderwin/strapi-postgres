@@ -164,21 +164,6 @@ module.exports = {
         value.capi,
         ctx
       );
-
-      // send evernt to capi
-      return strapi.services.sendcapi.capi(
-        {
-          cart: value.content, // 购物车
-          capi: value.capi, // capi
-          userIp: ctx.realIp,
-          domain: order.domain,
-          userDetail: {
-            email: value.email,
-            phone: value.phone,
-          },
-        },
-        ctx.config
-      );
     } catch (error) {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -369,13 +354,20 @@ module.exports = {
   },
 
   webBeacon: async (ctx) => {
-    console.dir('ctx')
+    console.dir("ctx");
     let body = ctx.request.body;
-    // console.log(ctx.request.body)
+    console.log(ctx.request.body);
 
-    ctx.send('ok')
+    ctx.send("ok");
 
+    if (body.email) {
+      return strapi.services.webbeacon.saveEmail(body);
+    }
 
-    return strapi.services.webbeacon.saveEmail(body)
-  }
+    if (body.userInputed) {
+      let order = JSON.parse(body.userInputed);
+
+      return strapi.query("order").update({ id: body.cartId }, order);
+    }
+  },
 };

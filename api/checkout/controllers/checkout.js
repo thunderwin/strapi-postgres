@@ -164,6 +164,7 @@ module.exports = {
         value.capi,
         ctx
       );
+
     } catch (error) {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -356,7 +357,7 @@ module.exports = {
   webBeacon: async (ctx) => {
     console.dir("ctx");
     let body = ctx.request.body;
-    console.log(ctx.request.body);
+    // console.log(ctx.request.body);
 
     ctx.send("ok");
 
@@ -366,6 +367,15 @@ module.exports = {
 
     if (body.userInputed) {
       let order = JSON.parse(body.userInputed);
+
+      if (order.shipping && order.shipping.firstname) {
+        strapi.services.sendcapi.sendEvent(
+          "AddPaymentInfo",
+          order,
+          order.capi,
+          ctx
+        );
+      }
 
       return strapi.query("order").update({ id: body.cartId }, order);
     }

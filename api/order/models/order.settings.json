@@ -79,6 +79,9 @@
     },
     "purchasedAt": {
       "type": "datetime"
+    },
+    "abandonStage": {
+      "type": "integer"
     }
   }
 }

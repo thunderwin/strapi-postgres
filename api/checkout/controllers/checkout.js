@@ -143,6 +143,9 @@ module.exports = {
       console.dir("%c 再次同步购物车", "color:green;font-weight:bold");
       console.log(JSON.stringify(order.id));
 
+      // sync customer
+      strapi.services.synccustomer.syncCustomer(order)
+
       if (!value.checkout) {
         return ctx.send(order);
       }
@@ -355,13 +358,20 @@ module.exports = {
   },
 
   webBeacon: async (ctx) => {
-    console.dir("ctx");
+    // console.dir("收到事件");
+
+    // console.dir('ctx')
+    // console.log(JSON.stringify(ctx.request.body))
+
     let body = ctx.request.body;
     // console.log(ctx.request.body);
 
     ctx.send("ok");
 
+
+
     if (body.email) {
+
       return strapi.services.webbeacon.saveEmail(body);
     }
 

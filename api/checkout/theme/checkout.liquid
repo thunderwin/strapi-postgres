@@ -1653,7 +1653,7 @@
     // Create a new FormData and add a key/value pair 创建一个FormData,并添加键值对
     let data = new FormData();
     data.append('cartId', window.globalCart.id);
-    data.append('userInputed', JSON.stringify(userInputed) );
+    data.append('userInputed', JSON.stringify(userInputed));
 
 
 
@@ -2188,9 +2188,12 @@
     //   fbq('track', 'AddPaymentInfo');
     // });
 
-    window.addEventListener('beforeunload', beforeUserLeave);
+    // window.addEventListener('beforeunload', beforeUserLeave);
 
-
+    window.addEventListener(
+      'pagehide',
+      beforeUserLeave
+    );
 
     initMovement(); // 一些jquery特效,和一些监控
 

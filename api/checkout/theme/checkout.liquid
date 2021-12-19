@@ -424,14 +424,11 @@
           </div>
         </form>
         {% else %}
-        <div class="empty-page-content text-center">
-          <h1>{{ "cart.general.title" | t }}</h1>
-          <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
-          <div class="cookie-message">
-            <p>{{ "cart.general.cookies_required" | t }}</p>
-          </div>
-          <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ "general.404.link" | t }}{% include
-            'icon-arrow-right' %}</a>
+        <div class="empty-page-content text-center" >
+          <h1>Shopping cart</h1>
+          <p class="cart--empty-message">Your cart is empty</p>
+
+          <a href="/" class="btn btn--has-icon-after cart__continue-btn">Go to homepage</a>
         </div>
         {% endif %}
       </div>
@@ -1027,13 +1024,10 @@
         </form>
         {% else %}
         <div class="empty-page-content text-center">
-          <h1>{{ "cart.general.title" | t }}</h1>
-          <p class="cart--empty-message">{{ "cart.general.empty" | t }}</p>
-          <div class="cookie-message">
-            <p>{{ "cart.general.cookies_required" | t }}</p>
-          </div>
-          <a href="/" class="btn btn--has-icon-after cart__continue-btn">{{ "general.404.link" | t }}{% include
-            'icon-arrow-right' %}</a>
+          <h1>Shopping cart</h1>
+          <p class="cart--empty-message">Your cart is empty</p>
+
+          <a href="/" class="btn btn--has-icon-after cart__continue-btn">Go to homepage</a>
         </div>
         {% endif %}
       </div>
@@ -1055,6 +1049,10 @@
     color: #000;
     text-decoration: none;
     background: 0 0;
+  }
+
+  .text-center{
+    text-align: center;
   }
 
   @media (min-width: 1000px) {

@@ -3,7 +3,7 @@ var dayjs = require("dayjs");
 function whichStage(order, now) {
   // 检查是不是在召回邮件的时间
   // 最长检查一周的时间
-  let duration = dayjs(now).diff(dayjs(order.createdAt), "hour");
+  let duration = dayjs(now).diff(dayjs(order.created_at), "hour");
 
   if (process.env.NODE_ENV === "development") {
     // 测试情况下，随机取时间

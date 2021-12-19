@@ -47,6 +47,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/emails/setAsAbandoned",
+      "handler": "email.setAsAbandoned",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/emails/abandonedEmail",
+      "handler": "email.abandonedEmail",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

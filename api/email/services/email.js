@@ -1,5 +1,7 @@
 "use strict";
 
+const { func } = require("joi");
+
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/concepts/services.html#core-services)
  * to customize this service
@@ -149,11 +151,112 @@
 
 
 
+function genOrderConfirmEmailHTML(orderObj) {
+  let email_title = `Thank you for your purchase!`;
+
+  let items = orderObj.content.items.map((x) => {
+    return `<p> ${x.product_title}  X ${x.quantity}</p>
+    <div> <img width="100" src="${x.image}" />  </div>
+    `;
+  });
+
+  let total = orderObj.content.total_price;
+  let address = orderObj.address;
+
+  let body = `<h2>ORDER ${orderObj.id}</h2>
+<p>Thank you for your purchase!</p>
+<p>Hi ${
+    address.firstname
+  }, we're getting your order ready to be shipped. We will notify you when it has been sent.</p>
+
+
+<h3>Order summary</h3>
+<div>${items}</div>
+
+<p>Total : $ ${total / 100}</p>
+
+
+<h3>Shipping information</h3>
+<p> ${address.firstname + " " + address.lastname} </p>
+<p> ${address.address1 + " " + address.address2} </p>
+<p> ${address.city + " " + address.country} </p>
+<p> ${address.zip + " " + address.phone} </p>
+
+
+<h3>Shipping method</h3>
+<p>${orderObj.shipping}</p>
+
+<h3>Payment method</h3>
+<p>${orderObj.payment}</p>
+
+`;
+
+  return {
+    title: email_title,
+    body,
+  };
+}
+
+
+function genCartDetail(orderObj){
+
+  let items = orderObj.content.items.map((x) => {
+    return `<p> ${x.product_title}  X ${x.quantity}</p>
+    <div> <img width="100" src="${x.image}" />  </div>
+    `;
+  });
+
+  return `<div>${items}</div>`
+
+}
+
+function firstEmail(orderObj){
+
+  return {
+    body  : ` <p>hi ${firstname}: </p>
+
+    <p>Your shopping cart at ${domain} has been reserved and is waiting for your return!
+    In your cart, you left:</p>
+
+    ${genCartDetail(orderObj)}
+
+    <p>But it's not too late! To complete your purchase, click this link:</p>
+
+    <p>${checkoutLink}</p>
+
+    <p>Thanks for shopping!</p>
+    `,
+    title : `hi ${firstname}, Your shopping cart at ${domain} has been reserved!`
+  }
+}
+
+function secondEmail(orderObj){
+
+  return {
+    title : `hi ${firstname}, Your shopping cart at ${domain} has been reserved!`,
+
+    body  : ` <p>hi ${firstname}: </p>
+
+    <p>Your shopping cart at ${domain} has been reserved and is waiting for your return!
+    In your cart, you left:</p>
+
+    ${genCartDetail(orderObj)}
+
+    <p>But it's not too late! To complete your purchase, click this link:</p>
+
+    <p>${checkoutLink}</p>
+
+    <p>Thanks for shopping!</p>
+    `
+  }
+}
 
 
 
 
 
 module.exports = {
+  firstEmail,
+  secondEmail,
 
 };

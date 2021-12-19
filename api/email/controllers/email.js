@@ -11,7 +11,7 @@ module.exports = {
 
 
     let r = await strapi.query("order").find({
-      created_at_gt: duration,
+      // created_at_gt: duration,
       active: true,
       abandon_null: true  // 把没变为abonon 的加一个空数组
     });

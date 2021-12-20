@@ -36,6 +36,7 @@ module.exports = {
       active: true,
       // _limit: 1000,
       _sort: "id:desc",
+      email_null: false,
       abandon_null: false, // 只关心进入召回状态的订单
     });
 
@@ -43,6 +44,7 @@ module.exports = {
     console.log(JSON.stringify(r.map((x) => x.id)));
 
     r = r.filter((x) => {
+      if (!x.email) return false; // 没有email的不管
       let stage = whichStage(x, now);
       console.dir('stage')
       console.log(JSON.stringify(stage))

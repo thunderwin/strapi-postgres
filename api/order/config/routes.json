@@ -53,28 +53,8 @@
       }
     },
 
-    {
-      "method": "GET",
-      "path": "/order/ads",
-      "handler": "order.ads",
-      "config": {
-        "policies": [
-          "plugins::users-permissions.ratelimit",
-          "plugins::users-permissions.isauthenticated"
-        ]
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/orders/ads/:id",
-      "handler": "order.adsdetail",
-      "config": {
-        "policies": [
-          "plugins::users-permissions.ratelimit",
-          "plugins::users-permissions.isauthenticated"
-        ]
-      }
-    },
+
+
     {
       "method": "POST",
       "path": "/order/orderByDay",

@@ -39,6 +39,9 @@
     "facebook": {
       "type": "json",
       "private": true
+    },
+    "adAccounts": {
+      "type": "json"
     }
   }
 }

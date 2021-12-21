@@ -1,9 +1,9 @@
 const axios = require("axios");
-const { ads } = require("../controllers/order");
+const { ads } = require("../../order/controllers/order");
 
 const ax = axios.create({
   baseURL: `https://graph.facebook.com/v12.0/`,
-  timeout: 1000 * 10,
+  timeout: 1000 * 20,
 });
 
 // 发送前拦截 request-请求
@@ -34,29 +34,34 @@ const adsfields = `name,status,conversion_domain,insights{spend,clicks,cpc,cpm,c
 
 module.exports = {
 
-  async allMyAds(ctx) {
+  async allShopWithAdAccount() {
 
-    let token = ctx.state.user.tokens.facebookAppToken
+    let shops = await strapi.query('shopify').find();
 
-    let path = `me?fields=adaccounts{name,balance}`;
+    return shops.map(x => ({
+      adAccounts: x.adAccounts,
+      domain:x.domain,
+      adminEmail:x.adminEmail
+    }))
+  },
+
+
+
+  async allMyAds() {
+    // 获取我管理的全部账户
+    let token = process.env.MY_FACEBOOK_APP_TOKEN;
+    let path = `me/adaccounts?fields=amount_spent,business,created_time,id,name`;
     let r = await ax.get(`${path}&access_token=${token}`);
-
-    let accountList = r.adaccounts.data;
-
+    let accountList = r.data;
     return accountList;
   },
 
-  async adsdetail(adAccountId,ctx){
-    let token = ctx.state.user.tokens.facebookAppToken
-
+  async adsdetail(adAccountId){
+    let token = process.env.FACEBOOK_APP_TOKEN;
     let path = `${adAccountId}?fields=name,balance,ads{name,status,conversion_domain,insights{spend,clicks,cpc,cpm,cpp,reach,date_start,date_stop,impressions},preview_shareable_link,adcreatives{link_url,name,title,object_url,link_destination_display_url,status,url_tags,object_story_spec}}`;
-
     let r = await ax.get(`${path}&access_token=${token}`);
-
     console.dir('r')
     console.log(JSON.stringify(r))
-
-
     return r;
 
   }

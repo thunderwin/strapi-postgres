@@ -235,18 +235,9 @@ module.exports = {
     };
 
     return ctx.send(result);
-  },
-
-  ads: async (ctx) => {
-    let r = await strapi.services.myads.allMyAds(ctx);
-    return ctx.send(r);
-  },
-
-  adsdetail: async (ctx) => {
-    let accountId = ctx.params.id
-    let r = await strapi.services.myads.adsdetail(accountId,ctx)
-    return ctx.send(r);
   }
+
+
 };
 
 

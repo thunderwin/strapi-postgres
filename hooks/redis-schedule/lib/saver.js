@@ -10,22 +10,27 @@ client.on("ready", () => {
   console.log("Redis saver client inited");
 });
 
-exports.schedule = async (
+exports.schedule = (
   { orderId, templateId, relativeTime = 0 } = {},
   prefix = "__expiredKey__"
 ) => {
-  if (!orderId || !templateId || !relativeTime)
-    return new Promise.reject("invalid parameters");
-  const key = `${prefix}${orderId}:${templateId}`;
-  const expireSeconds = relativeTime * 60;
-  const fireAt = dayjs().add(expireSeconds, "second");
-  const result = await client.set(
-    key,
-    `scheduled job: order ${orderId} email event will be fired at ${fireAt}`,
-    "EX",
-    expireSeconds
-  );
-  return result;
+  return new Promise(async (resolve, reject) => {
+
+    if (!orderId || !templateId || !relativeTime) {
+      reject("invalid parameters");
+      return;
+    }
+    const key = `${prefix}${orderId}:${templateId}`;
+    const expireSeconds = relativeTime * 60;
+    const fireAt = dayjs().add(expireSeconds, "second");
+    const result = await client.set(
+      key,
+      `scheduled job: order ${orderId} email event will be fired at ${fireAt}`,
+      "EX",
+      expireSeconds
+      );
+      resolve(result);
+    })
 };
 
 exports.set = (key, value, mode, time) => client.set(key, value, mode, time);

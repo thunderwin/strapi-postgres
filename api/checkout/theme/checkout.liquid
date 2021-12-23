@@ -1447,7 +1447,7 @@
 
   let endpoint =
     document.domain === "wudizu.myshopify.com"
-      ? "https://gudao-api-0.tokwork.com"
+      ? "http://localhost:1337"
       : "https://gudao-api-stable-1.tokwork.com";
 
 
@@ -1865,8 +1865,10 @@
 
         // capi
         let capi = CAPI() //get capi
-        console.log('%c capi', 'color:green;font-weight:bold')
-        console.log(JSON.stringify(capi))
+        // console.log('%c capi', 'color:green;font-weight:bold')
+        // console.log(JSON.stringify(capi))
+
+
 
 
         if (cart.token && cart.item_count >= 1) {
@@ -1889,6 +1891,11 @@
             }),
 
             success: function (r) {
+
+              console.log('%c 初始化成功','color:green;font-weight:bold')
+              console.log(JSON.stringify(r.id))
+
+
               window.globalCart = r; // 拿到的购物车挂到window
 
               // console.log("%c 后台返回购物车", "color:green;font-weight:bold");

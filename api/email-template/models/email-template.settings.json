@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_templates",
+  "info": {
+    "name": "emailTemplate",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "domain": {
+      "type": "string"
+    },
+    "template": {
+      "type": "richtext"
+    },
+    "title": {
+      "type": "string"
+    },
+    "gapMins": {
+      "type": "biginteger"
+    }
+  }
+}

@@ -56,10 +56,16 @@ function genEmailTemplate(template, order) {
 
 module.exports = {
   async sendEmail({ orderId, templateId }) {
+
+    console.dir('收到发送邮件请求')
+    console.log(JSON.stringify(orderId))
+    console.log(JSON.stringify(templateId))
     let r = await Promise.all([
       strapi.query("order").findOne({ id: orderId }),
       strapi.query("email-template").findOne({ id: templateId }),
     ]);
+
+
 
     let order = r[0];
     let template = r[1];
@@ -69,13 +75,19 @@ module.exports = {
     const msg = {
       to: order.email, // Change to your recipient
       from: "info@wudizu.com", // Change to your verified sender
-      replyTo: order.serviceEmail,
+      replyTo: order.serviceEmail || "info@wudizu.com",
       subject: title,
       html: body,
     };
 
+
+
+
     try {
      let r = await sgMail.send(msg);
+     console.dir('发送邮件成功')
+     console.log(JSON.stringify(r))
+
       return r;
     } catch (e){
 

@@ -60,6 +60,8 @@ module.exports = {
           domain: value.domain,
           tracking: value.capi ? [value.capi] : [],
           active: true, // 新建的订单 active
+          serviceEmail : ctx.config.adminEmail // 订单里面带上 serviceEmail
+
         });
 
         ctx.send(cart);
@@ -136,7 +138,6 @@ module.exports = {
 
     // 补上 subtotalPrice
     value.subtotalPrice = value.content.total_price;
-    value.serviceEmail = ctx.config.adminEmail; // 订单里面带上 serviceEmail
 
     try {
       let order = await strapi.query("order").update({ id: value.id }, value);

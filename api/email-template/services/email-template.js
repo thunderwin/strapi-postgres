@@ -56,6 +56,7 @@ async function sendMail() {
 }
 module.exports = {
   async sendEmail({ orderId, templateId }) {
+
     let r = await Promise.all([
       strapi.query("order").findOne({ id: orderId }),
       strapi.query("email-template").findOne({ id: templateId }),

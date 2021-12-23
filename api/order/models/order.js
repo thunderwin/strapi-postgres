@@ -63,7 +63,7 @@ module.exports = {
     beforeFind(params, populate) {},
 
     beforeCreate(data) {},
-    
+
     // 创建订单后，根据配置文件创建邮件发送任务
     async afterCreate(result, data) {
       const { id: orderId, domain } = result;
@@ -73,7 +73,10 @@ module.exports = {
           orderId,
           templateId,
           relativeTime,
-        });
+        }).then(() => console.log(`Schedule Job ${orderId} : ${templateId} Ok`)).catch(err => {
+          console.log(`Schedule Job ${orderId} : ${templateId} ERROR`);
+          console.log(error);
+        })
       });
       // data 是前台发送来的
       // result 是后台返回的

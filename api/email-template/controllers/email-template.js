@@ -8,7 +8,7 @@
 module.exports = {
   async send(ctx) {
 
-    let r = await strapi.services['email-template'].sendEmail(ctx.request.body);
+    let r = await strapi.services['email-template'].sendEmail({orderid,templateId});
 
     return ctx.send(r);
   }

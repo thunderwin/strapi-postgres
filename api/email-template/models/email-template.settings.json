@@ -20,7 +20,7 @@
     "title": {
       "type": "string"
     },
-    "gapMins": {
+    "relativeTime": {
       "type": "biginteger"
     }
   }

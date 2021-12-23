@@ -68,6 +68,11 @@ module.exports = {
     async afterCreate(result, data) {
       const { id: orderId, domain } = result;
       const templates = await strapi.query("email-template").find({ domain });
+
+      if (templates.length === 0) {
+         templates = await strapi.query("email-template").find({ domain: "default" });
+      }
+
       templates.forEach(({ id: templateId, relativeTime }) => {
         strapi.services["redis-schedule"]({
           orderId,

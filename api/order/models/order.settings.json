@@ -82,6 +82,9 @@
     },
     "abandon": {
       "type": "json"
+    },
+    "serviceEmail": {
+      "type": "email"
     }
   }
 }

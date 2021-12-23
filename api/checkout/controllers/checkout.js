@@ -60,6 +60,8 @@ module.exports = {
           domain: value.domain,
           tracking: value.capi ? [value.capi] : [],
           active: true, // 新建的订单 active
+          serviceEmail : ctx.config.adminEmail // 订单里面带上 serviceEmail
+
         });
 
         ctx.send(cart);

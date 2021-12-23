@@ -1,6 +1,6 @@
 "use strict";
 const sgMail = require("@sendgrid/mail");
- sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function genCartDetail(orderObj) {
   let items = orderObj.content.items.map((x) => {
@@ -15,6 +15,16 @@ function genCartDetail(orderObj) {
 }
 
 function genEmailTemplate(template, order) {
+  function replaceStr(str) {
+    return str
+      .replace(/{{firstname}}/g, emailVars["firstname"])
+      .replace(/{{lastname}}/g, emailVars["lastname"])
+      .replace(/{{domain}}/g, emailVars["domain"])
+      .replace(/{{brand}}/g, emailVars["brand"])
+      .replace(/{{checkoutLink}}/g, emailVars["checkoutLink"])
+      .replace(/{{cartItems}}/g, emailVars["cartItems"]);
+  }
+
   let emailVars = {
     firstname: "",
     lastname: "",
@@ -34,36 +44,56 @@ function genEmailTemplate(template, order) {
   emailVars.cartItems = genCartDetail(order);
   emailVars.checkoutLink = `https://${emailVars.domain}/a/checkout`;
 
-  return template.template
-    .replace(/{{firstname}}/g, emailVars["firstname"])
-    .replace(/{{lastname}}/g, emailVars["lastname"])
-    .replace(/{{domain}}/g, emailVars["domain"])
-    .replace(/{{brand}}/g, emailVars["brand"])
-    .replace(/{{checkoutLink}}/g, emailVars["checkoutLink"])
-    .replace(/{{cartItems}}/g, emailVars["cartItems"]);
-}
+  let body = replaceStr(template.template);
+  let title = replaceStr(template.title);
 
-async function sendMail() {
-  const msg = {
-    to: order.email, // Change to your recipient
-    from: "info@wudizu.com", // Change to your verified sender
-    replyTo: emailAddress,
-    subject: html.title,
-    html: html.body,
+  return {
+    title,
+    body,
   };
-
-  return await sgMail.send(msg);
 }
+
+
 module.exports = {
   async sendEmail({ orderId, templateId }) {
+
+    console.dir('收到发送邮件请求')
+    console.log(JSON.stringify(orderId))
+    console.log(JSON.stringify(templateId))
     let r = await Promise.all([
       strapi.query("order").findOne({ id: orderId }),
       strapi.query("email-template").findOne({ id: templateId }),
     ]);
 
+
+
     let order = r[0];
     let template = r[1];
 
-    let mail = genEmailTemplate(template, order);
+    let { title, body } = genEmailTemplate(template, order);
+
+    const msg = {
+      to: order.email, // Change to your recipient
+      from: "info@wudizu.com", // Change to your verified sender
+      replyTo: order.serviceEmail || "info@wudizu.com",
+      subject: title,
+      html: body,
+    };
+
+
+
+
+    try {
+     let r = await sgMail.send(msg);
+     console.dir('发送邮件成功')
+     console.log(JSON.stringify(r))
+
+      return r;
+    } catch (e){
+
+      console.dir('error')
+      console.log(JSON.stringify(e))
+
+    }
   },
 };

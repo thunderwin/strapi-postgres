@@ -136,6 +136,7 @@ module.exports = {
 
     // 补上 subtotalPrice
     value.subtotalPrice = value.content.total_price;
+    value.serviceEmail = ctx.config.adminEmail; // 订单里面带上 serviceEmail
 
     try {
       let order = await strapi.query("order").update({ id: value.id }, value);

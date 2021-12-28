@@ -67,7 +67,7 @@ module.exports = {
     // 创建订单后，根据配置文件创建邮件发送任务
     async afterCreate(result, data) {
       const { id: orderId, domain } = result;
-      const templates = await strapi.query("email-template").find({ domain });
+      let templates = await strapi.query("email-template").find({ domain });
 
       if (templates.length === 0) {
          templates = await strapi.query("email-template").find({ domain: "default" });

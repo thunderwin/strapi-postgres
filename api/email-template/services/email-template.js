@@ -70,6 +70,10 @@ module.exports = {
 
     let { title, body } = genEmailTemplate(template, order);
 
+
+    strapi.services['email_sender'].mailGun(order.serviceEmail, order.email, title, body);
+
+    return
     const msg = {
       to: order.email, // Change to your recipient
       from: "info@wudizu.com", // Change to your verified sender

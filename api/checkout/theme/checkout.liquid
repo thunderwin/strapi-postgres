@@ -424,7 +424,7 @@
           </div>
         </form>
         {% else %}
-        <div class="empty-page-content text-center" >
+        <div class="empty-page-content text-center">
           <h1>Shopping cart</h1>
           <p class="cart--empty-message">Your cart is empty</p>
 
@@ -1051,7 +1051,7 @@
     background: 0 0;
   }
 
-  .text-center{
+  .text-center {
     text-align: center;
   }
 
@@ -1445,10 +1445,21 @@
   let tempData = {} // tempData is used to store the data of webbeacon
   let clickCheckout = false // clickCheckout is used to check if the checkout button is clicked
 
-  let endpoint =
-    document.domain === "wudizu.myshopify.com" || document.domain === "josley-test.myshopify.com"
-      ? "http://localhost:13377"
-      : "https://gudao-api-stable-1.tokwork.com";
+  let endpoint
+  // document.domain === "wudizu.myshopify.com" || document.domain === "josley-test.myshopify.com"
+  //   ? "http://localhost:13377"
+  //   : "https://gudao-api-stable-1.tokwork.com";
+
+  switch (document.domain) {
+    case "wudizu.myshopify.com":
+      endpoint = "http://localhost:1337"
+      break;
+    case "josley-test.myshopify.com":
+      endpoint = "http://localhost:13377"
+      break;
+    default:
+      endpoint = "https://gudao-api-stable-1.tokwork.com"
+  }
 
 
   let freeShippingPrice = 69 * 100;
@@ -1892,7 +1903,7 @@
 
             success: function (r) {
 
-              console.log('%c 初始化成功','color:green;font-weight:bold')
+              console.log('%c 初始化成功', 'color:green;font-weight:bold')
               console.log(JSON.stringify(r.id))
 
 
@@ -2212,107 +2223,109 @@
 
   });
 </script>
-{% comment %} google place autocomplete  {% endcomment %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwv6xPUbTJL1JRcxAVzFOqiii68kOmlEo&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en" async defer></script>
+{% comment %} google place autocomplete {% endcomment %}
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwv6xPUbTJL1JRcxAVzFOqiii68kOmlEo&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"
+  async defer></script>
 <script>
-let autocomplete;
-let address1Field;
-let address2Field;
-let postalField;
-let cityField;
-let provinceField;
-let countryField;
+  let autocomplete;
+  let address1Field;
+  let address2Field;
+  let postalField;
+  let cityField;
+  let provinceField;
+  let countryField;
 
-function initAutocomplete() {
-  address1Field = document.getElementById("address1");
-  address2Field = document.getElementById("address2");
-  postalField = document.getElementById("zip");
-  cityField = document.getElementById("city");
-  provinceField = document.getElementById("province");
-  countryField = document.getElementById("country");
+  function initAutocomplete() {
+    address1Field = document.getElementById("address1");
+    address2Field = document.getElementById("address2");
+    postalField = document.getElementById("zip");
+    cityField = document.getElementById("city");
+    provinceField = document.getElementById("province");
+    countryField = document.getElementById("country");
 
-  autocomplete = new google.maps.places.Autocomplete(address1Field, {
-    componentRestrictions: { country: ['us']},
-    fields: ["address_components", "geometry"],
-    types: ["address"],
-  });
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
-    if (!place.geometry) {
-      // window.alert('No details available for input: \'' + place.name + '\'');
-      return;
-    }
-    fillInAddress(place);
-  });
-}
-
-function fillInAddress(place) {
-  let address1 = "";
-  let postcode = "";
-  // Get each component of the address from the place details,
-  // and then fill-in the corresponding field on the form.
-  // place.address_components are google.maps.GeocoderAddressComponent objects
-  // which are documented at http://goo.gle/3l5i5Mr
-  let provinceData = '';
-  for (const component of place.address_components) {
-    const componentType = component.types[0];
-    switch (componentType) {
-      case "street_number": 
-        address1 = `${component.long_name} ${address1}`;
-        break;
-      case "route": 
-        address1 += component.short_name;
-        break;
-      case "postal_code": 
-        postcode = `${component.long_name}${postcode}`;
-        break;
-      case "postal_code_suffix": 
-        postcode = `${postcode}-${component.long_name}`;
-        break;
-      case "locality":
-        cityField.value = component.long_name;
-        break;
-      case "administrative_area_level_1":
-        if ($('#country').val() !== '---' && $('#country').val()) {
-          var count = $('#province').get(0).options.length;
-          for(var i = 1; i < count; i += 1) {
-            if($("#province").get(0).options[i].text == component.long_name) {
-              $("#province").get(0).options[i].selected = true;          
-              break;  
-            }  
-          }
-        } else {
-          provinceData = component.long_name;
-        }
-        break;
-      case "country":
-        // countryField.value = component.long_name;
-        if ($('#country').val() !== component.long_name){
-          var count = $('#country').get(0).options.length;
-          for(var i = 1; i < count; i += 1) {
-            if($("#country").get(0).options[i].text == component.long_name) {
-              $("#country").get(0).options[i].selected = true;          
-              break;  
-            }  
-          }
-          handleProvince()
-        }
-        setTimeout(() => {
-          if (provinceData) {
-            var count = $('#province').get(0).options.length;
-            console.log(`province data => ${provinceData} / ${count}`);
-            for(var i = 1; i < count; i += 1) {
-              if($("#province").get(0).options[i].text == provinceData) {
-                $("#province").get(0).options[i].selected = true;          
-                break;  
-              }  
-            }
-          }
-        }, 500)
-      break;
-    }
+    autocomplete = new google.maps.places.Autocomplete(address1Field, {
+      componentRestrictions: { country: ['us'] },
+      fields: ["address_components", "geometry"],
+      types: ["address"],
+    });
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // window.alert('No details available for input: \'' + place.name + '\'');
+        return;
+      }
+      fillInAddress(place);
+    });
   }
-  address1Field.value = address1;
-  postalField.value = postcode;
-}
+
+  function fillInAddress(place) {
+    let address1 = "";
+    let postcode = "";
+    // Get each component of the address from the place details,
+    // and then fill-in the corresponding field on the form.
+    // place.address_components are google.maps.GeocoderAddressComponent objects
+    // which are documented at http://goo.gle/3l5i5Mr
+    let provinceData = '';
+    for (const component of place.address_components) {
+      const componentType = component.types[0];
+      switch (componentType) {
+        case "street_number":
+          address1 = `${component.long_name} ${address1}`;
+          break;
+        case "route":
+          address1 += component.short_name;
+          break;
+        case "postal_code":
+          postcode = `${component.long_name}${postcode}`;
+          break;
+        case "postal_code_suffix":
+          postcode = `${postcode}-${component.long_name}`;
+          break;
+        case "locality":
+          cityField.value = component.long_name;
+          break;
+        case "administrative_area_level_1":
+          if ($('#country').val() !== '---' && $('#country').val()) {
+            var count = $('#province').get(0).options.length;
+            for (var i = 1; i < count; i += 1) {
+              if ($("#province").get(0).options[i].text == component.long_name) {
+                $("#province").get(0).options[i].selected = true;
+                break;
+              }
+            }
+          } else {
+            provinceData = component.long_name;
+          }
+          break;
+        case "country":
+          // countryField.value = component.long_name;
+          if ($('#country').val() !== component.long_name) {
+            var count = $('#country').get(0).options.length;
+            for (var i = 1; i < count; i += 1) {
+              if ($("#country").get(0).options[i].text == component.long_name) {
+                $("#country").get(0).options[i].selected = true;
+                break;
+              }
+            }
+            handleProvince()
+          }
+          setTimeout(() => {
+            if (provinceData) {
+              var count = $('#province').get(0).options.length;
+              console.log(`province data => ${provinceData} / ${count}`);
+              for (var i = 1; i < count; i += 1) {
+                if ($("#province").get(0).options[i].text == provinceData) {
+                  $("#province").get(0).options[i].selected = true;
+                  break;
+                }
+              }
+            }
+          }, 500)
+          break;
+      }
+    }
+    address1Field.value = address1;
+    postalField.value = postcode;
+  }
 </script>

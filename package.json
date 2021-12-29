@@ -23,6 +23,7 @@
     "joi": "^17.4.2",
     "knex": "<0.20.0",
     "koa-send": "^5.0.1",
+    "nodemailer": "^6.7.2",
     "nonce": "^1.0.4",
     "pg": "^8.3.3",
     "pg-connection-string": "^2.4.0",

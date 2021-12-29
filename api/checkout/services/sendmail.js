@@ -51,8 +51,13 @@ module.exports = {
   sendOrderConfirmEmail(config, order) {
 
     let emailAddress = config.adminEmail
-
     let html = genOrderConfirmEmailHTML(order);
+
+
+    strapi.services['email_sender'].mailGun(emailAddress, order.email, html.title, html.body);
+
+    return
+
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
@@ -62,7 +67,7 @@ module.exports = {
 
     const msg = {
       to: order.email, // Change to your recipient
-      from: "info@wudizu.com", // Change to your verified sender
+      from: 'info@wudizu.com',
       replyTo: emailAddress,
       subject: html.title,
       html: html.body,

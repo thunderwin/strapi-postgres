@@ -42,6 +42,12 @@
     },
     "adAccounts": {
       "type": "json"
+    },
+    "department": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
     }
   }
 }

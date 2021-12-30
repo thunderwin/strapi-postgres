@@ -39,6 +39,8 @@ function genOrderConfirmEmailHTML(orderObj) {
 <h3>Payment method</h3>
 <p>${orderObj.payment}</p>
 
+<p>Please reply this email, if you have any questions to ask! </p>
+
 `;
 
   return {

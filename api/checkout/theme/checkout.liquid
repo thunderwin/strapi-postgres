@@ -2224,9 +2224,6 @@
   });
 </script>
 {% comment %} google place autocomplete {% endcomment %}
-<script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_OOjHY6beahg-AQG4GM-FxKpCGNwHdQ&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"
-  async defer></script>
 <script>
   let autocomplete;
   let address1Field;
@@ -2235,6 +2232,16 @@
   let cityField;
   let provinceField;
   let countryField;
+
+  
+function gm_authFailure(error) {
+  console.log('error handler')
+  autocomplete = null;
+  $("#address1").attr("disabled", false);
+  $("#address1").focus();
+  $("#address1").css({'background-image': 'none'});
+  $("#address1").removeClass("error");
+}
 
   function initAutocomplete() {
     address1Field = document.getElementById("address1");
@@ -2329,3 +2336,6 @@
     postalField.value = postcode;
   }
 </script>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_OOjHY6beahg-AQG4GM-FxKpCGNwHdQ&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"
+  async defer></script>

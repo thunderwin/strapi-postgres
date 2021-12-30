@@ -2206,7 +2206,7 @@
   });
 </script>
 {% comment %} google place autocomplete  {% endcomment %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwv6xPUbTJL1JRcxAVzFOqiii68kOmlEo&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_OOjHY6beahg-AQG4GM-FxKpCGNwHdQ&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en" async defer></script>
 <script>
 let autocomplete;
 let address1Field;
@@ -2216,27 +2216,41 @@ let cityField;
 let provinceField;
 let countryField;
 
-function initAutocomplete() {
-  address1Field = document.getElementById("address1");
-  address2Field = document.getElementById("address2");
-  postalField = document.getElementById("zip");
-  cityField = document.getElementById("city");
-  provinceField = document.getElementById("province");
-  countryField = document.getElementById("country");
+function gm_authFailure(error) {
+  console.log('error handler')
+  autocomplete = null;
+  $("#address1").attr("disabled", false);
+  $("#address1").focus();
+  $("#address1").css({'background-image': 'none'});
+  $("#address1").removeClass("error");
+}
 
-  autocomplete = new google.maps.places.Autocomplete(address1Field, {
-    componentRestrictions: { country: ['us']},
-    fields: ["address_components", "geometry"],
-    types: ["address"],
-  });
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
-    if (!place.geometry) {
-      // window.alert('No details available for input: \'' + place.name + '\'');
-      return;
-    }
-    fillInAddress(place);
-  });
+function initAutocomplete() {
+  try{
+    address1Field = document.getElementById("address1");
+    address2Field = document.getElementById("address2");
+    postalField = document.getElementById("zip");
+    cityField = document.getElementById("city");
+    provinceField = document.getElementById("province");
+    countryField = document.getElementById("country");
+  
+    autocomplete = new google.maps.places.Autocomplete(address1Field, {
+      componentRestrictions: { country: ['us']},
+      fields: ["address_components", "geometry"],
+      types: ["address"],
+    });
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // window.alert('No details available for input: \'' + place.name + '\'');
+        return;
+      }
+      fillInAddress(place);
+    });
+  }catch(err){
+    console.log(err)
+  }
+  
 }
 
 function fillInAddress(place) {

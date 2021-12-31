@@ -1659,7 +1659,7 @@
 
     let userInputed = getCheckoutPayload()
 
-    
+
     if (iti) {
       console.log(`iti number => ${iti.getNumber()}`);
       userInputed.address.phone = iti.getNumber();
@@ -2406,6 +2406,7 @@ function fillInAddress(place) {
     div:empty{
       display: block;
     }
+    #phone{padding-left: 82px!important}
   </style>
   <script>
     var input = document.querySelector("#phone");

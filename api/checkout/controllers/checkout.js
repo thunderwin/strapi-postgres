@@ -320,6 +320,8 @@ module.exports = {
         ctx.send(order);
 
         // 发订单确认邮件
+
+
         strapi.services.sendmail.sendOrderConfirmEmail(ctx.config, order);
         // 发送支付事件
         return strapi.services.sendcapi.sendEvent(

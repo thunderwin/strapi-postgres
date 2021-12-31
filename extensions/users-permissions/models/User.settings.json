@@ -66,6 +66,15 @@
     "tokens": {
       "type": "json",
       "private": true
+    },
+    "chineseName": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

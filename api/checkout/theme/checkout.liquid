@@ -1537,6 +1537,9 @@
   }
 
   function initFormValidation() {
+    $.validator.addMethod("iti", function(value,element){
+      return iti.isValidNumber();
+    }, 'Invalid Phone Number')
     $("#checkout").validate({
       rules: {
         firstname: "required",
@@ -1547,7 +1550,7 @@
         },
         phone: {
           required: true,
-          number: true,
+          iti: true,
         },
         address1: {
           required: true,
@@ -1655,6 +1658,12 @@
     console.log('%c user leave without checkout', 'color:green;font-weight:bold')
 
     let userInputed = getCheckoutPayload()
+
+    
+    if (iti) {
+      console.log(`iti number => ${iti.getNumber()}`);
+      userInputed.address.phone = iti.getNumber();
+    }
 
     console.log('%c 用户的输入', 'color:green;font-weight:bold')
     console.log(JSON.stringify(userInputed))
@@ -2027,6 +2036,7 @@
 
     // console.log(f);
 
+
     payload.address = {
       firstname: f.firstname,
       lastname: f.lastname,
@@ -2038,6 +2048,7 @@
       zip: f.zip,
       phone: f.phone,
     };
+
 
     payload.email = f.email;
     payload.payment = f.payment;
@@ -2078,6 +2089,11 @@
       success: function (content) {
 
         let payload = getCheckoutPayload(content);
+
+        if (iti) {
+          console.log(`iti number => ${iti.getNumber()}`);
+          payload.address.phone = iti.getNumber();
+        }
 
         syncCart(payload);
       },
@@ -2369,7 +2385,8 @@ function gm_authFailure(error) {
       customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
         return "e.g. " + selectedCountryPlaceholder;
       },
-      utilsScript: "https://unpkg.com/intl-tel-input@17.0.15/build/js/utils.js"
+      utilsScript: "https://unpkg.com/intl-tel-input@17.0.15/build/js/utils.js",
+      separateDialCode: true
       // any initialisation options go here
     });
     function changeTelCountry(shorName) {

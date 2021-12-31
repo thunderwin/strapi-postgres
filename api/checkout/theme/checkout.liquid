@@ -519,10 +519,10 @@
             </div>
 
             <div class="floating">
-              <input id="phone" class="floating__input" name="phone" type="number" autocomplete="phone"
-                placeholder="Phone" />
-              <label class="floating__label" data-content="Phone">
-                <span class="hidden--visually">Phone</span></label>
+              <input id="phone" class="floating__input" name="phone" autocomplete="phone" placeholder="Phone"
+                />
+              {% comment %} <label class="floating__label" data-content="Phone">
+                <span class="hidden--visually">Phone</span></label> {% endcomment %}
             </div>
 
             <div class="section__header">
@@ -1162,6 +1162,7 @@
     border: 1px solid;
     border-color: #d9d9d9;
     background-color: #fff;
+    outline: none;
   }
 
   .floating:hover .floating__input {
@@ -1604,7 +1605,7 @@
 
     $("#country").on("change", function () {
       console.log('%c 国家变动', 'color:green;font-weight:bold')
-
+      changeTelCountry();
       handleProvince();
     });
 
@@ -2307,6 +2308,7 @@ function gm_authFailure(error) {
           break;
         case "country":
           // countryField.value = component.long_name;
+          changeTelCountry(component.short_name)
           if ($('#country').val() !== component.long_name) {
             var count = $('#country').get(0).options.length;
             for (var i = 1; i < count; i += 1) {
@@ -2339,3 +2341,46 @@ function gm_authFailure(error) {
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_OOjHY6beahg-AQG4GM-FxKpCGNwHdQ&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"
   async defer></script>
+
+  {% comment %} intl-tel-input {% endcomment %}
+  <script src="https://unpkg.com/intl-tel-input@17.0.15/build/js/intlTelInput.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.15/build/css/intlTelInput.min.css">
+  <style>
+    .iti__flag {background-image: url("https://unpkg.com/intl-tel-input@17.0.15/build/img/flags.png");}
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .iti__flag {background-image: url("https://unpkg.com/intl-tel-input@17.0.15/build/img/flags@2x.png");}
+    }
+    .iti>.floating__input{
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .iti>.floating__input::placeholder{
+      color: #686868;
+    }
+    div:empty{
+      display: block;
+    }
+  </style>
+  <script>
+    var input = document.querySelector("#phone");
+    var iti = window.intlTelInput(input, {
+      autoPlaceholder: 'aggressive',
+      customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+        return "e.g. " + selectedCountryPlaceholder;
+      },
+      utilsScript: "https://unpkg.com/intl-tel-input@17.0.15/build/js/utils.js"
+      // any initialisation options go here
+    });
+    function changeTelCountry(shorName) {
+      if (!iti) return;
+      if (shorName) {
+        iti.setCountry(shorName);
+        return;
+      }
+      var countryData = window.intlTelInputGlobals.getCountryData();
+      var name = $("#country").val();
+      var curCountry = countryData.find(e => e.name === name || e.name.includes(name));
+      if(iti && curCountry) iti.setCountry(curCountry.iso2);
+    }
+  </script>

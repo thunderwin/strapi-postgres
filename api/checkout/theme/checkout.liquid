@@ -2223,19 +2223,6 @@
 
   });
 </script>
-<<<<<<< HEAD
-{% comment %} google place autocomplete  {% endcomment %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9_OOjHY6beahg-AQG4GM-FxKpCGNwHdQ&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en" async defer></script>
-<script>
-let autocomplete;
-let address1Field;
-let address2Field;
-let postalField;
-let cityField;
-let provinceField;
-let countryField;
-
-=======
 {% comment %} google place autocomplete {% endcomment %}
 <script>
   let autocomplete;
@@ -2246,8 +2233,7 @@ let countryField;
   let provinceField;
   let countryField;
 
-  
->>>>>>> f2a4af8255d7caaa9612ba0181c0da1d5ae6ee9d
+
 function gm_authFailure(error) {
   console.log('error handler')
   autocomplete = null;
@@ -2257,12 +2243,7 @@ function gm_authFailure(error) {
   $("#address1").removeClass("error");
 }
 
-<<<<<<< HEAD
-function initAutocomplete() {
-  try{
-=======
   function initAutocomplete() {
->>>>>>> f2a4af8255d7caaa9612ba0181c0da1d5ae6ee9d
     address1Field = document.getElementById("address1");
     address2Field = document.getElementById("address2");
     postalField = document.getElementById("zip");

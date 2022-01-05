@@ -2050,7 +2050,7 @@
         handleProvince();
       }
       if (x === "phone" && iti) {
-        iti.setNumber(formObj[x])
+        iti.setNumber(formObj[x]);
       }
       // $(`input[name='${x}']`).val(formObj[x]);
     }
@@ -2525,7 +2525,49 @@
     $(".total_price_amount").html((totalAmountValue * 0.01).toFixed(2));
   }
 
-  $(function () {
+  function loadJs(url, callback) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    if (typeof callback != "undefined") {
+      if (script.readyState) {
+        script.onreadystatechange = function () {
+          if (
+            script.readyState == "loaded" ||
+            script.readyState == "complete"
+          ) {
+            script.onreadystatechange = null;
+            callback();
+          }
+        };
+      } else {
+        script.onload = function () {
+          callback();
+        };
+      }
+    }
+    script.src = url;
+    document.body.appendChild(script);
+  }
+  window.onload = function () {
+    if (window.$ == undefined) {
+      console.log("LOAD JQUERY");
+      loadJs("https://unpkg.com/jquery@3.6.0/dist/jquery.js", function () {
+        loadJs(
+          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js", function () {
+            initPage();
+          }
+        );
+      });
+    } else {
+      loadJs(
+        "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js", function() {
+          initPage();
+        }
+      );
+    }
+  };
+
+  function initPage() {
     let successId = getParams("successId");
     let cancelId = getParams("cancelId");
     let token = getParams("token");
@@ -2552,7 +2594,7 @@
     initMovement(); // 一些jquery特效,和一些监控
 
     initFormValidation(); // 开启表单验证
-  });
+  }
 </script>
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_zCmYyK54Djl1TPsbYxUkjPkwCTro-N8&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"
@@ -2674,7 +2716,6 @@
     postalField.value = postcode;
   }
 </script>
-
 
 {% comment %} intl-tel-input {% endcomment %}
 <script src="https://unpkg.com/intl-tel-input@17.0.15/build/js/intlTelInput.min.js"></script>

@@ -2046,6 +2046,12 @@
 
       if (x === "country") {
         handleProvince();
+        if (iti) {
+          iti.setCountry(formObj[x])
+        }
+      }
+      if (x === "phone" && iti) {
+        iti.setNumber(formObj[x])
       }
       // $(`input[name='${x}']`).val(formObj[x]);
     }

@@ -65,7 +65,10 @@ const genCustomData = (order) => {
 };
 
 const sendEvent = (type, order, capi, ctx) => {
+
   let facebookConfig = ctx.config.facebook;
+  if (!facebookConfig || !facebookConfig.pixelAccessToken || !facebookConfig.pixelId) return
+
 
   let { capiTestId, pixelId, pixelAccessToken } = facebookConfig;
 

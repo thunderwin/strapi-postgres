@@ -83,6 +83,10 @@ module.exports = {
         ctx.send(cart);
       }
 
+      let facebookConfig = ctx.config.facebook;
+      if (!facebookConfig || !facebookConfig.pixelAccessToken || !facebookConfig.pixelId) return
+
+
       return strapi.services.sendcapi.sendEvent(
         "InitiateCheckout",
         cart,

@@ -2525,49 +2525,7 @@
     $(".total_price_amount").html((totalAmountValue * 0.01).toFixed(2));
   }
 
-  function loadJs(url, callback) {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    if (typeof callback != "undefined") {
-      if (script.readyState) {
-        script.onreadystatechange = function () {
-          if (
-            script.readyState == "loaded" ||
-            script.readyState == "complete"
-          ) {
-            script.onreadystatechange = null;
-            callback();
-          }
-        };
-      } else {
-        script.onload = function () {
-          callback();
-        };
-      }
-    }
-    script.src = url;
-    document.body.appendChild(script);
-  }
-  window.onload = function () {
-    if (window.$ == undefined) {
-      console.log("LOAD JQUERY");
-      loadJs("https://unpkg.com/jquery@3.6.0/dist/jquery.js", function () {
-        loadJs(
-          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js", function () {
-            initPage();
-          }
-        );
-      });
-    } else {
-      loadJs(
-        "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js", function() {
-          initPage();
-        }
-      );
-    }
-  };
-
-  function initPage() {
+  function initCheckoutPage() {
     let successId = getParams("successId");
     let cancelId = getParams("cancelId");
     let token = getParams("token");

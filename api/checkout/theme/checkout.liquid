@@ -1488,17 +1488,19 @@
   }
 
   .floating__input {
-    padding: 20px 16px 8px;
-    width: 100%;
-    font-size: 16px;
+    padding: 20px 16px 8px !important;
+    width: 100% !important;
+    font-size: 16px !important;
     transition: border-color 0.2s ease;
     caret-color: var(--color__accent);
-    border-radius: 4px;
+    border-radius: 4px !important;
     line-height: initial;
-    border: 1px solid;
-    border-color: #d9d9d9;
-    background-color: #fff;
-    outline: none;
+    border: 1px solid !important;
+    border-color: #d9d9d9 !important;
+    background-color: #fff !important;
+    outline: none !important;
+    text-indent: 0 !important;
+    margin: 0 !important;
   }
 
   .floating:hover .floating__input {
@@ -2046,9 +2048,6 @@
 
       if (x === "country") {
         handleProvince();
-        if (iti) {
-          iti.setCountry(formObj[x])
-        }
       }
       if (x === "phone" && iti) {
         iti.setNumber(formObj[x])
@@ -2694,8 +2693,8 @@
     }
   }
   .iti > .floating__input {
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
   }
   .iti > .floating__input::placeholder {
     color: #686868;

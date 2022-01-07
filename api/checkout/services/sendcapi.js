@@ -67,6 +67,8 @@ const genCustomData = (order) => {
 const sendEvent = (type, order, capi, ctx) => {
 
   let facebookConfig = ctx.config.facebook;
+
+  // 部分网站没填配置文件，要能正常用
   if (!facebookConfig || !facebookConfig.pixelAccessToken || !facebookConfig.pixelId) return
 
 

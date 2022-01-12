@@ -48,7 +48,7 @@ module.exports = {
     // 去掉敏感信息
     returnConfig.freeShippingAmount = ctx.config.freeShippingAmount || 69
     returnConfig.standardShippingAmount = ctx.config.standardShippingAmount || 3.99
-    returnConfig.expressShippingAmount = ctx.config.expressShippingAmount || 8.99
+    returnConfig.expressShippingAmount = ctx.config.expressShippingAmount
 
     try {
       let cart;

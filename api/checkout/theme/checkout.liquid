@@ -65,7 +65,6 @@
       margin: 0 auto;
       justify-content: space-between;
       font-size: 14px;
-      line-height: 1.3em;
     "
   >
     <div class="left-area">
@@ -132,7 +131,7 @@
                 </svg>
               </span>
 
-              <dl class="my-flex" id="base-price" style="margin: 10px 0">
+              <dl class="my-flex" id="base-price">
                 <div class="discouted-price">
                   <!-- <dt class="visually-hidden"><span>Sale price</span></dt> -->
                   <dd>
@@ -439,7 +438,7 @@
                   endif
                   %}
                 "
-                style="max-width: 100%; width: 100%"
+                style="max-width: 100%"
               >
                 <div
                   class="my-flex discounted-price"
@@ -1414,9 +1413,9 @@
 
   input.error,
   textarea.error {
-    border-color: #d02e2e !important;
-    background-color: #fff6f6 !important;
-    color: #d02e2e !important;
+    border-color: #d02e2e;
+    background-color: #fff6f6;
+    color: #d02e2e;
   }
 
   .page-width {
@@ -1505,15 +1504,6 @@
     margin: 0 !important;
     height: unset !important;
     line-height: unset !important;
-    color: #000 !important;
-  }
-
-  .floating select {
-    background-image: url("data:image/svg+xml,%3Csvg width='499' height='285' viewBox='0 0 499 285' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 35a35 35 0 0 1 59.75-24.76l189.74 189.75L439.23 10.24a35.002 35.002 0 1 1 49.5 49.5l-214.49 214.5a35 35 0 0 1-49.5 0L10.25 59.74A34.89 34.89 0 0 1 0 35z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 11px;
-    appearance: none;
   }
 
   .floating:hover .floating__input {
@@ -1779,7 +1769,7 @@
     border-color: #ffffff;
     border-color: #fff;
     border-top-color: transparent;
-    animation: Polaris-Spinner--loading 1s linear infinite;
+    animation: spin 1s linear infinite;
   }
 
   .btn--loading {
@@ -1899,9 +1889,9 @@
 
   function initFormValidation() {
     if (!window.$ || (window.$ && !window.$.validator)) {
-      setTimeout(function () {
+      setTimeout(function(){
         initFormValidation();
-      }, 100);
+      }, 100)
       return;
     }
     $.validator.addMethod(
@@ -2264,9 +2254,12 @@
               capi: capi,
             }),
 
-            success: function (r) {
+            success: function ({cart:r, config}) {
               console.log("%c 初始化成功", "color:green;font-weight:bold");
               console.log(JSON.stringify(r.id));
+
+              console.log("%c config", "color:green;font-weight:bold");
+              console.log(JSON.stringify(config));
 
               window.globalCart = r; // 拿到的购物车挂到window
 
@@ -2481,7 +2474,7 @@
       showError("Code is missing");
       return;
     }
-    $("#coupon-btn").addClass("btn--loading").prop("disabled", true);
+
     $.ajax({
       type: "POST",
       contentType: "json",
@@ -2499,7 +2492,6 @@
       success: function (r) {
         // console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
         // console.log(JSON.stringify(r));
-        $("#coupon-btn").removeClass("btn--loading").prop("disabled", false);
         if (r.code === 1) {
           showError(r.msg);
         }
@@ -2533,7 +2525,6 @@
       error: function (e) {
         console.log("%c e", "color:green;font-weight:bold");
         console.log(JSON.stringify(e));
-        $("#coupon-btn").removeClass("btn--loading").prop("disabled", false);
       },
     });
   }
@@ -2554,91 +2545,43 @@
   }
 
   function initCheckoutPage() {
-    try {
-      console.log("init check out page", isInit);
-      if (isInit) return;
-      isInit = true;
-      let successId = getParams("successId");
-      let cancelId = getParams("cancelId");
-      let token = getParams("token");
+    console.log('init check out page', isInit);
+    if (isInit) return;
+    isInit = true;
+    let successId = getParams("successId");
+    let cancelId = getParams("cancelId");
+    let token = getParams("token");
 
-      if (!!successId && token) {
-        handleSuccess(successId, token);
-        return;
-      }
-
-      $("#cart-wrapper").css("display", "block");
-
-      initCart(); // 初始化购物车
-
-      // window.addEventListener('load', function () {
-
-      //   fbq('track', 'InitiateCheckout');
-      //   fbq('track', 'AddPaymentInfo');
-      // });
-
-      // window.addEventListener('beforeunload', beforeUserLeave);
-
-      window.addEventListener("pagehide", beforeUserLeave);
-
-      initMovement(); // 一些jquery特效,和一些监控
-
-      initFormValidation(); // 开启表单验证
-    } catch (error) {
-      isInit = false;
-      setTimeout(() => {
-        initCheckoutPage();
-      }, 100);
+    if (!!successId && token) {
+      handleSuccess(successId, token);
+      return;
     }
+
+    $("#cart-wrapper").css("display", "block");
+
+    initCart(); // 初始化购物车
+
+    // window.addEventListener('load', function () {
+
+    //   fbq('track', 'InitiateCheckout');
+    //   fbq('track', 'AddPaymentInfo');
+    // });
+
+    // window.addEventListener('beforeunload', beforeUserLeave);
+
+    window.addEventListener("pagehide", beforeUserLeave);
+
+    initMovement(); // 一些jquery特效,和一些监控
+
+    initFormValidation(); // 开启表单验证
   }
 
-  (function () {
-    if (!isInit && window.$) {
+  (function(){
+
+    if(!isInit && window.$) {
       initCheckoutPage();
     }
-  })();
-  // load jquery and validator in page
-  (function () {
-    function loadJs(url, callback) {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      if (typeof callback != "undefined") {
-        if (script.readyState) {
-          script.onreadystatechange = function () {
-            if (
-              script.readyState == "loaded" ||
-              script.readyState == "complete"
-            ) {
-              script.onreadystatechange = null;
-              callback();
-            }
-          };
-        } else {
-          script.onload = function () {
-            callback();
-          };
-        }
-      }
-      script.src = url;
-      document.body.appendChild(script);
-    }
-    if (window.$ == undefined) {
-      console.log("LOAD JQUERY");
-      loadJs("https://unpkg.com/jquery@3.6.0/dist/jquery.js", function () {
-        if (window.initCheckoutPage) initCheckoutPage();
-        loadJs(
-          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js"
-        );
-      });
-    } else {
-      if (window.initCheckoutPage) initCheckoutPage();
-      if (!window.$.validator) {
-        loadJs(
-          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js"
-        );
-      }
-    }
-  })();
+  })()
 </script>
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_zCmYyK54Djl1TPsbYxUkjPkwCTro-N8&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"

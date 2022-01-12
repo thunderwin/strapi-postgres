@@ -48,6 +48,12 @@
     },
     "note": {
       "type": "string"
+    },
+    "standardShippingAmount": {
+      "type": "decimal"
+    },
+    "expressShippingAmount": {
+      "type": "decimal"
     }
   }
 }

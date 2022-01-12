@@ -43,6 +43,13 @@ module.exports = {
       return ctx.send(error.details);
     }
 
+
+    let returnConfig = {}
+    // 去掉敏感信息
+    returnConfig.freeShippingAmount = ctx.config.freeShippingAmount
+    returnConfig.standardShippingAmount = ctx.config.standardShippingAmount
+    returnConfig.expressShippingAmount = ctx.config.expressShippingAmount
+
     try {
       let cart;
       cart = await strapi
@@ -64,7 +71,7 @@ module.exports = {
 
         });
 
-        ctx.send(cart);
+        ctx.send({cart,config:returnConfig});
       } else {
         console.dir("同步订单");
         if (!cart.tracking) cart.tracking = [];
@@ -80,7 +87,7 @@ module.exports = {
             tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
           }
         );
-        ctx.send(cart);
+        ctx.send({cart, config: returnConfig});
       }
 
 

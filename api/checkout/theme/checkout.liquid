@@ -65,6 +65,7 @@
       margin: 0 auto;
       justify-content: space-between;
       font-size: 14px;
+      line-height: 1.3em;
     "
   >
     <div class="left-area">
@@ -131,7 +132,7 @@
                 </svg>
               </span>
 
-              <dl class="my-flex" id="base-price">
+              <dl class="my-flex" id="base-price" style="margin: 10px 0">
                 <div class="discouted-price">
                   <!-- <dt class="visually-hidden"><span>Sale price</span></dt> -->
                   <dd>
@@ -411,7 +412,7 @@
               {% if section.settings.cart_notes_enable %}
               <div
                 class="grid__item medium-up--one-half cart-note"
-                style="max-width: 100%"
+                style="max-width: 100%; width: 100%"
               >
                 <label
                   for="CartSpecialInstructions"
@@ -757,7 +758,7 @@
                     />
                     <div for="huey">Standard Shipping</div>
                   </div>
-                  <div class="price-amount">$ 3.99</div>
+                  <div class="price-amount" id="standard-price-amount">$ 3.99</div>
                 </div>
                 <div class="times">
                   (Delivery can be expected within 10-15 business days. Mon-Sat
@@ -777,7 +778,7 @@
                     <div for="dewey">Express Shipping</div>
                   </div>
 
-                  <div class="price-amount">$ 8.99</div>
+                  <div class="price-amount" id="express-price-amount">$ 8.99</div>
                 </div>
                 <div class="times">
                   (Delivery can be expected within 7-13 business days. Mon-Sat
@@ -1413,9 +1414,9 @@
 
   input.error,
   textarea.error {
-    border-color: #d02e2e;
-    background-color: #fff6f6;
-    color: #d02e2e;
+    border-color: #d02e2e !important;
+    background-color: #fff6f6 !important;
+    color: #d02e2e !important;
   }
 
   .page-width {
@@ -1504,6 +1505,15 @@
     margin: 0 !important;
     height: unset !important;
     line-height: unset !important;
+    color: #000 !important;
+  }
+
+  .floating select {
+    background-image: url(//cdn.shopify.com/s/files/1/0414/6253/0211/t/5/assets/ico-select.svg);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 11px;
+    appearance: none;
   }
 
   .floating:hover .floating__input {
@@ -1769,7 +1779,7 @@
     border-color: #ffffff;
     border-color: #fff;
     border-top-color: transparent;
-    animation: spin 1s linear infinite;
+    animation: Polaris-Spinner--loading 1s linear infinite;
   }
 
   .btn--loading {
@@ -1810,6 +1820,7 @@
   }
 
   let freeShippingPrice = 69 * 100;
+  let standardShippingValue = 0;
   let subtotalAmountValue = 0;
 
   let discountAmountValue = 0;
@@ -2193,14 +2204,15 @@
     subtotalAmountValue = Number(cart.total_price);
 
     // free shipping?
-    if (cart.total_price > freeShippingPrice) {
+    if (cart.total_price >= freeShippingPrice) {
       // console.log("%c Free shipping", "color:green;font-weight:bold");
 
       $(".free-shipping-wrapper").fadeIn();
       $("#free-shipping").prop("checked", true);
       $(".standard-shipping-wrapper").hide();
+      shippingAmountValue = 0;
     } else {
-      shippingAmountValue = 399;
+      shippingAmountValue = standardShippingValue || 399;
     }
     reSummary();
   }
@@ -2228,7 +2240,7 @@
         // console.log("%c 购物车", "color:green;font-weight:bold");
         // console.log(JSON.stringify(cart));
 
-        initShipping(cart);
+        // initShipping(cart);
 
         // capi
         let capi = CAPI(); //get capi
@@ -2260,6 +2272,17 @@
 
               console.log("%c config", "color:green;font-weight:bold");
               console.log(JSON.stringify(config));
+
+              const {freeShippingAmount = 60, standardShippingAmount = 3.99, expressShippingAmount = 8.99} = config;
+              freeShippingPrice = freeShippingAmount * 100;
+              standardShippingValue = standardShippingAmount * 100;
+              shippingAmountValue = standardShippingAmount * 100;
+              $('#standard-shipping').val(`standardShipping-${standardShippingAmount * 100}`);
+              $('#standard-price-amount').text(`$ ${standardShippingAmount}`);
+              $('#express-shipping').val(`expressShipping-${expressShippingAmount * 100}`);
+              $('#express-price-amount').text(`$ ${expressShippingAmount}`);
+              initShipping(cart);
+
 
               window.globalCart = r; // 拿到的购物车挂到window
 
@@ -2474,7 +2497,7 @@
       showError("Code is missing");
       return;
     }
-
+    $("#coupon-btn").addClass("btn--loading").prop("disabled", true);
     $.ajax({
       type: "POST",
       contentType: "json",
@@ -2492,6 +2515,7 @@
       success: function (r) {
         // console.log("%c 使用优惠券返回", "color:green;font-weight:bold");
         // console.log(JSON.stringify(r));
+        $("#coupon-btn").removeClass("btn--loading").prop("disabled", false);
         if (r.code === 1) {
           showError(r.msg);
         }
@@ -2525,6 +2549,7 @@
       error: function (e) {
         console.log("%c e", "color:green;font-weight:bold");
         console.log(JSON.stringify(e));
+        $("#coupon-btn").removeClass("btn--loading").prop("disabled", false);
       },
     });
   }
@@ -2545,43 +2570,91 @@
   }
 
   function initCheckoutPage() {
-    console.log('init check out page', isInit);
-    if (isInit) return;
-    isInit = true;
-    let successId = getParams("successId");
-    let cancelId = getParams("cancelId");
-    let token = getParams("token");
+    try {
+      console.log("init check out page", isInit);
+      if (isInit) return;
+      isInit = true;
+      let successId = getParams("successId");
+      let cancelId = getParams("cancelId");
+      let token = getParams("token");
 
-    if (!!successId && token) {
-      handleSuccess(successId, token);
-      return;
+      if (!!successId && token) {
+        handleSuccess(successId, token);
+        return;
+      }
+
+      $("#cart-wrapper").css("display", "block");
+
+      initCart(); // 初始化购物车
+
+      // window.addEventListener('load', function () {
+
+      //   fbq('track', 'InitiateCheckout');
+      //   fbq('track', 'AddPaymentInfo');
+      // });
+
+      // window.addEventListener('beforeunload', beforeUserLeave);
+
+      window.addEventListener("pagehide", beforeUserLeave);
+
+      initMovement(); // 一些jquery特效,和一些监控
+
+      initFormValidation(); // 开启表单验证
+    } catch (error) {
+      isInit = false;
+      setTimeout(() => {
+        initCheckoutPage();
+      }, 100);
     }
-
-    $("#cart-wrapper").css("display", "block");
-
-    initCart(); // 初始化购物车
-
-    // window.addEventListener('load', function () {
-
-    //   fbq('track', 'InitiateCheckout');
-    //   fbq('track', 'AddPaymentInfo');
-    // });
-
-    // window.addEventListener('beforeunload', beforeUserLeave);
-
-    window.addEventListener("pagehide", beforeUserLeave);
-
-    initMovement(); // 一些jquery特效,和一些监控
-
-    initFormValidation(); // 开启表单验证
   }
 
   (function(){
-
     if(!isInit && window.$) {
       initCheckoutPage();
     }
-  })()
+  })();
+  // load jquery and validator in page
+  (function () {
+    function loadJs(url, callback) {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      if (typeof callback != "undefined") {
+        if (script.readyState) {
+          script.onreadystatechange = function () {
+            if (
+              script.readyState == "loaded" ||
+              script.readyState == "complete"
+            ) {
+              script.onreadystatechange = null;
+              callback();
+            }
+          };
+        } else {
+          script.onload = function () {
+            callback();
+          };
+        }
+      }
+      script.src = url;
+      document.body.appendChild(script);
+    }
+    if (window.$ == undefined) {
+      console.log("LOAD JQUERY");
+      loadJs("https://unpkg.com/jquery@3.6.0/dist/jquery.js", function () {
+        if (window.initCheckoutPage) initCheckoutPage();
+        loadJs(
+          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js"
+        );
+      });
+    } else {
+      if (window.initCheckoutPage) initCheckoutPage();
+      if (!window.$.validator) {
+        loadJs(
+          "https://unpkg.com/jquery-validation@1.19.3/dist/jquery.validate.js"
+        );
+      }
+    }
+  })();
 </script>
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_zCmYyK54Djl1TPsbYxUkjPkwCTro-N8&libraries=places&callback=initAutocomplete&solution_channel=GMP_QB_addressselection_v1_cABC&language=en"

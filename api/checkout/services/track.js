@@ -1,15 +1,22 @@
 function UrlToHandleDomain(url) {
-  let u = url.split("//")[1].split("/");
+  function domainURI(str){
+    var durl=/https:\/\/([^\/]+)\//i;
+    let domain = str.match(durl);
+    return domain[1];
+ }
 
-  if (u[1] !== "products") return Promise.reject(new Error("Invalid URL"));
+  if (url.indexOf("/products/") == -1) return Promise.reject(new Error("Invalid URL"));
 
-  let handle = u[2];
+  let u = url.split("/products/")[1]
+
+
+  let handle = u
 
   if (handle.indexOf("?") > -1) {
     handle = handle.split("?")[0];
   }
 
-  let domain = u[0];
+  let domain = domainURI(url);
 
   return {
     handle,

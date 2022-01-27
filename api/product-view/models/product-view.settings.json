@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "carts",
+  "collectionName": "product_views",
   "info": {
-    "name": "cart",
+    "name": "productView",
     "description": ""
   },
   "options": {

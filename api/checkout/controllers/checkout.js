@@ -43,12 +43,12 @@ module.exports = {
       return ctx.send(error.details);
     }
 
-
-    let returnConfig = {}
+    let returnConfig = {};
     // 去掉敏感信息
-    returnConfig.freeShippingAmount = ctx.config.freeShippingAmount || 69
-    returnConfig.standardShippingAmount = ctx.config.standardShippingAmount || 3.99
-    returnConfig.expressShippingAmount = ctx.config.expressShippingAmount
+    returnConfig.freeShippingAmount = ctx.config.freeShippingAmount || 69;
+    returnConfig.standardShippingAmount =
+      ctx.config.standardShippingAmount || 3.99;
+    returnConfig.expressShippingAmount = ctx.config.expressShippingAmount;
 
     try {
       let cart;
@@ -67,11 +67,10 @@ module.exports = {
           domain: value.domain,
           tracking: value.capi ? [value.capi] : [],
           active: true, // 新建的订单 active
-          serviceEmail : ctx.config.adminEmail // 订单里面带上 serviceEmail
-
+          serviceEmail: ctx.config.adminEmail, // 订单里面带上 serviceEmail
         });
 
-        ctx.send({cart,config:returnConfig});
+        ctx.send({ cart, config: returnConfig });
       } else {
         console.dir("同步订单");
         if (!cart.tracking) cart.tracking = [];
@@ -87,11 +86,8 @@ module.exports = {
             tracking: cart.tracking, // 每次tracking 可能不一样，每次都更新一次
           }
         );
-        ctx.send({cart, config: returnConfig});
+        ctx.send({ cart, config: returnConfig });
       }
-
-
-
 
       return strapi.services.sendcapi.sendEvent(
         "InitiateCheckout",
@@ -156,7 +152,7 @@ module.exports = {
       console.log(JSON.stringify(order.id));
 
       // sync customer
-      strapi.services.synccustomer.syncCustomer(order)
+      strapi.services.synccustomer.syncCustomer(order);
 
       if (!value.checkout) {
         return ctx.send(order);
@@ -179,7 +175,6 @@ module.exports = {
         value.capi,
         ctx
       );
-
     } catch (error) {
       console.dir("获取支付链接出错", "color:green;font-weight:bold");
       console.log(JSON.stringify(error));
@@ -331,7 +326,6 @@ module.exports = {
 
         // 发订单确认邮件
 
-
         strapi.services.sendmail.sendOrderConfirmEmail(ctx.config, order);
         // 发送支付事件
         return strapi.services.sendcapi.sendEvent(
@@ -372,7 +366,7 @@ module.exports = {
   },
 
   webBeacon: async (ctx) => {
-    // console.dir("收到事件");
+    console.dir("收到事件");
 
     // console.dir('ctx')
     // console.log(JSON.stringify(ctx.request.body))
@@ -382,10 +376,7 @@ module.exports = {
 
     ctx.send("ok");
 
-
-
     if (body.email) {
-
       return strapi.services.webbeacon.saveEmail(body);
     }
 
@@ -403,5 +394,23 @@ module.exports = {
 
       return strapi.query("order").update({ id: body.cartId }, order);
     }
+  },
+
+
+  webBeaconTrack: async (ctx) => {
+    console.dir("收到事件");
+    let body = ctx.request.body;
+    console.log(ctx.request.body);
+
+    ctx.send("ok");
+
+    switch (body.target) {
+      case "addToCart":
+        return strapi.services.track.saveAddCart(body);
+      case 'visit':
+        return strapi.services.track.saveClick(body);
+    }
+
+
   },
 };

@@ -1992,6 +1992,7 @@
     // listen email input
     $("#email").blur(function () {
       let email = $(this).val();
+      email = email.toUpperCase().replace(/\s*/g,"")
       let email_regex =
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
       if (email_regex.test(email)) {

@@ -31,6 +31,14 @@
     },
     "domain": {
       "type": "string"
+    },
+    "addCart": {
+      "type": "integer",
+      "default": 1
+    },
+    "view": {
+      "type": "integer",
+      "default": 1
     }
   }
 }

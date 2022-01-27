@@ -36,6 +36,18 @@ function recodeProduct(order) {
 
     let isIn = await strapi.query("product").findOne({ handle: obj.handle });
     if (isIn) {
+
+      // 如果没带属性就更新下
+      if (!isIn.price || !isIn.image){
+        await strapi.query("product").update({id: isIn.id},{
+          handle: obj.handle,
+          title: obj.title,
+          price: obj.line_price,
+          image: obj.featured_image.url,
+          domain: order.domain,
+        });
+      }
+
       strapi
         .query("product")
         .model.query((q) => {

@@ -16,6 +16,7 @@ module.exports = {
       if (!isIn) {
         await strapi.query("product").create({
           handle: result.handle,
+          domain: result.domain,
         })
       }
 

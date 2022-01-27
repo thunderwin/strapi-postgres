@@ -39,22 +39,25 @@ function recodeProduct(order) {
 
       // 如果没带属性就更新下
       if (!isIn.price || !isIn.image){
-        await strapi.query("product").update({id: isIn.id},{
+         strapi.query("product").update({id: isIn.id},{
           handle: obj.handle,
           title: obj.title,
           price: obj.line_price,
           image: obj.featured_image.url,
           domain: order.domain,
+          sales: obj.quantity
         });
-      }
-
-      strapi
+      }else{
+        strapi
         .query("product")
         .model.query((q) => {
           q.where("id", isIn.id);
           q.increment("sales", obj.quantity);
         })
         .fetch();
+      }
+
+
     } else {
       strapi.query("product").create({
         handle: obj.handle,

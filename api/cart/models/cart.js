@@ -12,7 +12,7 @@ module.exports = {
         .query("product")
         .model.query((q) => {
           q.where("handle", result.handle);
-          q.increment("addCart", 1);
+          q.increment("add_cart", 1);
         })
         .fetch();
       // data 是前台发送来的

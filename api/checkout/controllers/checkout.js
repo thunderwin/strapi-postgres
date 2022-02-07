@@ -396,7 +396,6 @@ module.exports = {
     }
   },
 
-
   webBeaconTrack: async (ctx) => {
     console.dir("收到事件");
     let body = ctx.request.body;
@@ -407,10 +406,8 @@ module.exports = {
     switch (body.target) {
       case "addToCart":
         return strapi.services.track.saveAddCart(body);
-      case 'visit':
+      case "visit":
         return strapi.services.track.saveClick(body);
     }
-
-
   },
 };

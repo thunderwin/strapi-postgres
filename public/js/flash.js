@@ -489,16 +489,18 @@ if (url.indexOf("?") > -1) {
         visitSeconds += 1;
       }, 1000);
       window.addEventListener("beforeunload", () => {
-        if (visitSeconds >= 3) {
-          var data = {
-            url: location.href,
-            seconds: visitSeconds,
-            refer: this.helpers.getReferrer(),
-            timeIn: Date.parse(new Date()),
-            timeOut: Date.parse(new Date()) + visitSeconds * 1000,
-          };
-          this.report("visit", "visit", location.href, data);
-        }
+
+        var data = {
+          url: location.href,
+          seconds: visitSeconds,
+          refer: this.helpers.getReferrer(),
+          timeIn: Date.parse(new Date()),
+          timeOut: Date.parse(new Date()) + visitSeconds * 1000,
+        };
+        this.report("visit", "visit", location.href, data);
+        // if (visitSeconds >= 3) {
+
+        // }
       });
     },
     identityUser() {

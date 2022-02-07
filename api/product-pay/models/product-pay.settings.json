@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_pays",
+  "info": {
+    "name": "product-pay",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "uuid": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "handle": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}

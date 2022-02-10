@@ -32,8 +32,6 @@ async function recodeCustomerSpent(order) {
 
 function recodeProduct(order) {
   async function initProduct(obj) {
-
-
     let isIn = await strapi.query("product").findOne({ handle: obj.handle });
     if (isIn) {
       // 如果没带属性就更新下
@@ -122,7 +120,7 @@ module.exports = {
       // result 是后台返回的
     },
 
-    afterUpdate(order, params, data) {
+   async afterUpdate(order, params, data) {
       // console.dir("创建新订单结果");
       // console.log(JSON.stringify(order));
 
@@ -130,13 +128,13 @@ module.exports = {
         // 结账成功
 
         // 记录下销售额
-        recodeProduct(order);
+        await recodeProduct(order);
 
         // 记录下用户消费
-        recodeCustomerSpent(order);
+        await recodeCustomerSpent(order);
 
         // 记录销售流水
-        saveAddCart(order);
+        await saveAddCart(order);
 
         return;
 

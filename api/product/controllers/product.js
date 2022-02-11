@@ -16,19 +16,19 @@ module.exports = {
     let list = await strapi.services.product.find(ctx.query);
 
     let onlyTimeSlot
-    if (ctx.query._where && ctx.query._where.created_at_gte && ctx.query._where.created_at_lte ){
+    if (ctx.query._where && ctx.query._where.updated_at_gte && ctx.query._where.updated_at_lte ){
 
 
      onlyTimeSlot = {
       _where: {
-        created_at_gte: ctx.query._where.created_at_gte || defaultTimeSlot.created_at_gte,
-        created_at_lte: ctx.query._where.created_at_lte || defaultTimeSlot.created_at_lte,
+        updated_at_gte: ctx.query._where.updated_at_gte ,
+        updated_at_lte: ctx.query._where.updated_at_lte
       },
     };
   }else{
     onlyTimeSlot =  {
-      created_at_gte:  dayjs().subtract(7, "day").format("YYYY-MM-DD"),
-      created_at_lte: dayjs().add(1,'day').format("YYYY-MM-DD")
+      updated_at_gte:  dayjs().subtract(7, "day").format("YYYY-MM-DD"),
+      updated_at_lte: dayjs().add(1,'day').format("YYYY-MM-DD")
     }
   }
 

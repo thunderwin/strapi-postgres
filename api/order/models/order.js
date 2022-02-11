@@ -120,7 +120,7 @@ module.exports = {
       // result 是后台返回的
     },
 
-   async afterUpdate(order, params, data) {
+    async afterUpdate(order, params, data) {
       // console.dir("创建新订单结果");
       // console.log(JSON.stringify(order));
 

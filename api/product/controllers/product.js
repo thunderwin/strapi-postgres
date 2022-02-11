@@ -32,8 +32,8 @@ module.exports = {
     }
   }
 
-    console.dir('onlyTimeSlot')
-    console.log(JSON.stringify(onlyTimeSlot))
+    // console.dir('onlyTimeSlot')
+    // console.log(JSON.stringify(onlyTimeSlot))
 
 
     // 2 分别找到对应的 浏览 加车 支付
@@ -43,8 +43,8 @@ module.exports = {
 
     let result = await Promise.all([views, pays, carts]);
 
-    console.dir('result')
-    console.log(result)
+    // console.dir('result')
+    // console.log(result)
 
 
     return list.map((x) => {
